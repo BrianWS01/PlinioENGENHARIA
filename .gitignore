@@ -1,0 +1,52 @@
+# Sistema Operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+
+# Node (se usar no futuro)
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Logs
+*.log
+logs/
+
+# Temporários
+tmp/
+temp/
+*.tmp
+
+# Backups
+*.bak
+backup/
+
+# Ambiente
+.env
+.env.local
+.env.production
+
+# Build (se usar no futuro)
+dist/
+build/
+
+# Cache
+.cache/
+.sass-cache/
+
+# Outros
+*.zip
+*.rar
+*.7z
+

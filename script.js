@@ -26,14 +26,48 @@ let lastScroll = 0;
 window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;
     
-    if (currentScroll > 100) {
+    // Torna o fundo transparente quando rola para baixo
+    if (currentScroll > 50) {
+        navbar.classList.add('scrolled');
         navbar.classList.add('shadow');
     } else {
+        navbar.classList.remove('scrolled');
         navbar.classList.remove('shadow');
     }
     
     lastScroll = currentScroll;
+    
+    // Atualiza link ativo baseado na seção visível
+    updateActiveNavLink();
 });
+
+// Função para destacar o link ativo baseado na seção visível
+function updateActiveNavLink() {
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    let current = '';
+    const scrollPosition = window.pageYOffset + 150;
+    
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+            current = section.getAttribute('id');
+        }
+    });
+    
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+        }
+    });
+}
+
+// Chama a função ao carregar a página
+updateActiveNavLink();
 
 // Scroll to top button
 const scrollTopBtn = document.createElement('div');
@@ -64,15 +98,18 @@ if (contatoForm) {
         
         // Simula o envio do formulário
         const btn = contatoForm.querySelector('button[type="submit"]');
-        const originalText = btn.innerHTML;
+        const btnText = btn.querySelector('.btn-text');
+        const typingIndicator = btn.querySelector('.typing-indicator');
         
         btn.disabled = true;
-        btn.innerHTML = '<span class="loading"></span> Enviando...';
+        if (btnText) btnText.classList.add('d-none');
+        if (typingIndicator) typingIndicator.classList.remove('d-none');
         
         // Simula delay de envio
         setTimeout(() => {
             btn.disabled = false;
-            btn.innerHTML = originalText;
+            if (btnText) btnText.classList.remove('d-none');
+            if (typingIndicator) typingIndicator.classList.add('d-none');
             
             // Mostra mensagem de sucesso
             showAlert('Mensagem enviada com sucesso! Entraremos em contato em breve.', 'success');
@@ -404,11 +441,11 @@ document.querySelectorAll('.btn-primary, .btn-warning').forEach(btn => {
 });
 
 // Console log para debug (remover em produção)
-console.log('%c🔌 Campo Limpo Engenharia Website Loaded Successfully!', 'color: #0066cc; font-size: 16px; font-weight: bold;');
+console.log('%c🔌 USETRAFO Website Loaded Successfully!', 'color: #0066cc; font-size: 16px; font-weight: bold;');
 console.log('%cDesenvolvido com ❤️', 'color: #28a745; font-size: 14px;');
 
 // Exporta funções úteis para uso global
-window.campolimpo = {
+window.usetrafo = {
     showAlert,
     trackEvent,
     scrollToTop: () => window.scrollTo({ top: 0, behavior: 'smooth' })

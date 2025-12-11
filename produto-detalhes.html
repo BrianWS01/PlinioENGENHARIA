@@ -1,0 +1,2216 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#02093f">
+    <title>Detalhes do Produto - USETRAFO</title>
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/svg+xml" href="src/imgs/ChatGPT Image 10 de dez. de 2025, 13_41_48 9.svg">
+    <link rel="icon" type="image/svg+xml" href="src/imgs/ChatGPT Image 10 de dez. de 2025, 13_41_48 9.svg">
+    <link rel="apple-touch-icon" href="src/imgs/ChatGPT Image 10 de dez. de 2025, 13_41_48 9.svg">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        * {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        /* Breadcrumb Premium */
+        .breadcrumb-premium {
+            background: transparent;
+            padding: 1rem 0 0 0;
+            margin-top: 80px;
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+        
+        .breadcrumb-premium .breadcrumb-item {
+            color: #6c757d;
+        }
+        
+        .breadcrumb-premium .breadcrumb-item a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .breadcrumb-premium .breadcrumb-item a:hover {
+            color: #010520;
+            text-decoration: underline;
+        }
+        
+        .breadcrumb-premium .breadcrumb-item.active {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .product-detail-hero {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 50%, #ffffff 100%);
+            padding: 1.5rem 0 2rem;
+            margin-top: 0;
+            color: var(--primary-color);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-detail-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(2, 9, 63, 0.03) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255, 193, 7, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .product-detail-hero .container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .product-hero-content {
+            text-align: center;
+            padding: 0.5rem 0;
+        }
+        
+        .product-hero-content h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+            letter-spacing: -0.5px;
+        }
+        
+        .product-hero-content p {
+            font-size: 1.1rem;
+            color: #6c757d;
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        /* Galeria de Imagens Premium */
+        .product-image-gallery {
+            position: sticky;
+            top: 100px;
+        }
+        
+        .product-main-image {
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(2, 9, 63, 0.15);
+            margin-bottom: 1.5rem;
+            background: white;
+            padding: 2.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            cursor: zoom-in;
+        }
+        
+        .product-main-image::after {
+            content: '🔍';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            opacity: 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .product-main-image:hover::after {
+            opacity: 1;
+        }
+        
+        .product-main-image:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 80px rgba(2, 9, 63, 0.2);
+        }
+        
+        .product-main-image img {
+            border-radius: 16px;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%;
+            height: auto;
+        }
+        
+        .product-main-image:hover img {
+            transform: scale(1.08);
+        }
+        
+        .product-main-image.zoomed {
+            cursor: zoom-out;
+            z-index: 1000;
+        }
+        
+        .product-main-image.zoomed img {
+            transform: scale(2.5);
+            cursor: zoom-out;
+        }
+        
+        @media (max-width: 768px) {
+            .product-main-image.zoomed img {
+                transform: scale(2);
+            }
+        }
+        
+        .product-thumbnails {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 0.5rem 0;
+        }
+        
+        .product-thumbnail {
+            width: 100px;
+            height: 100px;
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
+            padding: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            position: relative;
+        }
+        
+        .product-thumbnail::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 13px;
+            padding: 3px;
+            background: linear-gradient(135deg, var(--primary-color), #010520);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .product-thumbnail:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 24px rgba(2, 9, 63, 0.2);
+        }
+        
+        .product-thumbnail.active {
+            border-color: var(--primary-color);
+            transform: scale(1.08);
+            box-shadow: 0 8px 28px rgba(2, 9, 63, 0.3);
+        }
+        
+        .product-thumbnail.active::before {
+            opacity: 1;
+        }
+        
+        .product-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .product-thumbnail:hover img {
+            transform: scale(1.1);
+        }
+        
+        .product-info-card {
+            background: white;
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(2, 9, 63, 0.1);
+            margin-bottom: 2rem;
+            border: 1px solid rgba(2, 9, 63, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color) 0%, #010520 50%, var(--secondary-color) 100%);
+        }
+        
+        .product-info-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(2, 9, 63, 0.02) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .product-info-card .badge {
+            font-size: 0.85rem;
+            padding: 0.65rem 1.4rem;
+            border-radius: 50px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #010520 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(2, 9, 63, 0.2);
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+        
+        .product-info-card h1 {
+            font-size: 2.75rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            letter-spacing: -1px;
+        }
+        
+        .product-info-card #productSubtitle {
+            font-size: 1.15rem;
+            color: #6c757d;
+            line-height: 1.7;
+            margin-bottom: 2.5rem;
+            font-weight: 400;
+        }
+        
+        .product-price-section {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            border: 2px solid rgba(2, 9, 63, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-price-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        }
+        
+        .product-price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #010520 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.5px;
+        }
+        
+        .product-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+        
+        .product-actions .btn {
+            border-radius: 16px;
+            padding: 1.25rem 2.5rem;
+            font-weight: 700;
+            font-size: 1.05rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            position: relative;
+            overflow: hidden;
+            border: none;
+        }
+        
+        .product-actions .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .product-actions .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .product-actions .btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .product-actions .btn:active {
+            transform: translateY(-2px);
+        }
+        
+        .product-actions .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #010520 100%);
+            color: white;
+            box-shadow: 0 8px 24px rgba(2, 9, 63, 0.3);
+        }
+        
+        .product-actions .btn-primary:hover {
+            background: linear-gradient(135deg, #010520 0%, var(--primary-color) 100%);
+            box-shadow: 0 16px 48px rgba(2, 9, 63, 0.4);
+        }
+        
+        .quick-info-section {
+            background: linear-gradient(135deg, rgba(2, 9, 63, 0.03) 0%, rgba(255, 255, 255, 0.5) 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(2, 9, 63, 0.08);
+            margin-top: 2rem;
+        }
+        
+        .quick-info-item {
+            display: flex;
+            align-items: center;
+            padding: 1.25rem;
+            background: white;
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-left: 4px solid var(--primary-color);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+        
+        .quick-info-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .quick-info-item:hover {
+            transform: translateX(8px);
+            box-shadow: 0 8px 24px rgba(2, 9, 63, 0.12);
+            border-left-width: 5px;
+        }
+        
+        .quick-info-item i {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #010520 100%);
+            color: white;
+            border-radius: 12px;
+            margin-right: 1.25rem;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(2, 9, 63, 0.2);
+            flex-shrink: 0;
+        }
+        
+        .product-tabs {
+            background: white;
+            border-radius: 24px;
+            padding: 0;
+            box-shadow: 0 20px 60px rgba(2, 9, 63, 0.1);
+            border: 1px solid rgba(2, 9, 63, 0.08);
+            margin-top: 3rem;
+            overflow: hidden;
+        }
+        
+        .nav-tabs {
+            border-bottom: none;
+            margin: 0;
+            padding: 3rem 2.5rem 3rem;
+            background: linear-gradient(135deg, rgba(2, 9, 63, 0.02) 0%, rgba(248, 249, 250, 0.8) 100%);
+            gap: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        
+        .nav-tabs::after {
+            display: none;
+        }
+        
+        .nav-tabs button.nav-link,
+        .nav-tabs .nav-link {
+            border: none !important;
+            outline: none !important;
+            color: #495057 !important;
+            font-weight: 600;
+            padding: 2.5rem 4rem;
+            transition: none !important;
+            border-radius: 0 !important;
+            font-size: 1.5rem;
+            letter-spacing: 0.5px;
+            position: relative;
+            background: transparent !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            flex: 0 1 auto;
+            text-align: center;
+            min-width: 280px;
+            box-shadow: none !important;
+            white-space: nowrap;
+            overflow: visible;
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            appearance: none !important;
+        }
+        
+        .nav-tabs button.nav-link:focus,
+        .nav-tabs .nav-link:focus,
+        .nav-tabs button.nav-link:focus-visible,
+        .nav-tabs .nav-link:focus-visible,
+        .nav-tabs button.nav-link:active,
+        .nav-tabs .nav-link:active {
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+            background: transparent !important;
+        }
+        
+        .nav-tabs .nav-link i {
+            font-size: 2rem;
+            width: 40px;
+            text-align: center;
+            color: #495057 !important;
+            flex-shrink: 0;
+        }
+        
+        .nav-tabs .nav-link span {
+            font-size: 1.5rem;
+            font-weight: 600;
+            white-space: nowrap;
+            letter-spacing: 0.5px;
+            color: #495057 !important;
+            overflow: visible;
+            text-overflow: clip;
+        }
+        
+        .nav-tabs .nav-link:hover {
+            color: #495057 !important;
+            background: transparent !important;
+            border: none !important;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+        
+        .nav-tabs .nav-link:hover i {
+            color: #495057 !important;
+        }
+        
+        .nav-tabs .nav-link:hover span {
+            color: #495057 !important;
+        }
+        
+        .nav-tabs .nav-link.active {
+            color: var(--primary-color) !important;
+            background: transparent !important;
+            border: none !important;
+            font-weight: 700;
+            box-shadow: none !important;
+            transform: none !important;
+        }
+        
+        .nav-tabs .nav-link.active i {
+            color: var(--primary-color) !important;
+        }
+        
+        .nav-tabs .nav-link.active span {
+            font-weight: 700;
+            color: var(--primary-color) !important;
+        }
+        
+        .product-specs-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 0;
+            padding: 4rem;
+            margin: 0;
+            border: none;
+            position: relative;
+        }
+        
+        .product-specs-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color) 0%, #010520 50%, var(--secondary-color) 100%);
+        }
+        
+        .product-specs-card h5 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 2.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            letter-spacing: -0.5px;
+            color: var(--primary-color);
+        }
+        
+        .product-specs-card h5 i {
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #010520 100%);
+            color: white;
+            border-radius: 14px;
+            font-size: 1.5rem;
+            box-shadow: 0 6px 16px rgba(2, 9, 63, 0.25);
+            flex-shrink: 0;
+        }
+        
+        /* Descrição do Produto Melhorada */
+        #productDescription {
+            line-height: 2.2;
+            font-size: 1.2rem;
+            color: #495057;
+            font-weight: 400;
+        }
+        
+        #productDescription p {
+            margin-bottom: 2rem;
+            position: relative;
+            padding-left: 3.5rem;
+            padding-top: 0.5rem;
+        }
+        
+        #productDescription p::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #010520 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(2, 9, 63, 0.25);
+            flex-shrink: 0;
+        }
+        
+        #productDescription p:last-child {
+            margin-bottom: 0;
+        }
+        
+        #productDescription strong {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        
+        /* Cards de Destaque na Descrição */
+        .description-highlight {
+            background: linear-gradient(135deg, rgba(2, 9, 63, 0.05) 0%, rgba(255, 255, 255, 0.8) 100%);
+            border-left: 4px solid var(--primary-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .description-highlight strong {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+        
+        .specs-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.25rem;
+        }
+        
+        .spec-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 18px;
+            border-left: 6px solid var(--primary-color);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            display: flex;
+            align-items: center;
+        }
+        
+        .spec-item:hover {
+            transform: translateX(10px) translateY(-4px);
+            box-shadow: 0 12px 32px rgba(2, 9, 63, 0.18);
+            border-left-width: 8px;
+        }
+        
+        .spec-item i {
+            font-size: 1.6rem;
+            margin-right: 1.25rem;
+            color: var(--primary-color);
+            width: 40px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        
+        .spec-item span {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #495057;
+        }
+        
+        /* Seção de Garantia - Design Elegante */
+        .guarantee-modern {
+            padding: 0;
+        }
+        
+        .guarantee-main {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 4rem;
+            align-items: center;
+            padding: 3rem;
+            background: white;
+            border-radius: 24px;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+        
+        .guarantee-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .guarantee-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #010520 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 15px 50px rgba(2, 9, 63, 0.3);
+            position: relative;
+        }
+        
+        .guarantee-circle::before {
+            content: '';
+            position: absolute;
+            inset: -10px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #010520 100%);
+            opacity: 0.2;
+            z-index: -1;
+            animation: pulse-ring 2s ease-out infinite;
+        }
+        
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(1);
+                opacity: 0.2;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.1;
+            }
+            100% {
+                transform: scale(1.2);
+                opacity: 0;
+            }
+        }
+        
+        .guarantee-months {
+            font-size: 4.5rem;
+            font-weight: 900;
+            color: white;
+            line-height: 1;
+            letter-spacing: -3px;
+        }
+        
+        .guarantee-period {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 0.5rem;
+        }
+        
+        .guarantee-info {
+            flex: 1;
+        }
+        
+        .guarantee-heading {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin: 0 0 1.5rem 0;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+        
+        .guarantee-text {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: #495057;
+            margin: 0;
+        }
+        
+        .guarantee-features-modern {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        
+        .guarantee-feature-modern {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .guarantee-feature-modern::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+        
+        .guarantee-feature-modern:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .guarantee-feature-modern:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(2, 9, 63, 0.15);
+            border-color: rgba(2, 9, 63, 0.1);
+        }
+        
+        .feature-modern-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #010520 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            box-shadow: 0 8px 24px rgba(2, 9, 63, 0.25);
+            transition: all 0.4s ease;
+        }
+        
+        .guarantee-feature-modern:hover .feature-modern-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 12px 32px rgba(2, 9, 63, 0.35);
+        }
+        
+        .guarantee-feature-modern h5 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 0 0 0.75rem 0;
+        }
+        
+        .guarantee-feature-modern p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #6c757d;
+            margin: 0;
+        }
+        
+        @media (max-width: 992px) {
+            .guarantee-main {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+                text-align: center;
+            }
+            
+            .guarantee-circle {
+                margin: 0 auto;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .guarantee-main {
+                padding: 2.5rem 2rem;
+            }
+            
+            .guarantee-circle {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .guarantee-months {
+                font-size: 3.5rem;
+            }
+            
+            .guarantee-heading {
+                font-size: 2rem;
+            }
+            
+            .guarantee-text {
+                font-size: 1.05rem;
+            }
+            
+            .guarantee-features-modern {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .guarantee-feature-modern {
+                padding: 2rem;
+            }
+        }
+        
+        .breadcrumb-custom {
+            background: transparent;
+            padding: 0;
+        }
+        
+        .breadcrumb-custom a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .breadcrumb-custom a:hover {
+            color: #010520;
+            text-decoration: underline;
+        }
+        
+        .breadcrumb-item.active {
+            color: var(--primary-color);
+        }
+        
+        /* Marquee de Destaques */
+        .product-marquee {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #010520 100%);
+            padding: 1.25rem 0;
+            overflow: hidden;
+            position: relative;
+            margin-top: 0;
+        }
+        
+        /* Ajustar hero quando não há breadcrumb */
+        .product-detail-hero {
+            margin-top: 0;
+        }
+        
+        .product-marquee::before,
+        .product-marquee::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 100px;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+        
+        .product-marquee::before {
+            left: 0;
+            background: linear-gradient(to right, var(--primary-color), transparent);
+        }
+        
+        .product-marquee::after {
+            right: 0;
+            background: linear-gradient(to left, var(--primary-color), transparent);
+        }
+        
+        .product-marquee {
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .marquee-wrapper {
+            display: flex;
+            width: max-content;
+        }
+        
+        .marquee-content {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            white-space: nowrap;
+            flex-shrink: 0;
+            padding: 0 2rem;
+        }
+        
+        .marquee-wrapper {
+            animation: marquee-scroll 30s linear infinite;
+        }
+        
+        .product-marquee:hover .marquee-wrapper {
+            animation-play-state: paused;
+        }
+        
+        @keyframes marquee-scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+        
+        .marquee-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .marquee-item i {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+        }
+        
+        .marquee-separator {
+            width: 2px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.4);
+            flex-shrink: 0;
+            margin: 0 2rem;
+            display: block;
+        }
+        
+        /* Duplicar conteúdo para loop infinito */
+        .marquee-content::after {
+            content: '';
+            display: none;
+        }
+        
+        /* Seção de Título Premium */
+        .section-title-premium {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            letter-spacing: -0.5px;
+        }
+        
+        .section-title-premium i {
+            color: var(--secondary-color);
+        }
+        
+        /* Produtos Relacionados - Carrossel */
+        #relatedProductsCarousel {
+            position: relative;
+            padding: 0 3rem;
+        }
+        
+        #relatedProductsCarousel .carousel-inner {
+            padding: 1rem 0;
+        }
+        
+        .related-product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(2, 9, 63, 0.08);
+        }
+        
+        .related-product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(2, 9, 63, 0.15);
+        }
+        
+        .related-product-image {
+            height: 200px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+        
+        .related-product-image img {
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .related-product-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .related-product-info h5 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        #relatedProductsCarousel .carousel-control-prev,
+        #relatedProductsCarousel .carousel-control-next {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.9;
+            transition: all 0.3s ease;
+        }
+        
+        #relatedProductsCarousel .carousel-control-prev {
+            left: -25px;
+        }
+        
+        #relatedProductsCarousel .carousel-control-next {
+            right: -25px;
+        }
+        
+        #relatedProductsCarousel .carousel-control-prev:hover,
+        #relatedProductsCarousel .carousel-control-next:hover {
+            opacity: 1;
+            background: #010520;
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        #relatedProductsCarousel .carousel-control-prev-icon,
+        #relatedProductsCarousel .carousel-control-next-icon {
+            width: 20px;
+            height: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .product-marquee {
+                padding: 1rem 0;
+            }
+            
+            .marquee-item {
+                font-size: 0.85rem;
+            }
+            
+            .marquee-item i {
+                font-size: 0.9rem;
+            }
+            
+            .marquee-separator {
+                height: 14px;
+                margin: 0 1rem;
+            }
+            
+            #relatedProductsCarousel {
+                padding: 0 1rem;
+            }
+            
+            #relatedProductsCarousel .carousel-control-prev {
+                left: 0;
+            }
+            
+            #relatedProductsCarousel .carousel-control-next {
+                right: 0;
+            }
+            
+            #relatedProductsCarousel .carousel-control-prev,
+            #relatedProductsCarousel .carousel-control-next {
+                width: 35px;
+                height: 35px;
+                opacity: 0.8;
+            }
+            
+            #relatedProductsCarousel .carousel-control-prev-icon,
+            #relatedProductsCarousel .carousel-control-next-icon {
+                width: 16px;
+                height: 16px;
+            }
+            
+            .related-product-card {
+                margin-bottom: 1rem;
+            }
+            
+            .related-product-info h5 {
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            #relatedProductsCarousel {
+                padding: 0 0.5rem;
+            }
+            
+            .related-product-image {
+                height: 150px;
+                padding: 1rem;
+            }
+            
+            .related-product-info {
+                padding: 1rem;
+            }
+            
+            .related-product-info h5 {
+                font-size: 1rem;
+                margin-bottom: 0.75rem;
+            }
+        }
+        
+        .carrinho-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff4757;
+            color: white;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+            border: 2px solid white;
+        }
+        
+        /* Animações */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .product-main-image {
+            animation: scaleIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .product-info-card {
+            animation: slideInRight 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            animation-delay: 0.2s;
+            animation-fill-mode: both;
+        }
+        
+        .product-tabs {
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            animation-delay: 0.4s;
+            animation-fill-mode: both;
+        }
+        
+        .quick-info-item {
+            animation: fadeInUp 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+        
+        .quick-info-item:nth-child(1) { animation-delay: 0.1s; }
+        .quick-info-item:nth-child(2) { animation-delay: 0.2s; }
+        .quick-info-item:nth-child(3) { animation-delay: 0.3s; }
+        
+        .spec-item {
+            animation: fadeInUp 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+        
+        .spec-item:nth-child(1) { animation-delay: 0.1s; }
+        .spec-item:nth-child(2) { animation-delay: 0.15s; }
+        .spec-item:nth-child(3) { animation-delay: 0.2s; }
+        .spec-item:nth-child(4) { animation-delay: 0.25s; }
+        .spec-item:nth-child(5) { animation-delay: 0.3s; }
+        .spec-item:nth-child(6) { animation-delay: 0.35s; }
+        
+        /* Botões melhorados */
+        .product-actions .btn-warning,
+        .product-actions .btn-mercado-livre {
+            background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+            border: none;
+            color: #ffffff;
+            box-shadow: 0 8px 24px rgba(255, 193, 7, 0.3);
+        }
+        
+        .product-actions .btn-warning:hover,
+        .product-actions .btn-mercado-livre:hover {
+            background: linear-gradient(135deg, #ff9800 0%, #ffc107 100%);
+            color: #ffffff;
+            box-shadow: 0 16px 48px rgba(255, 193, 7, 0.4);
+        }
+        
+        .product-actions .btn-outline-primary {
+            border: 2.5px solid var(--primary-color);
+            color: var(--primary-color);
+            background: transparent;
+        }
+        
+        .product-actions .btn-outline-primary:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        /* Badges de Destaque */
+        .product-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+        
+        .product-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            background: linear-gradient(135deg, rgba(2, 9, 63, 0.05) 0%, rgba(255, 255, 255, 0.8) 100%);
+            border-radius: 50px;
+            border: 1.5px solid rgba(2, 9, 63, 0.1);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        
+        .product-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(2, 9, 63, 0.15);
+            border-color: var(--primary-color);
+        }
+        
+        .product-badge i {
+            font-size: 1.1rem;
+        }
+        
+        /* Animações Premium */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 15px 40px rgba(2, 9, 63, 0.3);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 20px 50px rgba(2, 9, 63, 0.4);
+            }
+        }
+        
+        /* Responsividade Premium */
+        @media (max-width: 992px) {
+            .product-image-gallery {
+                position: static;
+                margin-bottom: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .product-hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .product-info-card {
+                padding: 2rem;
+            }
+            
+            .product-info-card h1 {
+                font-size: 2rem;
+            }
+            
+            .product-main-image {
+                padding: 1.5rem;
+            }
+            
+            .product-main-image img {
+                height: auto !important;
+                max-height: 400px;
+            }
+            
+            .specs-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .product-tabs {
+                padding: 0;
+            }
+            
+            .nav-tabs {
+                padding: 2rem 1rem 2rem;
+                flex-wrap: wrap;
+                gap: 1.25rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .nav-tabs .nav-link {
+                padding: 2rem 2rem;
+                font-size: 1.2rem;
+                flex: 1;
+                min-width: 180px;
+                gap: 1rem;
+            }
+            
+            .nav-tabs .nav-link i {
+                font-size: 1.6rem;
+                width: 36px;
+            }
+            
+            .nav-tabs .nav-link span {
+                font-size: 1.2rem;
+            }
+            
+            @media (min-width: 576px) {
+                .nav-tabs {
+                    padding: 2.5rem 1.5rem 2.5rem;
+                    margin-bottom: 2rem;
+                    gap: 1.5rem;
+                }
+                
+                .nav-tabs .nav-link {
+                    padding: 2.25rem 2.5rem;
+                    font-size: 1.35rem;
+                    min-width: 220px;
+                }
+                
+                .nav-tabs .nav-link i {
+                    font-size: 1.8rem;
+                    width: 38px;
+                }
+                
+                .nav-tabs .nav-link span {
+                    font-size: 1.35rem;
+                }
+            }
+            
+            @media (min-width: 768px) {
+                .nav-tabs {
+                    padding: 3rem 2.5rem 3rem;
+                    margin-bottom: 2rem;
+                    gap: 2rem;
+                }
+                
+                .nav-tabs .nav-link {
+                    padding: 2.5rem 3.5rem;
+                    font-size: 1.45rem;
+                    min-width: 260px;
+                    gap: 1.25rem;
+                }
+                
+                .nav-tabs .nav-link i {
+                    font-size: 1.9rem;
+                    width: 40px;
+                }
+                
+                .nav-tabs .nav-link span {
+                    font-size: 1.45rem;
+                }
+            }
+            
+            @media (min-width: 992px) {
+                .nav-tabs .nav-link {
+                    padding: 2.5rem 4rem;
+                    font-size: 1.5rem;
+                    min-width: 280px;
+                    gap: 1.5rem;
+                }
+                
+                .nav-tabs .nav-link i {
+                    font-size: 2rem;
+                    width: 40px;
+                }
+                
+                .nav-tabs .nav-link span {
+                    font-size: 1.5rem;
+                }
+            }
+            
+            .product-specs-card {
+                padding: 2.5rem 1.5rem;
+            }
+            
+            .product-specs-card h5 {
+                font-size: 1.6rem;
+                margin-bottom: 2rem;
+            }
+            
+            .product-specs-card h5 i {
+                width: 48px;
+                height: 48px;
+                font-size: 1.3rem;
+            }
+            
+            #productDescription {
+                font-size: 1.05rem;
+                line-height: 2;
+            }
+            
+            #productDescription p {
+                padding-left: 2.5rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            #productDescription p::before {
+                width: 32px;
+                height: 32px;
+                font-size: 1rem;
+            }
+            
+            .spec-item {
+                padding: 1.5rem;
+            }
+            
+            .spec-item i {
+                font-size: 1.3rem;
+                width: 36px;
+            }
+            
+            .spec-item span {
+                font-size: 0.95rem;
+            }
+            
+            .guarantee-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .guarantee-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 1.75rem;
+            }
+            
+            .product-actions .btn {
+                padding: 1rem 1.5rem;
+                font-size: 0.9rem;
+            }
+            
+            .product-price {
+                font-size: 1.75rem;
+            }
+            
+            .product-badges {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .product-badge {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .quick-info-section {
+                padding: 1.5rem;
+            }
+            
+            .quick-info-item {
+                padding: 1rem;
+            }
+            
+            .quick-info-item i {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+                margin-right: 1rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .product-hero-content h1 {
+                font-size: 1.75rem;
+            }
+            
+            .product-info-card {
+                padding: 1.5rem;
+            }
+            
+            .product-info-card h1 {
+                font-size: 1.75rem;
+            }
+            
+            .product-price {
+                font-size: 1.5rem;
+            }
+            
+            .product-actions .btn {
+                padding: 0.875rem 1.25rem;
+                font-size: 0.85rem;
+            }
+            
+            .product-main-image {
+                padding: 1rem;
+            }
+            
+            .product-thumbnails {
+                gap: 0.5rem;
+            }
+            
+            .product-thumbnail {
+                width: 70px;
+                height: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="src/imgs/ChatGPT Image 10 de dez. de 2025, 13_41_48 9.svg" alt="USETRAFO" class="img-fluid">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#sobre">Sobre</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#produtos">Produtos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#usetrafo-solar">USETRAFO Solar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#personalizados">Transformadores Personalizados</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="loja.html">Loja</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#contato">Contato</a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-primary position-relative ms-2" id="btnCarrinho" type="button">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="carrinho-badge" id="carrinhoBadge">0</span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Marquee de Destaques -->
+    <div class="product-marquee">
+        <div class="marquee-wrapper">
+            <div class="marquee-content">
+                <div class="marquee-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>36 Meses de Garantia Total</span>
+                </div>
+                <div class="marquee-separator"></div>
+                <div class="marquee-item">
+                    <i class="fas fa-certificate"></i>
+                    <span>Certificado ABNT/NBR</span>
+                </div>
+                <div class="marquee-separator"></div>
+                <div class="marquee-item">
+                    <i class="fas fa-truck"></i>
+                    <span>Entrega Rápida em Todo Brasil</span>
+                </div>
+                <div class="marquee-separator"></div>
+                <div class="marquee-item">
+                    <i class="fas fa-flask"></i>
+                    <span>Testes Individuais em Laboratório</span>
+                </div>
+                <div class="marquee-separator"></div>
+                <div class="marquee-item">
+                    <i class="fas fa-award"></i>
+                    <span>Mais de 30 Anos de Experiência</span>
+                </div>
+                <div class="marquee-separator"></div>
+                <div class="marquee-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Qualidade Garantida</span>
+                </div>
+            </div>
+            <div class="marquee-content" aria-hidden="true">
+                <div class="marquee-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>36 Meses de Garantia Total</span>
+                </div>
+                <div class="marquee-separator"></div>
+                <div class="marquee-item">
+                    <i class="fas fa-certificate"></i>
+                    <span>Certificado ABNT/NBR</span>
+                </div>
+                <div class="marquee-separator"></div>
+                <div class="marquee-item">
+                    <i class="fas fa-truck"></i>
+                    <span>Entrega Rápida em Todo Brasil</span>
+                </div>
+                <div class="marquee-separator"></div>
+                <div class="marquee-item">
+                    <i class="fas fa-flask"></i>
+                    <span>Testes Individuais em Laboratório</span>
+                </div>
+                <div class="marquee-separator"></div>
+                <div class="marquee-item">
+                    <i class="fas fa-award"></i>
+                    <span>Mais de 30 Anos de Experiência</span>
+                </div>
+                <div class="marquee-separator"></div>
+                <div class="marquee-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Qualidade Garantida</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="product-detail-hero">
+        <div class="container">
+            <div class="product-hero-content">
+                <h1 id="productNameHero"></h1>
+                <p id="productSubtitleHero" class="mb-0"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Detail Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <!-- Product Images -->
+                <div class="col-lg-6 mb-4">
+                    <div class="product-image-gallery">
+                        <div class="product-main-image" id="mainProductImageContainer">
+                            <img id="mainProductImage" src="" alt="Produto" class="img-fluid w-100" style="height: 550px; object-fit: contain; background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);">
+                        </div>
+                        <div class="product-thumbnails" id="productThumbnails">
+                            <!-- Thumbnails will be generated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Info -->
+                <div class="col-lg-6">
+                    <div class="product-info-card">
+                        <div id="productCategory" class="badge bg-primary mb-3"></div>
+                        <h1 id="productName" class="mb-3"></h1>
+                        <p id="productSubtitle" class="mb-4"></p>
+                        
+                        <div class="product-badges">
+                            <div class="product-badge">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>36 Meses de Garantia</span>
+                            </div>
+                            <div class="product-badge">
+                                <i class="fas fa-certificate"></i>
+                                <span>Certificado ABNT/NBR</span>
+                            </div>
+                            <div class="product-badge">
+                                <i class="fas fa-truck"></i>
+                                <span>Entrega Rápida</span>
+                            </div>
+                        </div>
+                        
+                        <div class="product-price-section mb-4">
+                            <div class="product-price" id="productPrice">Consulte o preço</div>
+                            <p class="text-muted mb-0" style="font-size: 0.95rem; font-weight: 500;">
+                                <i class="fas fa-info-circle me-2 text-primary"></i>
+                                Entre em contato para obter um orçamento personalizado
+                            </p>
+                        </div>
+
+                        <div class="product-actions mb-4">
+                            <button class="btn btn-primary btn-lg btn-adicionar-carrinho" id="btnAddToCart">
+                                <i class="fas fa-shopping-cart me-2"></i> Adicionar ao Carrinho
+                            </button>
+                            <a href="#" class="btn btn-warning btn-lg btn-mercado-livre" id="btnMercadoLivre" target="_blank">
+                                <i class="fab fa-mercadolivre me-2"></i> Comprar no Mercado Livre
+                            </a>
+                            <a href="index.html#contato" class="btn btn-outline-primary btn-lg">
+                                <i class="fas fa-envelope me-2"></i> Solicitar Orçamento
+                            </a>
+                        </div>
+
+                        <div class="quick-info-section">
+                            <h6 class="fw-bold mb-3" style="color: var(--primary-color);">
+                                <i class="fas fa-info-circle me-2"></i> Informações Rápidas
+                            </h6>
+                            <div id="quickInfo">
+                                <!-- Quick info will be generated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Produtos Relacionados -->
+            <div class="row mt-5 mb-5">
+                <div class="col-12">
+                    <h3 class="section-title-premium mb-4">
+                        <i class="fas fa-th-large me-2"></i>
+                        Produtos Relacionados
+                    </h3>
+                    <div id="relatedProductsCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="row g-4">
+                                    <div class="col-md-4">
+                                        <div class="related-product-card">
+                                            <div class="related-product-image">
+                                                <img src="src/imgs/B (3) 1.png" alt="Caixa B" class="img-fluid">
+                                            </div>
+                                            <div class="related-product-info">
+                                                <h5>Caixa B</h5>
+                                                <a href="produto-detalhes.html?produto=caixa-b" class="btn btn-sm btn-outline-primary">Ver Detalhes</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="related-product-card">
+                                            <div class="related-product-image">
+                                                <img src="src/imgs/C (1) 1.png" alt="Caixa C" class="img-fluid">
+                                            </div>
+                                            <div class="related-product-info">
+                                                <h5>Caixa C</h5>
+                                                <a href="produto-detalhes.html?produto=caixa-c" class="btn btn-sm btn-outline-primary">Ver Detalhes</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="related-product-card">
+                                            <div class="related-product-image">
+                                                <img src="src/imgs/D (1) 1.png" alt="Caixa D" class="img-fluid">
+                                            </div>
+                                            <div class="related-product-info">
+                                                <h5>Caixa D</h5>
+                                                <a href="produto-detalhes.html?produto=caixa-d" class="btn btn-sm btn-outline-primary">Ver Detalhes</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="row g-4">
+                                    <div class="col-md-4">
+                                        <div class="related-product-card">
+                                            <div class="related-product-image">
+                                                <img src="src/imgs/E (1) 1.png" alt="Caixa E" class="img-fluid">
+                                            </div>
+                                            <div class="related-product-info">
+                                                <h5>Caixa E</h5>
+                                                <a href="produto-detalhes.html?produto=caixa-e" class="btn btn-sm btn-outline-primary">Ver Detalhes</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="related-product-card">
+                                            <div class="related-product-image">
+                                                <img src="src/imgs/F (1) 1.png" alt="Caixa F" class="img-fluid">
+                                            </div>
+                                            <div class="related-product-info">
+                                                <h5>Caixa F</h5>
+                                                <a href="produto-detalhes.html?produto=caixa-f" class="btn btn-sm btn-outline-primary">Ver Detalhes</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="related-product-card">
+                                            <div class="related-product-image">
+                                                <img src="src/imgs/C (3) 1.png" alt="Autotransformador Linha C" class="img-fluid">
+                                            </div>
+                                            <div class="related-product-info">
+                                                <h5>Autotransformador Linha C</h5>
+                                                <a href="produto-detalhes.html?produto=autotransformador-c" class="btn btn-sm btn-outline-primary">Ver Detalhes</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="row g-4">
+                                    <div class="col-md-4">
+                                        <div class="related-product-card">
+                                            <div class="related-product-image">
+                                                <img src="src/imgs/D (2) 1.png" alt="Autotransformador Linha D" class="img-fluid">
+                                            </div>
+                                            <div class="related-product-info">
+                                                <h5>Autotransformador Linha D</h5>
+                                                <a href="produto-detalhes.html?produto=autotransformador-d" class="btn btn-sm btn-outline-primary">Ver Detalhes</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="related-product-card">
+                                            <div class="related-product-image">
+                                                <img src="src/imgs/D (3) 1.png" alt="Transformador Isolador Linha D" class="img-fluid">
+                                            </div>
+                                            <div class="related-product-info">
+                                                <h5>Transformador Isolador Linha D</h5>
+                                                <a href="produto-detalhes.html?produto=transformador-isolador-d" class="btn btn-sm btn-outline-primary">Ver Detalhes</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="related-product-card">
+                                            <div class="related-product-image">
+                                                <img src="src/imgs/F (3) 1.png" alt="Transformador Isolador Linha F" class="img-fluid">
+                                            </div>
+                                            <div class="related-product-info">
+                                                <h5>Transformador Isolador Linha F</h5>
+                                                <a href="produto-detalhes.html?produto=transformador-isolador-f" class="btn btn-sm btn-outline-primary">Ver Detalhes</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#relatedProductsCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Anterior</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#relatedProductsCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Próximo</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Details Tabs -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="product-tabs">
+                        <ul class="nav nav-tabs" id="productTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="descricao-tab" data-bs-toggle="tab" data-bs-target="#descricao" type="button" role="tab">
+                                    <i class="fas fa-info-circle me-2"></i> Descrição
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="especificacoes-tab" data-bs-toggle="tab" data-bs-target="#especificacoes" type="button" role="tab">
+                                    <i class="fas fa-list-alt me-2"></i> Especificações Técnicas
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="garantia-tab" data-bs-toggle="tab" data-bs-target="#garantia" type="button" role="tab">
+                                    <i class="fas fa-shield-alt me-2"></i> Garantia
+                                </button>
+                            </li>
+                        </ul>
+                        
+                        <div class="tab-content" id="productTabContent">
+                            <div class="tab-pane fade show active" id="descricao" role="tabpanel">
+                                <div class="product-specs-card">
+                                    <h5 style="color: var(--primary-color);">
+                                        <i class="fas fa-file-alt"></i>
+                                        <span>Sobre o Produto</span>
+                                    </h5>
+                                    <div id="productDescription">
+                                        <!-- Description will be loaded by JavaScript -->
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tab-pane fade" id="especificacoes" role="tabpanel">
+                                <div class="product-specs-card">
+                                    <h5 style="color: var(--primary-color);">
+                                        <i class="fas fa-cogs"></i>
+                                        <span>Especificações Técnicas</span>
+                                    </h5>
+                                    <div id="productSpecs">
+                                        <!-- Specifications will be loaded by JavaScript -->
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tab-pane fade" id="garantia" role="tabpanel">
+                                <div class="guarantee-modern">
+                                    <div class="guarantee-main">
+                                        <div class="guarantee-visual">
+                                            <div class="guarantee-circle">
+                                                <span class="guarantee-months">36</span>
+                                                <span class="guarantee-period">Meses</span>
+                                            </div>
+                                        </div>
+                                        <div class="guarantee-info">
+                                            <h3 class="guarantee-heading">Garantia de 36 Meses</h3>
+                                            <p class="guarantee-text">
+                                                Todos os equipamentos produzidos pela USETRAFO são testados em nosso laboratório individualmente, e emitido certificado de garantia com 36 meses contra defeitos de fabricação.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="guarantee-features-modern">
+                                        <div class="guarantee-feature-modern">
+                                            <div class="feature-modern-icon">
+                                                <i class="fas fa-vial"></i>
+                                            </div>
+                                            <h5>Testes Individuais</h5>
+                                            <p>Cada produto é testado antes da entrega</p>
+                                        </div>
+
+                                        <div class="guarantee-feature-modern">
+                                            <div class="feature-modern-icon">
+                                                <i class="fas fa-certificate"></i>
+                                            </div>
+                                            <h5>Certificado Incluso</h5>
+                                            <p>Documentação completa de garantia</p>
+                                        </div>
+
+                                        <div class="guarantee-feature-modern">
+                                            <div class="feature-modern-icon">
+                                                <i class="fas fa-award"></i>
+                                            </div>
+                                            <h5>Normas ABNT/NBR</h5>
+                                            <p>Produtos certificados e aprovados</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer bg-dark text-white pt-5 pb-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <div class="footer-logo mb-3">
+                        <img src="src/imgs/ChatGPT Image 10 de dez. de 2025, 13_41_48 9.svg" alt="USETRAFO" class="img-fluid" style="max-height: 80px;">
+                    </div>
+                    <p class="footer-text">Transformadores elétricos de alta qualidade há mais de 30 anos.</p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-links">
+                        <h5 class="footer-title mb-3">Links Rápidos</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <a href="index.html#sobre" class="footer-link-item">
+                                    <i class="fas fa-chevron-right me-2"></i> Sobre Nós
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="index.html#produtos" class="footer-link-item">
+                                    <i class="fas fa-chevron-right me-2"></i> Produtos
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="loja.html" class="footer-link-item">
+                                    <i class="fas fa-chevron-right me-2"></i> Loja
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="index.html#contato" class="footer-link-item">
+                                    <i class="fas fa-chevron-right me-2"></i> Contato
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-contact">
+                        <h5 class="footer-title mb-3">Contato</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <i class="fas fa-phone me-2"></i>
+                                <a href="tel:1140384800" class="footer-link">(11) 4038-4800</a>
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-envelope me-2"></i>
+                                <a href="mailto:contato@usetrafo.com.br" class="footer-link">contato@usetrafo.com.br</a>
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-map-marker-alt me-2"></i>
+                                <span class="footer-text">Varzea Paulista - SP</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-info">
+                        <h5 class="footer-title mb-3">Informações</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <i class="fas fa-clock me-2"></i>
+                                <span class="footer-text">Segunda a Sexta: 8h às 17h</span>
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-shield-alt me-2"></i>
+                                <span class="footer-text">Garantia de 36 meses</span>
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-certificate me-2"></i>
+                                <span class="footer-text">Produtos certificados</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6 mb-3 mb-md-0">
+                        <p class="mb-0 footer-copyright">
+                            <i class="fas fa-copyright me-2"></i>
+                            2025 USETRAFO. Todos os direitos reservados.
+                        </p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <p class="mb-0 footer-developer">
+                            Desenvolvido por<span style="margin: 0 0.5rem;"></span>
+                            <a href="https://brianws01.github.io/WoodCompany/" target="_blank" rel="noopener noreferrer" class="footer-dev-link">
+                                <i class="fas fa-code me-1"></i> WoodTec Company
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+    
+    <!-- Product Details Script -->
+    <script src="produto-detalhes.js"></script>
+    
+    <!-- Zoom na Imagem e Controle de Tabs -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mainImageContainer = document.getElementById('mainProductImageContainer');
+            const mainImage = document.getElementById('mainProductImage');
+            
+            if (mainImageContainer && mainImage) {
+                let isZoomed = false;
+                
+                mainImageContainer.addEventListener('click', function() {
+                    if (!isZoomed) {
+                        mainImageContainer.classList.add('zoomed');
+                        isZoomed = true;
+                    } else {
+                        mainImageContainer.classList.remove('zoomed');
+                        isZoomed = false;
+                    }
+                });
+                
+                // Reset zoom ao trocar imagem
+                const observer = new MutationObserver(function() {
+                    mainImageContainer.classList.remove('zoomed');
+                    isZoomed = false;
+                });
+                
+                observer.observe(mainImage, { attributes: true, attributeFilter: ['src'] });
+                
+                // Reset zoom ao clicar em thumbnail
+                document.addEventListener('click', function(e) {
+                    if (e.target.closest('.product-thumbnail')) {
+                        setTimeout(() => {
+                            mainImageContainer.classList.remove('zoomed');
+                            isZoomed = false;
+                        }, 100);
+                    }
+                });
+            }
+            
+            // Controle de animação da linha indicadora das tabs
+            const tabButtons = document.querySelectorAll('#productTabs .nav-link');
+            const tabsContainer = document.getElementById('productTabs');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const tabIndex = this.getAttribute('data-tab-index');
+                    tabsContainer.setAttribute('data-active', tabIndex);
+                });
+            });
+            
+            // Inicializar com a primeira tab ativa
+            const activeTab = document.querySelector('#productTabs .nav-link.active');
+            if (activeTab) {
+                const tabIndex = activeTab.getAttribute('data-tab-index') || '1';
+                tabsContainer.setAttribute('data-active', tabIndex);
+            }
+        });
+    </script>
+</body>
+</html>
+

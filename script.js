@@ -19,6 +19,44 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
+// Funcionalidade básica do carrinho
+document.addEventListener('DOMContentLoaded', function() {
+    const btnCarrinho = document.getElementById('btnCarrinho');
+    const carrinhoBadge = document.getElementById('carrinhoBadge');
+    
+    if (btnCarrinho && carrinhoBadge) {
+        // Atualizar badge do carrinho
+        function atualizarBadgeCarrinho() {
+            try {
+                const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+                const totalItens = carrinho.reduce((sum, item) => sum + (item.quantity || 0), 0);
+                carrinhoBadge.textContent = totalItens;
+                carrinhoBadge.style.display = totalItens > 0 ? 'flex' : 'none';
+            } catch (e) {
+                carrinhoBadge.textContent = '0';
+                carrinhoBadge.style.display = 'none';
+            }
+        }
+        
+        // Redirecionar para loja ao clicar no carrinho (se não estiver na loja)
+        if (!window.location.pathname.includes('loja.html') && !window.location.pathname.includes('produto-detalhes.html')) {
+            btnCarrinho.addEventListener('click', function() {
+                window.location.href = 'loja.html';
+            });
+        }
+        
+        // Atualizar badge ao carregar a página
+        atualizarBadgeCarrinho();
+        
+        // Atualizar badge quando o carrinho mudar (evento customizado)
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'carrinho') {
+                atualizarBadgeCarrinho();
+            }
+        });
+    }
+});
+
 // Navbar scroll effect
 const navbar = document.querySelector('.navbar');
 let lastScroll = 0;
@@ -418,7 +456,6 @@ document.addEventListener('click', (e) => {
         const modal = e.target.closest('.modal');
         const productName = modal?.querySelector('.modal-title')?.textContent || 'Produto';
         trackEvent('Quote Request', 'Click Orçamento', productName);
-        showAlert('Preencha o formulário de contato para solicitar seu orçamento!', 'info');
     }
 });
 
@@ -450,4 +487,35 @@ window.usetrafo = {
     trackEvent,
     scrollToTop: () => window.scrollTo({ top: 0, behavior: 'smooth' })
 };
+
+// Filtros da Loja
+document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const lojaItems = document.querySelectorAll('.loja-item');
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Remove active de todos os botões
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            // Adiciona active no botão clicado
+            this.classList.add('active');
+
+            const filter = this.getAttribute('data-filter');
+
+            // Filtra os produtos
+            lojaItems.forEach(item => {
+                if (filter === 'all') {
+                    item.classList.remove('hidden');
+                } else {
+                    const category = item.getAttribute('data-category');
+                    if (category === filter) {
+                        item.classList.remove('hidden');
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                }
+            });
+        });
+    });
+});
 

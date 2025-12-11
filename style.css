@@ -43,6 +43,51 @@ link[rel="apple-touch-icon"] {
     background-color: rgba(255, 255, 255, 1) !important;
 }
 
+.navbar-nav {
+    align-items: center;
+}
+
+@media (max-width: 991px) {
+    .navbar-nav {
+        padding: 1rem 0;
+    }
+    
+    .navbar-nav .nav-item {
+        margin: 0.25rem 0;
+    }
+    
+    .navbar-nav .btn {
+        margin-top: 0.5rem;
+        width: 100%;
+        max-width: 200px;
+    }
+    
+    .navbar-brand {
+        max-width: 150px;
+    }
+    
+    .navbar-brand img {
+        max-height: 50px;
+    }
+}
+
+.carrinho-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #ff4757;
+    color: white;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: bold;
+    border: 2px solid white;
+}
+
 .navbar.scrolled {
     background-color: rgba(0, 0, 0, 0.3) !important;
     backdrop-filter: blur(10px);
@@ -106,7 +151,22 @@ link[rel="apple-touch-icon"] {
     }
     
     .navbar-brand img {
-        max-height: 70px;
+        max-height: 50px;
+    }
+    
+    .navbar-nav .btn {
+        margin: 0.5rem 0;
+        width: auto;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .carrinho-badge {
+        width: 18px;
+        height: 18px;
+        font-size: 0.7rem;
+        top: -6px;
+        right: -6px;
     }
 }
 
@@ -161,9 +221,19 @@ link[rel="apple-touch-icon"] {
     overflow: hidden;
 }
 
+.hero-section .row {
+    overflow: visible;
+}
+
+.hero-section .col-lg-6 {
+    overflow: visible;
+}
+
 .hero-section .container {
     position: relative;
     z-index: 2;
+    display: block !important;
+    visibility: visible !important;
 }
 
 .hero-section::before {
@@ -183,8 +253,11 @@ link[rel="apple-touch-icon"] {
     width: auto;
     height: auto;
     object-fit: contain;
+    object-position: center;
     filter: drop-shadow(0 15px 40px rgba(0, 0, 0, 0.4));
     animation: slideInLeft 1s ease-out;
+    display: block !important;
+    visibility: visible !important;
 }
 
 @keyframes slideInLeft {
@@ -272,6 +345,9 @@ link[rel="apple-touch-icon"] {
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     letter-spacing: 2px;
     font-size: 4.5rem;
+    display: block !important;
+    visibility: visible !important;
+    color: white !important;
 }
 
 /* Hero Subtitle */
@@ -281,6 +357,9 @@ link[rel="apple-touch-icon"] {
     font-weight: 300;
     letter-spacing: 1px;
     text-transform: uppercase;
+    display: block !important;
+    visibility: visible !important;
+    color: rgba(255, 255, 255, 0.8) !important;
 }
 
 /* Hero Description */
@@ -291,6 +370,9 @@ link[rel="apple-touch-icon"] {
     font-size: 1.15rem;
     line-height: 1.8;
     max-width: 90%;
+    display: block !important;
+    visibility: visible !important;
+    color: white !important;
 }
 
 /* Hero CTA Buttons */
@@ -394,6 +476,27 @@ link[rel="apple-touch-icon"] {
     background: #e0a800;
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
+}
+
+.btn-mercado-livre {
+    background: var(--secondary-color) !important;
+    color: #ffffff !important;
+    border-color: var(--secondary-color) !important;
+}
+
+.btn-mercado-livre i,
+.btn-mercado-livre {
+    color: #ffffff !important;
+}
+
+.btn-mercado-livre:hover {
+    background: #e0a800 !important;
+    color: #ffffff !important;
+    border-color: #e0a800 !important;
+}
+
+.btn-mercado-livre:hover i {
+    color: #ffffff !important;
 }
 
 .btn-outline-primary {
@@ -531,6 +634,9 @@ link[rel="apple-touch-icon"] {
 .produtos-section {
     background: linear-gradient(to bottom, #ffffff 0%, #f8f9fa 50%, #ffffff 100%);
     position: relative;
+    z-index: 1;
+    display: block !important;
+    visibility: visible !important;
 }
 
 .produtos-title {
@@ -652,6 +758,9 @@ link[rel="apple-touch-icon"] {
     padding-left: 40px;
     padding-right: 40px;
     overflow: visible;
+    z-index: 1;
+    display: block !important;
+    visibility: visible !important;
 }
 
 #produtosCarousel .carousel-inner {
@@ -1220,6 +1329,100 @@ link[rel="apple-touch-icon"] {
     color: var(--text-color);
 }
 
+/* Loja Section */
+.loja-section {
+    background: linear-gradient(to bottom, #ffffff 0%, #f8f9fa 50%, #ffffff 100%);
+    padding: 4rem 0;
+}
+
+.loja-icon-header {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, var(--primary-color) 0%, #010520 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: #ffffff;
+    box-shadow: 0 10px 30px rgba(2, 9, 63, 0.3);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.filter-btn {
+    border-radius: 25px;
+    padding: 0.5rem 1.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(2, 9, 63, 0.3);
+}
+
+.loja-item {
+    transition: all 0.3s ease;
+}
+
+.loja-item.hidden {
+    display: none;
+}
+
+.loja-item .product-card {
+    transition: all 0.3s ease;
+}
+
+.loja-item .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Melhorias adicionais para loja */
+.loja-section {
+    background: linear-gradient(to bottom, #ffffff 0%, #f8f9fa 30%, #ffffff 100%);
+}
+
+.product-card {
+    border: 1px solid #e9ecef;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.product-card .card-body {
+    padding: 1.5rem;
+}
+
+.product-card .card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    transition: color 0.3s ease;
+}
+
+.product-card .card-title:hover {
+    color: #010520;
+}
+
+.product-card .card-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    min-height: 60px;
+}
+
+/* Badge de categoria */
+.badge {
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
 /* Contato Section */
 .contato-section {
     background: linear-gradient(to bottom, #ffffff 0%, #f8f9fa 50%, #ffffff 100%);
@@ -1413,7 +1616,7 @@ link[rel="apple-touch-icon"] {
 
 /* Footer Section */
 .footer-section {
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
     color: white;
     position: relative;
     overflow: hidden;
@@ -1425,45 +1628,107 @@ link[rel="apple-touch-icon"] {
     top: 0;
     left: 0;
     right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+}
+
+.footer-section::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    opacity: 0.5;
+    pointer-events: none;
 }
 
 .footer-top {
-    padding: 4rem 0 2rem;
+    padding: 5rem 0 3rem;
     position: relative;
     z-index: 1;
 }
 
 .footer-brand {
     animation: fadeInUp 0.8s ease-out;
+    overflow: visible;
+}
+
+.footer-brand img {
+    display: block;
 }
 
 .footer-logo {
-    max-width: 200px;
+    max-width: 220px;
+    max-height: 100%;
+    width: auto;
     height: auto;
-    filter: brightness(1.1);
-    transition: transform 0.3s ease;
+    object-fit: contain;
+    object-position: center;
+    filter: brightness(1.2) drop-shadow(0 0 10px rgba(255, 255, 255, 0.1));
+    transition: all 0.3s ease;
 }
 
 .footer-logo:hover {
     transform: scale(1.05);
+    filter: brightness(1.3) drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
 }
 
 .footer-description {
-    color: rgba(255, 255, 255, 0.8);
-    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.8;
+    font-size: 1rem;
+    margin-top: 1.5rem;
+}
+
+.footer-title-small {
+    color: rgba(255, 255, 255, 0.9);
     font-size: 0.95rem;
-    margin-top: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.social-link {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.social-link:hover {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 5px 20px rgba(2, 9, 63, 0.4);
 }
 
 .footer-title {
     color: white;
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
     position: relative;
-    padding-bottom: 0.5rem;
+    padding-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .footer-title::after {
@@ -1471,9 +1736,10 @@ link[rel="apple-touch-icon"] {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 40px;
-    height: 2px;
-    background: var(--primary-color);
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color) 0%, transparent 100%);
+    border-radius: 2px;
 }
 
 .footer-links,
@@ -1491,7 +1757,7 @@ link[rel="apple-touch-icon"] {
 }
 
 .footer-link {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.8);
     text-decoration: none;
     transition: all 0.3s ease;
     display: inline-block;
@@ -1500,8 +1766,37 @@ link[rel="apple-touch-icon"] {
 
 .footer-link:hover {
     color: var(--primary-color);
-    transform: translateX(5px);
+    transform: translateX(3px);
     text-decoration: none;
+}
+
+.footer-link-item {
+    color: rgba(255, 255, 255, 0.75);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    font-size: 0.95rem;
+    padding: 0.5rem 0;
+    border-radius: 5px;
+}
+
+.footer-link-item i {
+    font-size: 0.7rem;
+    opacity: 0.6;
+    transition: all 0.3s ease;
+}
+
+.footer-link-item:hover {
+    color: var(--primary-color);
+    background: rgba(2, 9, 63, 0.1);
+    padding-left: 0.5rem;
+    text-decoration: none;
+}
+
+.footer-link-item:hover i {
+    opacity: 1;
+    color: var(--primary-color);
 }
 
 .footer-text {
@@ -1510,57 +1805,148 @@ link[rel="apple-touch-icon"] {
     line-height: 1.6;
 }
 
-.footer-contact li i,
-.footer-info li i {
-    color: var(--primary-color);
-    width: 20px;
-    text-align: center;
+.footer-contact-item,
+.footer-info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0.75rem;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer-contact-item:hover,
+.footer-info-item:hover {
+    background: rgba(2, 9, 63, 0.2);
+    border-color: rgba(2, 9, 63, 0.3);
+    transform: translateX(5px);
+}
+
+.footer-contact-icon,
+.footer-info-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary-color) 0%, #010520 100%);
+    border-radius: 10px;
+    color: white;
+    font-size: 1rem;
+    flex-shrink: 0;
+    box-shadow: 0 4px 15px rgba(2, 9, 63, 0.3);
+}
+
+.footer-contact-content,
+.footer-info-content {
+    flex: 1;
+}
+
+.footer-contact-label,
+.footer-info-label {
+    display: block;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.25rem;
+}
+
+.footer-contact-content .footer-link,
+.footer-info-content .footer-text {
+    display: block;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .footer-bottom {
-    background: rgba(0, 0, 0, 0.3);
-    padding: 1.5rem 0;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 0.75rem 0;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     position: relative;
     z-index: 1;
+    backdrop-filter: blur(10px);
+    margin-bottom: 0;
+}
+
+.footer-bottom::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
 }
 
 .footer-copyright {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+}
+
+.footer-copyright i {
+    color: var(--primary-color);
+    margin-right: 0.5rem;
 }
 
 .footer-developer {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 .footer-dev-link {
-    color: var(--primary-color);
+    color: #ffc107;
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 700;
     transition: all 0.3s ease;
     position: relative;
+    padding: 0.25rem 0.5rem;
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 193, 7, 0.1);
+    border: 1px solid rgba(255, 193, 7, 0.2);
 }
 
-.footer-dev-link::after {
+.footer-dev-link i {
+    color: #ffc107;
+    font-size: 0.9rem;
+}
+
+.footer-dev-link::before {
     content: '';
     position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--primary-color);
-    transition: width 0.3s ease;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.2) 0%, rgba(255, 193, 7, 0.1) 100%);
+    border-radius: 5px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .footer-dev-link:hover {
-    color: #3d5a8f;
+    color: #ffd700;
     text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(255, 193, 7, 0.3);
+    background: rgba(255, 193, 7, 0.2);
+    border-color: rgba(255, 193, 7, 0.4);
 }
 
-.footer-dev-link:hover::after {
-    width: 100%;
+.footer-dev-link:hover::before {
+    opacity: 1;
+}
+
+.footer-dev-link:hover i {
+    color: #ffd700;
+    transform: rotate(5deg);
 }
 
 /* Gallery (mantido para compatibilidade) */
@@ -2092,10 +2478,29 @@ section {
     .navbar-nav {
         text-align: center;
         padding: 1rem 0;
-        background-color: rgba(255, 255, 255, 0.98);
+        background-color: rgba(255, 255, 255, 1) !important;
         border-radius: 8px;
         margin-top: 1rem;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .navbar-collapse {
+        background-color: rgba(255, 255, 255, 1) !important;
+        border-radius: 8px;
+        margin-top: 1rem;
+    }
+    
+    .navbar-collapse.show {
+        background-color: rgba(255, 255, 255, 1) !important;
+    }
+    
+    .navbar-collapse .nav-link {
+        color: var(--text-color) !important;
+    }
+    
+    .navbar-collapse .nav-link:hover {
+        color: var(--primary-color) !important;
+        background-color: rgba(2, 9, 63, 0.05) !important;
     }
 
     .nav-link {
@@ -2256,6 +2661,46 @@ section {
     
     .footer-title:first-of-type {
         margin-top: 0;
+    }
+    
+    .footer-contact-item,
+    .footer-info-item {
+        padding: 0.5rem;
+    }
+    
+    .footer-contact-icon,
+    .footer-info-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+    }
+    
+    .social-links {
+        gap: 0.75rem;
+    }
+    
+    .social-link {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .footer-developer {
+        justify-content: flex-start;
+        margin-top: 1rem;
+    }
+    
+    .footer-bottom {
+        text-align: center;
+    }
+    
+    .footer-bottom .row {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .footer-bottom .col-md-6 {
+        width: 100%;
+        text-align: center !important;
     }
     
     .personalizado-card-image {

@@ -838,3 +838,521 @@ window.usetrafo = {
 //     });
 // });
 
+// Sistema de Autenticação com Supabase
+class AuthManager {
+    constructor() {
+        // Inicializar cliente Supabase se disponível
+        this.supabase = null;
+        if (typeof supabase !== 'undefined' && window.supabaseClient) {
+            this.supabase = window.supabaseClient;
+        }
+        
+        this.usuarioLogado = null;
+        this.init();
+    }
+    
+    async getUsuarioLogado() {
+        // Se Supabase estiver disponível, usar autenticação do Supabase
+        if (this.supabase) {
+            try {
+                const { data: { user } } = await this.supabase.auth.getUser();
+                if (user) {
+                    // Buscar perfil do usuário
+                    const { data: profile } = await this.supabase
+                        .from('user_profiles')
+                        .select('*')
+                        .eq('user_id', user.id)
+                        .single();
+                    
+                    if (profile) {
+                        return {
+                            id: user.id,
+                            email: user.email,
+                            nome: profile.nome,
+                            telefone: profile.telefone,
+                            dataCadastro: profile.data_cadastro
+                        };
+                    }
+                    
+                    // Se não tem perfil, retornar dados básicos do auth
+                    return {
+                        id: user.id,
+                        email: user.email,
+                        nome: user.email.split('@')[0], // Nome padrão do email
+                        telefone: null,
+                        dataCadastro: user.created_at
+                    };
+                }
+            } catch (error) {
+                console.error('Erro ao buscar usuário:', error);
+            }
+        }
+        
+        // Fallback para localStorage (migração gradual)
+        try {
+            return JSON.parse(localStorage.getItem('usuarioLogado')) || null;
+        } catch (e) {
+            return null;
+        }
+    }
+    
+    async init() {
+        this.usuarioLogado = await this.getUsuarioLogado();
+        this.atualizarMenuUsuario();
+        this.setupEventListeners();
+        
+        // Listener para mudanças de autenticação (Supabase)
+        if (this.supabase) {
+            this.supabase.auth.onAuthStateChange((event, session) => {
+                if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+                    this.getUsuarioLogado().then(user => {
+                        this.usuarioLogado = user;
+                        this.atualizarMenuUsuario();
+                    });
+                } else if (event === 'SIGNED_OUT') {
+                    this.usuarioLogado = null;
+                    this.atualizarMenuUsuario();
+                }
+            });
+        }
+    }
+    
+    setupEventListeners() {
+        // Formulário de Login
+        const loginForm = document.getElementById('loginForm');
+        if (loginForm) {
+            loginForm.addEventListener('submit', (e) => this.handleLogin(e));
+        }
+        
+        // Formulário de Registro
+        const registerForm = document.getElementById('registerForm');
+        if (registerForm) {
+            registerForm.addEventListener('submit', (e) => this.handleRegister(e));
+        }
+        
+        // Botão de Logout
+        const btnLogout = document.getElementById('btnLogout');
+        if (btnLogout) {
+            btnLogout.addEventListener('click', (e) => this.handleLogout(e));
+        }
+        
+        // Verificar login ao tentar finalizar compra
+        const btnFinalizarCompra = document.getElementById('btnFinalizarCompra');
+        if (btnFinalizarCompra) {
+            btnFinalizarCompra.addEventListener('click', (e) => this.verificarLoginAntesCompra(e));
+        }
+    }
+    
+    async handleLogin(e) {
+        e.preventDefault();
+        
+        const email = document.getElementById('loginEmail').value;
+        const senha = document.getElementById('loginPassword').value;
+        
+        // Se Supabase estiver disponível, usar autenticação do Supabase
+        if (this.supabase) {
+            try {
+                const { data, error } = await this.supabase.auth.signInWithPassword({
+                    email: email,
+                    password: senha
+                });
+                
+                if (error) {
+                    this.showAlert(error.message || 'E-mail ou senha incorretos!', 'danger');
+                    return;
+                }
+                
+                if (data.user) {
+                    // Buscar perfil do usuário
+                    const { data: profile } = await this.supabase
+                        .from('user_profiles')
+                        .select('*')
+                        .eq('user_id', data.user.id)
+                        .single();
+                    
+                    this.usuarioLogado = {
+                        id: data.user.id,
+                        email: data.user.email,
+                        nome: profile?.nome || data.user.email.split('@')[0],
+                        telefone: profile?.telefone || null,
+                        dataCadastro: profile?.data_cadastro || data.user.created_at
+                    };
+                    
+                    // Fechar modal se existir
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+                    if (modal) modal.hide();
+                    
+                    // Atualizar menu
+                    this.atualizarMenuUsuario();
+                    
+                    // Mostrar mensagem de sucesso
+                    this.showAlert('Login realizado com sucesso!', 'success');
+                    
+                    // Limpar formulário
+                    const loginForm = document.getElementById('loginForm');
+                    if (loginForm) loginForm.reset();
+                    
+                    // Redirecionar se houver parâmetro redirect
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const redirect = urlParams.get('redirect');
+                    if (redirect) {
+                        setTimeout(() => {
+                            window.location.href = redirect;
+                        }, 1500);
+                    }
+                }
+            } catch (error) {
+                console.error('Erro no login:', error);
+                this.showAlert('Erro ao fazer login. Tente novamente.', 'danger');
+            }
+        } else {
+            // Fallback para localStorage (migração gradual)
+            const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+            const usuario = usuarios.find(u => u.email === email && u.senha === senha);
+            
+            if (usuario) {
+                const usuarioSemSenha = { ...usuario };
+                delete usuarioSemSenha.senha;
+                
+                localStorage.setItem('usuarioLogado', JSON.stringify(usuarioSemSenha));
+                this.usuarioLogado = usuarioSemSenha;
+                
+                const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+                if (modal) modal.hide();
+                
+                this.atualizarMenuUsuario();
+                this.showAlert('Login realizado com sucesso!', 'success');
+                
+                const loginForm = document.getElementById('loginForm');
+                if (loginForm) loginForm.reset();
+            } else {
+                this.showAlert('E-mail ou senha incorretos!', 'danger');
+            }
+        }
+    }
+    
+    async handleRegister(e) {
+        e.preventDefault();
+        
+        const nome = document.getElementById('registerName').value;
+        const email = document.getElementById('registerEmail').value;
+        const telefone = document.getElementById('registerPhone').value;
+        const senha = document.getElementById('registerPassword').value;
+        const confirmSenha = document.getElementById('registerPasswordConfirm').value;
+        
+        // Validações
+        if (senha !== confirmSenha) {
+            this.showAlert('As senhas não coincidem!', 'danger');
+            return;
+        }
+        
+        if (senha.length < 6) {
+            this.showAlert('A senha deve ter no mínimo 6 caracteres!', 'danger');
+            return;
+        }
+        
+        // Se Supabase estiver disponível, usar autenticação do Supabase
+        if (this.supabase) {
+            try {
+                // Criar usuário no Supabase Auth
+                const { data: authData, error: authError } = await this.supabase.auth.signUp({
+                    email: email,
+                    password: senha,
+                    options: {
+                        data: {
+                            nome: nome,
+                            telefone: telefone
+                        }
+                    }
+                });
+                
+                if (authError) {
+                    this.showAlert(authError.message || 'Erro ao criar conta. Tente novamente.', 'danger');
+                    return;
+                }
+                
+                if (authData.user) {
+                    // Criar perfil do usuário na tabela user_profiles
+                    const { error: profileError } = await this.supabase
+                        .from('user_profiles')
+                        .insert([
+                            {
+                                user_id: authData.user.id,
+                                nome: nome,
+                                telefone: telefone || null,
+                                data_cadastro: new Date().toISOString()
+                            }
+                        ]);
+                    
+                    if (profileError) {
+                        console.error('Erro ao criar perfil:', profileError);
+                        // Continuar mesmo se der erro no perfil (pode ser criado depois)
+                    }
+                    
+                    // Fazer login automaticamente
+                    this.usuarioLogado = {
+                        id: authData.user.id,
+                        email: authData.user.email,
+                        nome: nome,
+                        telefone: telefone || null,
+                        dataCadastro: new Date().toISOString()
+                    };
+                    
+                    // Fechar modal se existir
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+                    if (modal) modal.hide();
+                    
+                    // Atualizar menu
+                    this.atualizarMenuUsuario();
+                    
+                    // Mostrar mensagem de sucesso
+                    this.showAlert('Conta criada com sucesso! Bem-vindo!', 'success');
+                    
+                    // Limpar formulário
+                    const registerForm = document.getElementById('registerForm');
+                    if (registerForm) registerForm.reset();
+                    
+                    // Redirecionar se houver parâmetro redirect
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const redirect = urlParams.get('redirect');
+                    if (redirect) {
+                        setTimeout(() => {
+                            window.location.href = redirect;
+                        }, 1500);
+                    }
+                }
+            } catch (error) {
+                console.error('Erro no registro:', error);
+                this.showAlert('Erro ao criar conta. Tente novamente.', 'danger');
+            }
+        } else {
+            // Fallback para localStorage (migração gradual)
+            const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+            
+            if (usuarios.find(u => u.email === email)) {
+                this.showAlert('Este e-mail já está cadastrado!', 'danger');
+                return;
+            }
+            
+            const novoUsuario = {
+                nome,
+                email,
+                telefone,
+                senha,
+                dataCadastro: new Date().toISOString()
+            };
+            
+            usuarios.push(novoUsuario);
+            localStorage.setItem('usuarios', JSON.stringify(usuarios));
+            
+            const usuarioSemSenha = { ...novoUsuario };
+            delete usuarioSemSenha.senha;
+            
+            localStorage.setItem('usuarioLogado', JSON.stringify(usuarioSemSenha));
+            this.usuarioLogado = usuarioSemSenha;
+            
+            const modal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+            if (modal) modal.hide();
+            
+            this.atualizarMenuUsuario();
+            this.showAlert('Conta criada com sucesso! Bem-vindo!', 'success');
+            
+            const registerForm = document.getElementById('registerForm');
+            if (registerForm) registerForm.reset();
+        }
+    }
+    
+    handleLogout(e) {
+        e.preventDefault();
+        
+        // Criar modal de confirmação customizado
+        const confirmModal = document.createElement('div');
+        confirmModal.className = 'modal fade';
+        confirmModal.setAttribute('tabindex', '-1');
+        confirmModal.innerHTML = `
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="fas fa-sign-out-alt me-2"></i>Confirmar Saída
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <i class="fas fa-question-circle fa-3x text-primary mb-3"></i>
+                        <p class="lead">Deseja realmente sair da sua conta?</p>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" id="confirmLogout">
+                            <i class="fas fa-sign-out-alt me-2"></i>Sair
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(confirmModal);
+        
+        const bsModal = new bootstrap.Modal(confirmModal);
+        bsModal.show();
+        
+        document.getElementById('confirmLogout').addEventListener('click', async () => {
+            // Se Supabase estiver disponível, fazer logout no Supabase
+            if (this.supabase) {
+                try {
+                    await this.supabase.auth.signOut();
+                } catch (error) {
+                    console.error('Erro ao fazer logout:', error);
+                }
+            }
+            
+            // Limpar localStorage (fallback)
+            localStorage.removeItem('usuarioLogado');
+            this.usuarioLogado = null;
+            this.atualizarMenuUsuario();
+            this.showAlert('Logout realizado com sucesso!', 'success');
+            bsModal.hide();
+            
+            // Remover modal do DOM
+            setTimeout(() => confirmModal.remove(), 300);
+            
+            // Redirecionar se estiver na página de configurações
+            if (window.location.pathname.includes('configuracoes.html')) {
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+            }
+        });
+        
+        // Remover modal quando fechar sem confirmar
+        confirmModal.addEventListener('hidden.bs.modal', () => {
+            confirmModal.remove();
+        });
+    }
+    
+    verificarLoginAntesCompra(e) {
+        if (!this.usuarioLogado) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Redirecionar para página de login com redirect
+            window.location.href = 'login.html?redirect=' + encodeURIComponent(window.location.href);
+            
+            return false;
+        }
+        return true;
+    }
+    
+    atualizarMenuUsuario() {
+        const userNameDisplay = document.getElementById('userNameDisplay');
+        const menuItemLogin = document.getElementById('menuItemLogin');
+        const menuItemRegister = document.getElementById('menuItemRegister');
+        const menuItemConfig = document.getElementById('menuItemConfig');
+        const menuItemLogout = document.getElementById('menuItemLogout');
+        
+        if (this.usuarioLogado) {
+            // Usuário logado
+            if (userNameDisplay) {
+                userNameDisplay.textContent = this.usuarioLogado.nome.split(' ')[0];
+            }
+            if (menuItemLogin) menuItemLogin.style.display = 'none';
+            if (menuItemRegister) menuItemRegister.style.display = 'none';
+            if (menuItemConfig) menuItemConfig.style.display = 'block';
+            if (menuItemLogout) menuItemLogout.style.display = 'block';
+        } else {
+            // Usuário não logado
+            if (userNameDisplay) {
+                userNameDisplay.textContent = 'Conta';
+            }
+            if (menuItemLogin) menuItemLogin.style.display = 'block';
+            if (menuItemRegister) menuItemRegister.style.display = 'block';
+            if (menuItemConfig) menuItemConfig.style.display = 'none';
+            if (menuItemLogout) menuItemLogout.style.display = 'none';
+        }
+    }
+    
+    showAlert(message, type = 'info', duration = 4000) {
+        // Criar container de notificações se não existir
+        let container = document.getElementById('notificationContainer');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'notificationContainer';
+            container.className = 'notification-container';
+            document.body.appendChild(container);
+        }
+        
+        // Determinar ícone e título baseado no tipo
+        let icon = 'fa-info-circle';
+        let title = 'Informação';
+        
+        switch(type) {
+            case 'success':
+                icon = 'fa-check-circle';
+                title = 'Sucesso!';
+                break;
+            case 'error':
+            case 'danger':
+                icon = 'fa-exclamation-circle';
+                title = 'Erro!';
+                break;
+            case 'warning':
+                icon = 'fa-exclamation-triangle';
+                title = 'Atenção!';
+                break;
+            case 'info':
+            default:
+                icon = 'fa-info-circle';
+                title = 'Informação';
+                break;
+        }
+        
+        // Criar notificação
+        const notification = document.createElement('div');
+        notification.className = `notification ${type} progress`;
+        notification.innerHTML = `
+            <div class="notification-icon">
+                <i class="fas ${icon}"></i>
+            </div>
+            <div class="notification-content">
+                <div class="notification-title">${title}</div>
+                <p class="notification-message">${message}</p>
+            </div>
+            <button class="notification-close" aria-label="Fechar">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="notification-progress-bar" style="animation-duration: ${duration}ms;"></div>
+        `;
+        
+        container.appendChild(notification);
+        
+        // Fechar ao clicar no botão
+        const closeBtn = notification.querySelector('.notification-close');
+        closeBtn.addEventListener('click', () => {
+            this.closeNotification(notification);
+        });
+        
+        // Auto-fechar após duração
+        setTimeout(() => {
+            this.closeNotification(notification);
+        }, duration);
+    }
+    
+    closeNotification(notification) {
+        notification.classList.add('hiding');
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }
+    
+    isLoggedIn() {
+        return this.usuarioLogado !== null;
+    }
+}
+
+// Inicializar sistema de autenticação
+document.addEventListener('DOMContentLoaded', function() {
+    window.authManager = new AuthManager();
+});
+

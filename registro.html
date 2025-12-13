@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Conta - USETRAFO</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        .register-container {
+            min-height: calc(100vh - 200px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 0;
+        }
+        
+        .register-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            padding: 2.5rem;
+            margin: 0 auto;
+        }
+        
+        .register-logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            min-height: 400px;
+            padding: 2rem;
+        }
+        
+        .register-logo {
+            max-width: 100%;
+            height: auto;
+            max-height: 500px;
+            object-fit: contain;
+            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.1));
+        }
+        
+        @media (max-width: 991px) {
+            .register-logo-container {
+                min-height: 300px;
+                padding: 1.5rem;
+            }
+            
+            .register-logo {
+                max-height: 300px;
+            }
+        }
+        
+        .register-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .register-header h2 {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .register-header p {
+            color: #6c757d;
+            margin: 0;
+        }
+        
+        .register-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color), #030d5a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 2rem;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            color: #495057;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .form-control {
+            border-radius: 10px;
+            padding: 0.6rem 0.9rem;
+            border: 1px solid #dee2e6;
+            font-size: 0.9rem;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(2, 9, 63, 0.15);
+        }
+        
+        .form-text {
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+        }
+        
+        .btn-register {
+            background: var(--primary-color);
+            border: none;
+            border-radius: 10px;
+            padding: 0.75rem;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-register:hover {
+            background: #030d5a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(2, 9, 63, 0.3);
+        }
+        
+        .register-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .register-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .register-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .form-check-label {
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+        
+        .form-check-label a {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="src/imgs/ChatGPT Image 10 de dez. de 2025, 13_41_48 9.svg" alt="USETRAFO" class="img-fluid" loading="eager">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#sobre">Sobre</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#produtos">Produtos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="loja.html">Loja</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#contato">Contato</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Register Container -->
+    <div class="register-container">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Logo USETRAFO à Esquerda -->
+                <div class="col-lg-6 text-center mb-4 mb-lg-0">
+                    <div class="register-logo-container">
+                        <img src="src/imgs/ChatGPT Image 10 de dez. de 2025, 13_41_48 9 (1).png" alt="USETRAFO - Logo" class="register-logo" loading="lazy">
+                    </div>
+                </div>
+                
+                <!-- Formulário à Direita -->
+                <div class="col-lg-6">
+                    <div class="register-card">
+                        <div class="register-header">
+                            <div class="register-icon">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                            <h2>Criar nova conta</h2>
+                            <p>Preencha os dados abaixo para criar sua conta</p>
+                        </div>
+                        
+                        <form id="registerForm">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="registerName" class="form-label">Nome Completo</label>
+                                    <input type="text" class="form-control" id="registerName" required aria-required="true" placeholder="Seu nome completo">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="registerEmail" class="form-label">E-mail</label>
+                                    <input type="email" class="form-control" id="registerEmail" required aria-required="true" aria-describedby="registerEmailHelp" placeholder="seu@email.com">
+                                    <div id="registerEmailHelp" class="form-text">Usaremos este e-mail para entrar na sua conta</div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="registerPhone" class="form-label">Telefone</label>
+                                <input type="tel" class="form-control" id="registerPhone" placeholder="(00) 00000-0000" required aria-required="true">
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="registerPassword" class="form-label">Senha</label>
+                                    <input type="password" class="form-control" id="registerPassword" required aria-required="true" aria-describedby="registerPasswordHelp" minlength="6" placeholder="Mínimo 6 caracteres">
+                                    <div id="registerPasswordHelp" class="form-text">Mínimo de 6 caracteres</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="registerPasswordConfirm" class="form-label">Confirmar Senha</label>
+                                    <input type="password" class="form-control" id="registerPasswordConfirm" required aria-required="true" placeholder="Confirme sua senha">
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="acceptTerms" required aria-required="true">
+                                <label class="form-check-label" for="acceptTerms">
+                                    Aceito os <a href="#" target="_blank">termos de uso</a> e <a href="#" target="_blank">política de privacidade</a>
+                                </label>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary btn-register">
+                                <i class="fas fa-user-plus me-2"></i>Criar Conta
+                            </button>
+                        </form>
+                        
+                        <div class="register-footer">
+                            <p class="mb-0">Já tem uma conta? <a href="login.html">Entre aqui</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer bg-dark text-white pt-5 pb-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <div class="footer-logo mb-3">
+                        <img src="src/imgs/ChatGPT Image 10 de dez. de 2025, 13_41_48 9.svg" alt="USETRAFO - Logo" class="img-fluid" style="max-height: 80px;" loading="lazy">
+                    </div>
+                    <p class="footer-text">Transformadores elétricos de alta qualidade há mais de 30 anos.</p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-links">
+                        <h5 class="footer-title mb-3">Links Rápidos</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <a href="index.html#sobre" class="footer-link-item">
+                                    <i class="fas fa-chevron-right me-2"></i> Sobre Nós
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="index.html#produtos" class="footer-link-item">
+                                    <i class="fas fa-chevron-right me-2"></i> Produtos
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="loja.html" class="footer-link-item">
+                                    <i class="fas fa-chevron-right me-2"></i> Loja
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="index.html#contato" class="footer-link-item">
+                                    <i class="fas fa-chevron-right me-2"></i> Contato
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-contact">
+                        <h5 class="footer-title mb-3">Contato</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <i class="fas fa-phone me-2"></i>
+                                <a href="tel:1140384800" class="footer-link">(11) 4038-4800</a>
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-envelope me-2"></i>
+                                <a href="mailto:contato@usetrafo.com.br" class="footer-link">contato@usetrafo.com.br</a>
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-map-marker-alt me-2"></i>
+                                <span class="footer-text">Varzea Paulista - SP</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-info">
+                        <h5 class="footer-title mb-3">Informações</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <i class="fas fa-clock me-2"></i>
+                                <span class="footer-text">Segunda a Sexta: 8h às 17h</span>
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-shield-alt me-2"></i>
+                                <span class="footer-text">Garantia de 36 meses</span>
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-certificate me-2"></i>
+                                <span class="footer-text">Produtos certificados</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6 mb-3 mb-md-0">
+                        <p class="mb-0 footer-copyright">
+                            <i class="fas fa-copyright me-2"></i>
+                            2025 USETRAFO. Todos os direitos reservados.
+                        </p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <p class="mb-0 footer-developer">
+                            Desenvolvido por<span style="margin: 0 0.5rem;"></span>
+                            <a href="https://brianws01.github.io/WoodCompany/" target="_blank" rel="noopener noreferrer" class="footer-dev-link">
+                                <i class="fas fa-code me-1"></i> WoodTec Company
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script>
+        // Inicializar cliente Supabase
+        if (typeof SUPABASE_URL !== 'undefined' && typeof SUPABASE_ANON_KEY !== 'undefined' && 
+            SUPABASE_URL !== 'COLE_SUA_PROJECT_URL_AQUI' && SUPABASE_ANON_KEY !== 'COLE_SUA_ANON_KEY_AQUI') {
+            window.supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        }
+    </script>
+    
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+    
+    <script>
+        // Função de notificação global (fallback se authManager não estiver disponível)
+        function showNotification(message, type = 'info', duration = 4000) {
+            let container = document.getElementById('notificationContainer');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'notificationContainer';
+                container.className = 'notification-container';
+                document.body.appendChild(container);
+            }
+            
+            let icon = 'fa-info-circle';
+            let title = 'Informação';
+            
+            switch(type) {
+                case 'success':
+                    icon = 'fa-check-circle';
+                    title = 'Sucesso!';
+                    break;
+                case 'error':
+                case 'danger':
+                    icon = 'fa-exclamation-circle';
+                    title = 'Erro!';
+                    break;
+                case 'warning':
+                    icon = 'fa-exclamation-triangle';
+                    title = 'Atenção!';
+                    break;
+            }
+            
+            const notification = document.createElement('div');
+            notification.className = `notification ${type} progress`;
+            notification.innerHTML = `
+                <div class="notification-icon">
+                    <i class="fas ${icon}"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">${title}</div>
+                    <p class="notification-message">${message}</p>
+                </div>
+                <button class="notification-close" aria-label="Fechar">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="notification-progress-bar" style="animation-duration: ${duration}ms;"></div>
+            `;
+            
+            container.appendChild(notification);
+            
+            const closeBtn = notification.querySelector('.notification-close');
+            closeBtn.addEventListener('click', () => {
+                notification.classList.add('hiding');
+                setTimeout(() => notification.remove(), 300);
+            });
+            
+            setTimeout(() => {
+                notification.classList.add('hiding');
+                setTimeout(() => notification.remove(), 300);
+            }, duration);
+        }
+        
+        // Formulário de Registro - Usar AuthManager se disponível
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Se authManager estiver disponível, usar ele (já tem integração com Supabase)
+            if (window.authManager) {
+                await window.authManager.handleRegister(e);
+                return;
+            }
+            
+            // Fallback para localStorage (migração gradual)
+            const nome = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const telefone = document.getElementById('registerPhone').value;
+            const senha = document.getElementById('registerPassword').value;
+            const confirmSenha = document.getElementById('registerPasswordConfirm').value;
+            
+            // Validações
+            if (senha !== confirmSenha) {
+                showNotification('As senhas não coincidem!', 'danger');
+                return;
+            }
+            
+            if (senha.length < 6) {
+                showNotification('A senha deve ter no mínimo 6 caracteres!', 'warning');
+                return;
+            }
+            
+            const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+            
+            if (usuarios.find(u => u.email === email)) {
+                showNotification('Este e-mail já está cadastrado!', 'danger');
+                return;
+            }
+            
+            const novoUsuario = {
+                nome,
+                email,
+                telefone,
+                senha,
+                dataCadastro: new Date().toISOString()
+            };
+            
+            usuarios.push(novoUsuario);
+            localStorage.setItem('usuarios', JSON.stringify(usuarios));
+            
+            const usuarioSemSenha = { ...novoUsuario };
+            delete usuarioSemSenha.senha;
+            
+            localStorage.setItem('usuarioLogado', JSON.stringify(usuarioSemSenha));
+            
+            showNotification('Conta criada com sucesso! Bem-vindo!', 'success');
+            
+            setTimeout(() => {
+                const urlParams = new URLSearchParams(window.location.search);
+                const redirect = urlParams.get('redirect') || 'index.html';
+                window.location.href = redirect;
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
+

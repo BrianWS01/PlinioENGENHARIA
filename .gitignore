@@ -1,53 +1,21 @@
-# Sistema Operacional
-.DS_Store
-Thumbs.db
-desktop.ini
+# Supabase Config (contém credenciais sensíveis)
+supabase-config.js
 
-# Editores
-.vscode/
-.idea/
-*.sublime-project
-*.sublime-workspace
-*.swp
-*.swo
-*~
-
-# Node (se usar no futuro)
+# Node modules
 node_modules/
-npm-debug.log
-yarn-error.log
-package-lock.json
-yarn.lock
 
 # Logs
 *.log
-logs/
+npm-debug.log*
 
-# Temporários
-tmp/
-temp/
-*.tmp
+# OS files
+.DS_Store
+Thumbs.db
 
-# Backups
-*.bak
-backup/
+# IDE
+.vscode/
+.idea/
 
-# Ambiente
-.env
-.env.local
-.env.production
-
-# Build (se usar no futuro)
+# Build
 dist/
 build/
-
-# Cache
-.cache/
-.sass-cache/
-
-# Outros
-*.zip
-*.rar
-*.7z
-
-

@@ -387,6 +387,14 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Botão adicionar ao carrinho
     document.getElementById('btnAddToCart').addEventListener('click', function() {
+        // Verificar se está logado
+        const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado')) || null;
+        if (!usuarioLogado) {
+            // Redirecionar para página de login com redirect
+            window.location.href = 'login.html?redirect=' + encodeURIComponent(window.location.href);
+            return;
+        }
+        
         const product = this.getAttribute('data-product');
         const name = this.getAttribute('data-name');
         const price = parseFloat(this.getAttribute('data-price'));

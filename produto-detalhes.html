@@ -1674,6 +1674,37 @@
                             <span class="carrinho-badge" id="carrinhoBadge">0</span>
                         </button>
                     </li>
+                    <li class="nav-item">
+                        <div class="dropdown ms-2">
+                            <button class="btn btn-outline-primary dropdown-toggle" type="button" id="userMenuDropdown" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Menu do usuário">
+                                <i class="fas fa-user" aria-hidden="true"></i>
+                                <span class="d-none d-md-inline ms-2" id="userNameDisplay">Conta</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenuDropdown" id="userMenu">
+                                <li id="menuItemLogin" style="display: none;">
+                                    <a class="dropdown-item" href="login.html">
+                                        <i class="fas fa-sign-in-alt me-2"></i>Entrar
+                                    </a>
+                                </li>
+                                <li id="menuItemRegister" style="display: none;">
+                                    <a class="dropdown-item" href="registro.html">
+                                        <i class="fas fa-user-plus me-2"></i>Criar Conta
+                                    </a>
+                                </li>
+                                <li id="menuItemConfig" style="display: none;">
+                                    <a class="dropdown-item" href="configuracoes.html">
+                                        <i class="fas fa-cog me-2"></i>Configurações
+                                    </a>
+                                </li>
+                                <li id="menuItemLogout" style="display: none;">
+                                    <hr class="dropdown-divider">
+                                    <a class="dropdown-item text-danger" href="#" id="btnLogout">
+                                        <i class="fas fa-sign-out-alt me-2"></i>Sair
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -2157,8 +2188,146 @@
         </div>
     </footer>
 
+    <!-- Modal de Login -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">
+                        <i class="fas fa-sign-in-alt me-2"></i>Entrar na sua conta
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="loginEmail" class="form-label">E-mail</label>
+                            <input type="email" class="form-control" id="loginEmail" required aria-required="true" aria-describedby="loginEmailHelp">
+                            <div id="loginEmailHelp" class="form-text">Digite seu e-mail cadastrado</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Senha</label>
+                            <input type="password" class="form-control" id="loginPassword" required aria-required="true">
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">
+                                Lembrar-me
+                            </label>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-sign-in-alt me-2"></i>Entrar
+                            </button>
+                        </div>
+                    </form>
+                    <div class="text-center mt-3">
+                        <p class="mb-0">Não tem uma conta? <a href="registro.html">Crie uma aqui</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Registro -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered register-modal-dialog">
+            <div class="modal-content register-modal-content">
+                <div class="modal-header register-modal-header">
+                    <h5 class="modal-title" id="registerModalLabel">
+                        <i class="fas fa-user-plus me-2"></i>Criar nova conta
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body register-modal-body">
+                    <form id="registerForm">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="registerName" class="form-label">Nome Completo</label>
+                                <input type="text" class="form-control form-control-sm" id="registerName" required aria-required="true">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="registerEmail" class="form-label">E-mail</label>
+                                <input type="email" class="form-control form-control-sm" id="registerEmail" required aria-required="true" aria-describedby="registerEmailHelp">
+                                <div id="registerEmailHelp" class="form-text small">Usaremos este e-mail para entrar na sua conta</div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerPhone" class="form-label">Telefone</label>
+                            <input type="tel" class="form-control form-control-sm" id="registerPhone" placeholder="(00) 00000-0000" required aria-required="true">
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="registerPassword" class="form-label">Senha</label>
+                                <input type="password" class="form-control form-control-sm" id="registerPassword" required aria-required="true" aria-describedby="registerPasswordHelp" minlength="6">
+                                <div id="registerPasswordHelp" class="form-text small">Mínimo de 6 caracteres</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="registerPasswordConfirm" class="form-label">Confirmar Senha</label>
+                                <input type="password" class="form-control form-control-sm" id="registerPasswordConfirm" required aria-required="true">
+                            </div>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="acceptTerms" required aria-required="true">
+                            <label class="form-check-label small" for="acceptTerms">
+                                Aceito os <a href="#" target="_blank">termos de uso</a> e <a href="#" target="_blank">política de privacidade</a>
+                            </label>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-sm">
+                                <i class="fas fa-user-plus me-2"></i>Criar Conta
+                            </button>
+                        </div>
+                    </form>
+                    <div class="text-center mt-3">
+                        <p class="mb-0 small">Já tem uma conta? <a href="login.html">Entre aqui</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Login Necessário -->
+    <div class="modal fade" id="loginRequiredModal" tabindex="-1" aria-labelledby="loginRequiredModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginRequiredModalLabel">
+                        <i class="fas fa-exclamation-triangle text-warning me-2"></i>Login Necessário
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <i class="fas fa-lock fa-3x text-primary mb-3"></i>
+                    <p class="lead">Você precisa estar logado para realizar uma compra.</p>
+                    <p>Faça login ou crie uma conta para continuar.</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <a href="login.html" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt me-2"></i>Fazer Login
+                    </a>
+                    <a href="registro.html" class="btn btn-outline-primary">
+                        <i class="fas fa-user-plus me-2"></i>Criar Conta
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script>
+        // Inicializar cliente Supabase
+        if (typeof SUPABASE_URL !== 'undefined' && typeof SUPABASE_ANON_KEY !== 'undefined' && 
+            SUPABASE_URL !== 'COLE_SUA_PROJECT_URL_AQUI' && SUPABASE_ANON_KEY !== 'COLE_SUA_ANON_KEY_AQUI') {
+            window.supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        }
+    </script>
     
     <!-- Custom JS -->
     <script src="script.js"></script>

@@ -27,6 +27,120 @@ html {
     scroll-behavior: smooth;
 }
 
+/* Feedback visual - Formulários */
+.input-group.focused {
+    transform: scale(1.02);
+    transition: transform 0.2s ease;
+}
+
+.input-group.valid .input-group-text {
+    background-color: #d4edda;
+    border-color: #28a745;
+}
+
+.input-group.invalid .input-group-text {
+    background-color: #f8d7da;
+    border-color: #dc3545;
+}
+
+.input-group.valid .form-control {
+    border-color: #28a745;
+}
+
+.input-group.invalid .form-control {
+    border-color: #dc3545;
+}
+
+/* Carrinho Badge */
+.carrinho-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: bold;
+    border: 2px solid white;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* Modal do Carrinho */
+.carrinho-item {
+    transition: all 0.3s ease;
+}
+
+.carrinho-item:hover {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 0.5rem;
+    margin: 0 -0.5rem;
+}
+
+.carrinho-item img {
+    transition: transform 0.3s ease;
+}
+
+.carrinho-item:hover img {
+    transform: scale(1.1);
+}
+
+/* Botões com feedback visual */
+.btn {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+.btn-success {
+    animation: successPulse 0.5s ease;
+}
+
+@keyframes successPulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Loading states */
+.btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Cards com hover melhorado */
+.card, .product-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:active, .product-card:active {
+    transform: scale(0.98);
+}
+
 /* Favicon - Otimização para máxima qualidade */
 link[rel="icon"],
 link[rel="apple-touch-icon"] {
@@ -750,6 +864,274 @@ link[rel="apple-touch-icon"] {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
+/* Seção Comparação */
+.comparacao-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.comparacao-icon-header {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, #010520 100%);
+    border-radius: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: white;
+    box-shadow: 0 15px 40px rgba(2, 9, 63, 0.25);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.comparacao-icon-header::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+    animation: rotate 6s linear infinite;
+}
+
+.comparacao-icon-header:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 20px 50px rgba(2, 9, 63, 0.35);
+}
+
+.comparacao-icon-header i {
+    position: relative;
+    z-index: 1;
+}
+
+/* Tabela Comparativa */
+.comparacao-tabela-wrapper {
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+.comparacao-tabela-wrapper .table {
+    margin-bottom: 0;
+}
+
+.comparacao-tabela-wrapper thead th {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #010520 100%);
+    color: white;
+    border: none;
+    padding: 1rem;
+    font-weight: 600;
+    vertical-align: middle;
+}
+
+.comparacao-tabela-wrapper tbody td {
+    padding: 1rem;
+    vertical-align: middle;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.comparacao-tabela-wrapper tbody tr:hover {
+    background-color: rgba(2, 9, 63, 0.03);
+}
+
+/* Cards Comparativos */
+.comparacao-card {
+    background: white;
+    border-radius: 24px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid transparent;
+    animation: fadeInUp 0.8s ease-out both;
+}
+
+.comparacao-card:nth-child(1) {
+    animation-delay: 0.3s;
+}
+
+.comparacao-card:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+.comparacao-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+}
+
+.comparacao-card-isolador {
+    border-top: 4px solid var(--primary-color);
+}
+
+.comparacao-card-isolador:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 20px 50px rgba(2, 9, 63, 0.2);
+}
+
+.comparacao-card-autotransformador {
+    border-top: 4px solid var(--secondary-color);
+}
+
+.comparacao-card-autotransformador:hover {
+    border-color: var(--secondary-color);
+    box-shadow: 0 20px 50px rgba(255, 193, 7, 0.2);
+}
+
+.comparacao-card-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #010520 100%);
+    color: white;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.comparacao-card-autotransformador .comparacao-card-header {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+}
+
+.comparacao-card-header::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: rotate 8s linear infinite;
+}
+
+.comparacao-badge {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    z-index: 2;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.badge-seguranca {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.badge-economia {
+    background: var(--secondary-color);
+    color: var(--primary-color);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.comparacao-icon {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 2;
+    transition: transform 0.3s ease;
+}
+
+.comparacao-card:hover .comparacao-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.comparacao-card-header h3 {
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.comparacao-card-body {
+    padding: 2.5rem 2rem;
+    color: var(--text-color);
+}
+
+.comparacao-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.comparacao-features li {
+    padding: 0.75rem 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.comparacao-features li:last-child {
+    border-bottom: none;
+}
+
+.comparacao-features li:hover {
+    padding-left: 0.5rem;
+    color: var(--primary-color);
+}
+
+.comparacao-features li i {
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+}
+
+.comparacao-card-autotransformador .comparacao-features li i {
+    color: var(--secondary-color);
+}
+
+/* Responsividade da Seção Comparação */
+@media (max-width: 992px) {
+    .comparacao-card {
+        margin-bottom: 2rem;
+    }
+    
+    .comparacao-tabela-wrapper {
+        overflow-x: auto;
+    }
+    
+    .comparacao-tabela-wrapper .table {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .comparacao-icon-header {
+        width: 80px;
+        height: 80px;
+        font-size: 2.5rem;
+    }
+    
+    .comparacao-card-header {
+        padding: 2rem 1.5rem;
+    }
+    
+    .comparacao-card-body {
+        padding: 2rem 1.5rem;
+    }
+    
+    .comparacao-badge {
+        position: static;
+        display: inline-block;
+        margin-bottom: 1rem;
+    }
+    
+    .comparacao-tabela-wrapper thead th,
+    .comparacao-tabela-wrapper tbody td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.85rem;
+    }
+}
+
 /* Carousel Container */
 #produtosCarousel {
     position: relative;
@@ -893,6 +1275,333 @@ link[rel="apple-touch-icon"] {
 .carousel-indicators button.active:hover {
     transform: scale(1.05);
     opacity: 1;
+}
+
+/* Carrossel de Transformadores */
+.transformadores-carousel {
+    position: relative;
+    margin: 2rem 0;
+    padding: 0 80px;
+    border-radius: 16px;
+    overflow: visible;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Garantir que o container não corte as setas */
+#produtos .container {
+    overflow: visible;
+}
+
+.produtos-section {
+    overflow: visible;
+}
+
+/* Ocultar seção USETRAFO Solar */
+#usetrafo-solar {
+    display: none !important;
+}
+
+.transformadores-carousel .carousel-inner {
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.transformador-carousel-item {
+    position: relative;
+    height: 650px;
+    overflow: hidden;
+    background-color: #f8f9fa;
+    transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+}
+
+.transformador-carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+}
+
+/* Transição suave entre slides - Slide com Fade */
+.transformadores-carousel .carousel-item {
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease-in-out;
+}
+
+.transformadores-carousel .carousel-item.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.transformadores-carousel .carousel-item.carousel-item-next:not(.carousel-item-start),
+.transformadores-carousel .carousel-item.active.carousel-item-next {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+.transformadores-carousel .carousel-item.carousel-item-prev:not(.carousel-item-end),
+.transformadores-carousel .carousel-item.active.carousel-item-prev {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+/* Animação de entrada para a imagem */
+@keyframes slideFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(30px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+.transformadores-carousel .carousel-item.active .transformador-carousel-item {
+    animation: slideFadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transformadores-carousel .carousel-item.active .transformador-carousel-item img {
+    transition: transform 0.6s ease-out;
+}
+
+/* Overlay com animação de entrada */
+.transformadores-carousel .carousel-item.active .carousel-overlay {
+    animation: slideFadeUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.15s both;
+}
+
+@keyframes slideFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.carousel-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(2, 9, 63, 0.95) 0%, rgba(2, 9, 63, 0.7) 50%, transparent 100%);
+    padding: 3rem 2rem 2rem;
+    color: white;
+    z-index: 2;
+}
+
+.overlay-content {
+    text-align: center;
+}
+
+.overlay-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: white;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.overlay-description {
+    font-size: 1.5rem;
+    color: var(--secondary-color);
+    font-weight: 600;
+    margin: 0;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Indicadores do carrossel de transformadores - Estilo pílula e bolinha */
+#transformadoresCarousel .carousel-indicators {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+}
+
+#transformadoresCarousel .carousel-indicators button {
+    width: 10px;
+    height: 10px;
+    background-color: var(--secondary-color);
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0;
+    margin: 0;
+    opacity: 0.8;
+    position: relative;
+}
+
+#transformadoresCarousel .carousel-indicators button:hover {
+    opacity: 1;
+    background-color: var(--secondary-color);
+    border-color: #ffffff;
+    transform: scale(1.3);
+}
+
+#transformadoresCarousel .carousel-indicators button.active {
+    width: 60px;
+    height: 14px;
+    background-color: var(--secondary-color);
+    border: 2px solid #ffffff;
+    border-radius: 20px;
+    opacity: 1;
+    box-shadow: 0 2px 8px rgba(255, 193, 7, 0.4);
+    transform: scale(1);
+    padding: 0;
+    position: relative;
+}
+
+#transformadoresCarousel .carousel-indicators button.active::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 5px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+}
+
+#transformadoresCarousel .carousel-indicators button.active::after {
+    display: none;
+}
+
+#transformadoresCarousel .carousel-indicators button.active:hover {
+    transform: scale(1.05);
+    opacity: 1;
+    box-shadow: 0 3px 12px rgba(255, 193, 7, 0.5);
+}
+
+/* Controles do carrossel de transformadores */
+#transformadoresCarousel .carousel-control-prev,
+#transformadoresCarousel .carousel-control-next {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 50%;
+    opacity: 1;
+    transition: all 0.3s ease;
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+#transformadoresCarousel .carousel-control-prev {
+    left: -80px;
+}
+
+#transformadoresCarousel .carousel-control-next {
+    right: -80px;
+}
+
+#transformadoresCarousel .carousel-control-prev:hover,
+#transformadoresCarousel .carousel-control-next:hover {
+    opacity: 1;
+    background-color: white;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 6px 20px rgba(2, 9, 63, 0.4);
+}
+
+#transformadoresCarousel .carousel-control-prev-icon,
+#transformadoresCarousel .carousel-control-next-icon {
+    filter: brightness(0) saturate(100%) invert(8%) sepia(95%) saturate(7498%) hue-rotate(230deg) brightness(95%) contrast(101%);
+}
+
+/* Responsividade do carrossel de transformadores */
+@media (max-width: 992px) {
+    .transformadores-carousel {
+        padding: 0 60px;
+    }
+    
+    #transformadoresCarousel .carousel-control-prev {
+        left: -60px;
+    }
+    
+    #transformadoresCarousel .carousel-control-next {
+        right: -60px;
+    }
+}
+
+@media (max-width: 768px) {
+    .transformadores-carousel {
+        padding: 0 50px;
+    }
+    
+    .transformador-carousel-item {
+        height: 450px;
+    }
+    
+    .carousel-overlay {
+        padding: 2rem 1.5rem 1.5rem;
+    }
+    
+    .overlay-title {
+        font-size: 1.5rem;
+    }
+    
+    .overlay-description {
+        font-size: 1.2rem;
+    }
+    
+    #transformadoresCarousel .carousel-control-prev,
+    #transformadoresCarousel .carousel-control-next {
+        width: 50px;
+        height: 50px;
+    }
+    
+    #transformadoresCarousel .carousel-control-prev {
+        left: -50px;
+    }
+    
+    #transformadoresCarousel .carousel-control-next {
+        right: -50px;
+    }
+}
+
+@media (max-width: 576px) {
+    .transformadores-carousel {
+        padding: 0 40px;
+    }
+    
+    .transformador-carousel-item {
+        height: 350px;
+    }
+    
+    .carousel-overlay {
+        padding: 1.5rem 1rem 1rem;
+    }
+    
+    .overlay-title {
+        font-size: 1.3rem;
+    }
+    
+    .overlay-description {
+        font-size: 1rem;
+    }
+    
+    #transformadoresCarousel .carousel-control-prev,
+    #transformadoresCarousel .carousel-control-next {
+        width: 45px;
+        height: 45px;
+    }
+    
+    #transformadoresCarousel .carousel-control-prev {
+        left: -40px;
+    }
+    
+    #transformadoresCarousel .carousel-control-next {
+        right: -40px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -1427,77 +2136,196 @@ link[rel="apple-touch-icon"] {
 .contato-section {
     background: linear-gradient(to bottom, #ffffff 0%, #f8f9fa 50%, #ffffff 100%);
     position: relative;
-    padding: 5rem 0;
+    padding: 6rem 0;
+    overflow: hidden;
+}
+
+.contato-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(2, 9, 63, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(255, 193, 7, 0.03) 0%, transparent 50%);
+    pointer-events: none;
 }
 
 .contato-icon-header {
-    width: 90px;
-    height: 90px;
+    width: 100px;
+    height: 100px;
     background: linear-gradient(135deg, var(--primary-color) 0%, #010520 100%);
-    border-radius: 50%;
+    border-radius: 24px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     font-size: 3rem;
     color: white;
-    box-shadow: 0 10px 30px rgba(2, 9, 63, 0.3);
+    box-shadow: 0 15px 40px rgba(2, 9, 63, 0.25);
     animation: fadeInUp 0.8s ease-out;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.contato-icon-header::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+    animation: rotate 6s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.contato-icon-header:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 20px 50px rgba(2, 9, 63, 0.35);
 }
 
 /* Contato Info Card */
 .contato-info-card {
     background: white;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 24px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
     overflow: hidden;
     height: 100%;
-    border: 1px solid rgba(2, 9, 63, 0.1);
+    border: 1px solid rgba(2, 9, 63, 0.08);
     animation: fadeInUp 0.8s ease-out 0.2s both;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.contato-info-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+}
+
+.contato-info-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+}
+
+.contato-info-card:hover::before {
+    transform: scaleX(1);
 }
 
 .contato-info-header {
     background: linear-gradient(135deg, var(--primary-color) 0%, #010520 100%);
     color: white;
-    padding: 2rem;
+    padding: 2.5rem 2rem;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.contato-info-header::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.1); opacity: 0.8; }
 }
 
 .contato-info-header i {
-    font-size: 2.5rem;
+    font-size: 3rem;
     margin-bottom: 1rem;
     display: block;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.3s ease;
+}
+
+.contato-info-card:hover .contato-info-header i {
+    transform: scale(1.1) rotate(5deg);
 }
 
 .contato-info-body {
-    padding: 2rem;
+    padding: 2.5rem 2rem;
 }
 
 .contato-item {
     display: flex;
-    gap: 1rem;
-    margin-bottom: 2rem;
+    gap: 1.25rem;
+    margin-bottom: 2.25rem;
+    padding: 1rem;
+    border-radius: 12px;
     transition: all 0.3s ease;
+    position: relative;
 }
 
 .contato-item:last-child {
     margin-bottom: 0;
 }
 
+.contato-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+    border-radius: 0 3px 3px 0;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.3s ease;
+}
+
 .contato-item:hover {
-    transform: translateX(5px);
+    transform: translateX(8px);
+    background: linear-gradient(90deg, rgba(2, 9, 63, 0.03), transparent);
+}
+
+.contato-item:hover::before {
+    transform: scaleY(1);
 }
 
 .contato-item-icon {
-    width: 50px;
-    height: 50px;
-    background: linear-gradient(135deg, rgba(2, 9, 63, 0.1) 0%, rgba(1, 5, 32, 0.1) 100%);
-    border-radius: 12px;
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, rgba(2, 9, 63, 0.1) 0%, rgba(1, 5, 32, 0.15) 100%);
+    border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
     color: var(--primary-color);
     font-size: 1.5rem;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.contato-item:hover .contato-item-icon {
+    background: linear-gradient(135deg, var(--primary-color), #010520);
+    color: white;
+    transform: scale(1.1);
+    border-color: var(--secondary-color);
+    box-shadow: 0 4px 15px rgba(2, 9, 63, 0.2);
 }
 
 .contato-item-content {
@@ -1506,94 +2334,163 @@ link[rel="apple-touch-icon"] {
 
 .contato-item-content h6 {
     color: var(--text-color);
-    font-size: 0.95rem;
+    font-size: 1rem;
     margin-bottom: 0.5rem;
+    font-weight: 600;
 }
 
 .contato-item-content a {
     color: var(--primary-color);
     transition: all 0.3s ease;
+    font-weight: 500;
+    display: inline-block;
 }
 
 .contato-item-content a:hover {
     color: #010520;
-    text-decoration: underline !important;
+    text-decoration: none !important;
+    transform: translateX(3px);
 }
 
 .contato-item-content p {
     color: #666;
-    font-size: 0.9rem;
-    line-height: 1.6;
+    font-size: 0.95rem;
+    line-height: 1.7;
     margin: 0;
 }
 
 /* Contato Form Card */
 .contato-form-card {
     background: white;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 24px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
     overflow: hidden;
     height: 100%;
-    border: 1px solid rgba(2, 9, 63, 0.1);
+    border: 1px solid rgba(2, 9, 63, 0.08);
     animation: fadeInUp 0.8s ease-out 0.4s both;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.contato-form-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+}
+
+.contato-form-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+}
+
+.contato-form-card:hover::before {
+    transform: scaleX(1);
 }
 
 .contato-form-header {
     background: linear-gradient(135deg, var(--primary-color) 0%, #010520 100%);
     color: white;
-    padding: 2rem;
+    padding: 2.5rem 2rem;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.contato-form-header::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: pulse 3s ease-in-out infinite;
 }
 
 .contato-form-header i {
-    font-size: 2.5rem;
+    font-size: 3rem;
     margin-bottom: 1rem;
     display: block;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.3s ease;
+}
+
+.contato-form-card:hover .contato-form-header i {
+    transform: scale(1.1) rotate(-10deg);
 }
 
 .contato-form-header h4 {
     color: white;
     margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
 }
 
 .contato-form-body {
-    padding: 2rem;
+    padding: 2.5rem 2rem;
 }
 
 .contato-form-body .form-label {
     color: var(--text-color);
     font-size: 0.95rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+}
+
+.contato-form-body .input-group {
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.contato-form-body .input-group:focus-within {
+    transform: translateY(-2px);
 }
 
 .contato-form-body .input-group-text {
-    background: linear-gradient(135deg, rgba(2, 9, 63, 0.1) 0%, rgba(1, 5, 32, 0.1) 100%);
-    border: 1px solid rgba(2, 9, 63, 0.2);
+    background: linear-gradient(135deg, rgba(2, 9, 63, 0.08) 0%, rgba(1, 5, 32, 0.12) 100%);
+    border: 2px solid rgba(2, 9, 63, 0.15);
     color: var(--primary-color);
     border-right: none;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
 }
 
 .contato-form-body .form-control {
     border-left: none;
-    padding: 0.75rem 1rem;
+    border: 2px solid rgba(2, 9, 63, 0.15);
+    padding: 0.875rem 1.25rem;
     transition: all 0.3s ease;
+    font-size: 0.95rem;
+    background: #fafafa;
 }
 
 .contato-form-body .form-control:focus {
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 0.2rem rgba(2, 9, 63, 0.15);
+    box-shadow: 0 0 0 0.25rem rgba(2, 9, 63, 0.1);
+    background: white;
+    outline: none;
 }
 
 .contato-form-body .form-control:focus + .input-group-text,
 .contato-form-body .input-group:focus-within .input-group-text {
     border-color: var(--primary-color);
-    background: linear-gradient(135deg, rgba(2, 9, 63, 0.15) 0%, rgba(1, 5, 32, 0.15) 100%);
+    background: linear-gradient(135deg, var(--primary-color), #010520);
+    color: white;
+    transform: scale(1.05);
 }
 
 .contato-form-body textarea.form-control {
-    border-left: 1px solid #ced4da;
+    border-left: 2px solid rgba(2, 9, 63, 0.15);
     resize: vertical;
-    min-height: 120px;
+    min-height: 140px;
 }
 
 .contato-form-body .input-group:focus-within textarea.form-control {
@@ -1602,16 +2499,40 @@ link[rel="apple-touch-icon"] {
 
 .contato-form-body .btn {
     border-radius: 50px;
-    padding: 0.875rem 2rem;
+    padding: 1rem 2.5rem;
     font-weight: 600;
     font-size: 1.1rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(2, 9, 63, 0.3);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 6px 20px rgba(2, 9, 63, 0.25);
+    position: relative;
+    overflow: hidden;
+}
+
+.contato-form-body .btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.contato-form-body .btn:hover::before {
+    width: 300px;
+    height: 300px;
 }
 
 .contato-form-body .btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(2, 9, 63, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(2, 9, 63, 0.35);
+}
+
+.contato-form-body .btn:active {
+    transform: translateY(-1px);
 }
 
 /* Footer Section */
@@ -3339,6 +4260,112 @@ hr {
     50% {
         opacity: 1;
         transform: scale(1.2);
+    }
+}
+
+/* Marquee de Destaques */
+.product-marquee {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #010520 100%);
+    padding: 1.25rem 0;
+    overflow: hidden;
+    position: relative;
+    margin-top: 0;
+}
+
+.product-marquee::before,
+.product-marquee::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 100px;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.product-marquee::before {
+    left: 0;
+    background: linear-gradient(to right, var(--primary-color), transparent);
+}
+
+.product-marquee::after {
+    right: 0;
+    background: linear-gradient(to left, var(--primary-color), transparent);
+}
+
+.marquee-wrapper {
+    display: flex;
+    width: max-content;
+    animation: marquee-scroll 30s linear infinite;
+}
+
+.product-marquee:hover .marquee-wrapper {
+    animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.marquee-content {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding: 0 2rem;
+}
+
+.marquee-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.marquee-item i {
+    font-size: 1.2rem;
+    color: var(--secondary-color);
+}
+
+.marquee-separator {
+    width: 2px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.4);
+    flex-shrink: 0;
+    margin: 0 2rem;
+    display: block;
+}
+
+/* Responsividade do Marquee */
+@media (max-width: 768px) {
+    .product-marquee {
+        padding: 1rem 0;
+    }
+    
+    .marquee-item {
+        font-size: 0.85rem;
+    }
+    
+    .marquee-item i {
+        font-size: 0.9rem;
+    }
+    
+    .marquee-separator {
+        height: 14px;
+        margin: 0 1rem;
+    }
+    
+    .marquee-content {
+        padding: 0 1rem;
     }
 }
 

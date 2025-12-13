@@ -19,42 +19,245 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Funcionalidade básica do carrinho
-document.addEventListener('DOMContentLoaded', function() {
-    const btnCarrinho = document.getElementById('btnCarrinho');
-    const carrinhoBadge = document.getElementById('carrinhoBadge');
+// Sistema completo de carrinho
+class CarrinhoManager {
+    constructor() {
+        this.carrinho = this.getCarrinho();
+        this.init();
+    }
     
-    if (btnCarrinho && carrinhoBadge) {
-        // Atualizar badge do carrinho
-        function atualizarBadgeCarrinho() {
-            try {
-                const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
-                const totalItens = carrinho.reduce((sum, item) => sum + (item.quantity || 0), 0);
-                carrinhoBadge.textContent = totalItens;
-                carrinhoBadge.style.display = totalItens > 0 ? 'flex' : 'none';
-            } catch (e) {
-                carrinhoBadge.textContent = '0';
-                carrinhoBadge.style.display = 'none';
-            }
+    getCarrinho() {
+        try {
+            return JSON.parse(localStorage.getItem('carrinho')) || [];
+        } catch (e) {
+            return [];
         }
+    }
+    
+    saveCarrinho() {
+        localStorage.setItem('carrinho', JSON.stringify(this.carrinho));
+        this.dispatchCarrinhoEvent();
+    }
+    
+    dispatchCarrinhoEvent() {
+        window.dispatchEvent(new CustomEvent('carrinhoAtualizado', { detail: this.carrinho }));
+    }
+    
+    adicionarItem(productId, name, price = 0, image = '') {
+        const itemExistente = this.carrinho.find(item => item.product === productId);
         
-        // Redirecionar para loja ao clicar no carrinho (se não estiver na loja)
-        if (!window.location.pathname.includes('loja.html') && !window.location.pathname.includes('produto-detalhes.html')) {
-            btnCarrinho.addEventListener('click', function() {
-                window.location.href = 'loja.html';
+        if (itemExistente) {
+            itemExistente.quantity++;
+        } else {
+            this.carrinho.push({
+                product: productId,
+                name: name,
+                price: price,
+                quantity: 1,
+                image: image
             });
         }
         
-        // Atualizar badge ao carregar a página
-        atualizarBadgeCarrinho();
+        this.saveCarrinho();
+        this.atualizarBadge();
+        this.mostrarFeedback('Produto adicionado ao carrinho!', 'success');
+        return true;
+    }
+    
+    removerItem(productId) {
+        this.carrinho = this.carrinho.filter(item => item.product !== productId);
+        this.saveCarrinho();
+        this.atualizarBadge();
+        this.renderCarrinho();
+        this.mostrarFeedback('Produto removido do carrinho', 'info');
+    }
+    
+    atualizarQuantidade(productId, quantity) {
+        const item = this.carrinho.find(item => item.product === productId);
+        if (item) {
+            if (quantity <= 0) {
+                this.removerItem(productId);
+            } else {
+                item.quantity = quantity;
+                this.saveCarrinho();
+                this.renderCarrinho();
+            }
+        }
+    }
+    
+    limparCarrinho() {
+        this.carrinho = [];
+        this.saveCarrinho();
+        this.atualizarBadge();
+        this.renderCarrinho();
+        this.mostrarFeedback('Carrinho limpo', 'info');
+    }
+    
+    getTotalItens() {
+        return this.carrinho.reduce((sum, item) => sum + (item.quantity || 0), 0);
+    }
+    
+    getTotalPreco() {
+        return this.carrinho.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    }
+    
+    atualizarBadge() {
+        const carrinhoBadge = document.getElementById('carrinhoBadge');
+        if (carrinhoBadge) {
+            const total = this.getTotalItens();
+            carrinhoBadge.textContent = total;
+            carrinhoBadge.style.display = total > 0 ? 'flex' : 'none';
+            carrinhoBadge.setAttribute('aria-label', `${total} itens no carrinho`);
+        }
+    }
+    
+    renderCarrinho() {
+        const carrinhoVazio = document.getElementById('carrinhoVazio');
+        const carrinhoItens = document.getElementById('carrinhoItens');
+        const carrinhoLista = document.getElementById('carrinhoLista');
+        const carrinhoTotal = document.getElementById('carrinhoTotal');
+        const btnFinalizar = document.getElementById('btnFinalizarCompra');
         
-        // Atualizar badge quando o carrinho mudar (evento customizado)
-        window.addEventListener('storage', function(e) {
+        if (!carrinhoLista) return;
+        
+        if (this.carrinho.length === 0) {
+            if (carrinhoVazio) carrinhoVazio.classList.remove('d-none');
+            if (carrinhoItens) carrinhoItens.classList.add('d-none');
+            if (btnFinalizar) btnFinalizar.classList.add('d-none');
+            return;
+        }
+        
+        if (carrinhoVazio) carrinhoVazio.classList.add('d-none');
+        if (carrinhoItens) carrinhoItens.classList.remove('d-none');
+        if (btnFinalizar) btnFinalizar.classList.remove('d-none');
+        
+        carrinhoLista.innerHTML = this.carrinho.map(item => `
+            <div class="d-flex align-items-center mb-3 pb-3 border-bottom carrinho-item" data-product="${item.product}">
+                ${item.image ? `<img src="${item.image}" alt="${item.name}" class="img-thumbnail me-3" style="width: 80px; height: 80px; object-fit: cover;">` : ''}
+                <div class="flex-grow-1">
+                    <h6 class="mb-1">${item.name}</h6>
+                    <small class="text-muted">R$ ${item.price.toFixed(2).replace('.', ',')} cada</small>
+                    <div class="mt-2 d-flex align-items-center">
+                        <button class="btn btn-sm btn-outline-secondary" onclick="carrinhoManager.atualizarQuantidade('${item.product}', ${item.quantity - 1})" aria-label="Diminuir quantidade">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <span class="mx-3">${item.quantity}</span>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="carrinhoManager.atualizarQuantidade('${item.product}', ${item.quantity + 1})" aria-label="Aumentar quantidade">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger ms-auto" onclick="carrinhoManager.removerItem('${item.product}')" aria-label="Remover item">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="text-end ms-3">
+                    <strong>R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}</strong>
+                </div>
+            </div>
+        `).join('');
+        
+        if (carrinhoTotal) {
+            carrinhoTotal.textContent = `R$ ${this.getTotalPreco().toFixed(2).replace('.', ',')}`;
+        }
+    }
+    
+    mostrarFeedback(mensagem, tipo = 'success') {
+        if (typeof showAlert === 'function') {
+            showAlert(mensagem, tipo);
+        } else {
+            // Fallback simples
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${tipo} position-fixed`;
+            alert.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+            alert.textContent = mensagem;
+            document.body.appendChild(alert);
+            setTimeout(() => alert.remove(), 3000);
+        }
+    }
+    
+    init() {
+        const btnCarrinho = document.getElementById('btnCarrinho');
+        const carrinhoModal = document.getElementById('carrinhoModal');
+        
+        // Atualizar badge inicial
+        this.atualizarBadge();
+        
+        // Abrir modal ao clicar no carrinho
+        if (btnCarrinho && carrinhoModal) {
+            btnCarrinho.addEventListener('click', () => {
+                this.renderCarrinho();
+                const modal = new bootstrap.Modal(carrinhoModal);
+                modal.show();
+            });
+        }
+        
+        // Renderizar carrinho quando modal abrir
+        if (carrinhoModal) {
+            carrinhoModal.addEventListener('show.bs.modal', () => {
+                this.renderCarrinho();
+            });
+        }
+        
+        // Botão finalizar compra
+        const btnFinalizar = document.getElementById('btnFinalizarCompra');
+        if (btnFinalizar) {
+            btnFinalizar.addEventListener('click', () => {
+                if (this.carrinho.length > 0) {
+                    window.location.href = 'loja.html#contato';
+                    const modal = bootstrap.Modal.getInstance(carrinhoModal);
+                    if (modal) modal.hide();
+                }
+            });
+        }
+        
+        // Escutar mudanças no carrinho
+        window.addEventListener('carrinhoAtualizado', () => {
+            this.carrinho = this.getCarrinho();
+            this.atualizarBadge();
+        });
+        
+        // Escutar mudanças no localStorage (outras abas)
+        window.addEventListener('storage', (e) => {
             if (e.key === 'carrinho') {
-                atualizarBadgeCarrinho();
+                this.carrinho = this.getCarrinho();
+                this.atualizarBadge();
+                this.renderCarrinho();
             }
         });
     }
+}
+
+// Inicializar carrinho
+let carrinhoManager;
+document.addEventListener('DOMContentLoaded', function() {
+    carrinhoManager = new CarrinhoManager();
+    
+    // Tornar global para uso em onclick
+    window.carrinhoManager = carrinhoManager;
+    
+    // Adicionar botões "Adicionar ao Carrinho" nos produtos
+    document.querySelectorAll('[data-product-id]').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const productId = this.getAttribute('data-product-id');
+            const productName = this.getAttribute('data-product-name') || 'Produto';
+            const productPrice = parseFloat(this.getAttribute('data-product-price')) || 0;
+            const productImage = this.getAttribute('data-product-image') || '';
+            
+            carrinhoManager.adicionarItem(productId, productName, productPrice, productImage);
+            
+            // Feedback visual no botão
+            const originalHTML = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-check me-2"></i>Adicionado!';
+            this.classList.add('btn-success');
+            this.disabled = true;
+            
+            setTimeout(() => {
+                this.innerHTML = originalHTML;
+                this.classList.remove('btn-success');
+                this.disabled = false;
+            }, 2000);
+        });
+    });
 });
 
 // Navbar scroll effect
@@ -128,52 +331,142 @@ scrollTopBtn.addEventListener('click', () => {
     });
 });
 
-// Formulário de contato
+// Formulário de contato com feedback visual aprimorado
 const contatoForm = document.getElementById('contatoForm');
 if (contatoForm) {
     contatoForm.addEventListener('submit', (e) => {
         e.preventDefault();
+        
+        if (!contatoForm.checkValidity()) {
+            contatoForm.classList.add('was-validated');
+            showAlert('Por favor, preencha todos os campos obrigatórios.', 'warning');
+            return;
+        }
         
         // Simula o envio do formulário
         const btn = contatoForm.querySelector('button[type="submit"]');
         const btnText = btn.querySelector('.btn-text');
         const typingIndicator = btn.querySelector('.typing-indicator');
         
+        // Feedback visual no botão
         btn.disabled = true;
+        btn.style.opacity = '0.7';
+        btn.style.cursor = 'not-allowed';
         if (btnText) btnText.classList.add('d-none');
         if (typingIndicator) typingIndicator.classList.remove('d-none');
+        
+        // Animação de loading
+        btn.style.position = 'relative';
         
         // Simula delay de envio
         setTimeout(() => {
             btn.disabled = false;
+            btn.style.opacity = '1';
+            btn.style.cursor = 'pointer';
             if (btnText) btnText.classList.remove('d-none');
             if (typingIndicator) typingIndicator.classList.add('d-none');
             
-            // Mostra mensagem de sucesso
-            showAlert('Mensagem enviada com sucesso! Entraremos em contato em breve.', 'success');
+            // Mostra mensagem de sucesso com animação
+            showAlert('Mensagem enviada com sucesso! Entraremos em contato em breve.', 'success', 6000);
             
             // Limpa o formulário
             contatoForm.reset();
+            contatoForm.classList.remove('was-validated');
+            
+            // Feedback visual de sucesso no botão
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check me-2"></i>Enviado!';
+            btn.classList.add('btn-success');
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.classList.remove('btn-success');
+            }, 2000);
         }, 2000);
+    });
+    
+    // Feedback visual em campos do formulário
+    const inputs = contatoForm.querySelectorAll('input, textarea');
+    inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentElement.classList.add('focused');
+        });
+        
+        input.addEventListener('blur', function() {
+            this.parentElement.classList.remove('focused');
+            if (this.value && this.checkValidity()) {
+                this.parentElement.classList.add('valid');
+            } else if (this.value && !this.checkValidity()) {
+                this.parentElement.classList.add('invalid');
+            }
+        });
+        
+        input.addEventListener('input', function() {
+            if (this.checkValidity()) {
+                this.parentElement.classList.remove('invalid');
+                this.parentElement.classList.add('valid');
+            }
+        });
     });
 }
 
-// Função para mostrar alertas
-function showAlert(message, type = 'info') {
+// Função para mostrar alertas com animação
+function showAlert(message, type = 'info', duration = 5000) {
+    // Remove alertas anteriores
+    const existingAlerts = document.querySelectorAll('.custom-alert');
+    existingAlerts.forEach(alert => alert.remove());
+    
     const alertDiv = document.createElement('div');
-    alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
-    alertDiv.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+    alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed custom-alert`;
+    alertDiv.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px; max-width: 400px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); animation: slideInRight 0.3s ease;';
     alertDiv.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'danger' ? 'exclamation-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'} me-2"></i>
         ${message}
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
     `;
     
     document.body.appendChild(alertDiv);
     
-    // Remove o alerta após 5 segundos
+    // Remove o alerta após o tempo especificado
     setTimeout(() => {
-        alertDiv.remove();
-    }, 5000);
+        alertDiv.style.animation = 'slideOutRight 0.3s ease';
+        setTimeout(() => {
+            if (alertDiv.parentNode) {
+                alertDiv.remove();
+            }
+        }, 300);
+    }, duration);
+}
+
+// Adicionar animações CSS para alertas
+if (!document.getElementById('alertAnimations')) {
+    const style = document.createElement('style');
+    style.id = 'alertAnimations';
+    style.textContent = `
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+        .custom-alert {
+            transition: all 0.3s ease;
+        }
+    `;
+    document.head.appendChild(style);
 }
 
 // Animação de entrada dos elementos ao scroll
@@ -233,18 +526,9 @@ galleryItems.forEach(item => {
     });
 });
 
-// Lazy loading para imagens
-if ('loading' in HTMLImageElement.prototype) {
-    const images = document.querySelectorAll('img[loading="lazy"]');
-    images.forEach(img => {
-        img.src = img.dataset.src;
-    });
-} else {
-    // Fallback para navegadores que não suportam lazy loading nativo
-    const script = document.createElement('script');
-    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js';
-    document.body.appendChild(script);
-}
+// Lazy loading nativo do navegador - não precisa de código adicional
+// O atributo loading="lazy" já é suficiente para navegadores modernos
+// Navegadores antigos simplesmente carregarão as imagens normalmente
 
 // Contador animado para a seção de anos
 const animateCounter = (element, start, end, duration) => {
@@ -281,14 +565,27 @@ if (heroSection) {
     heroYearsObserver.observe(heroSection);
 }
 
-// Adiciona efeito de hover nos cards de produto
-document.querySelectorAll('.product-card').forEach(card => {
+// Adiciona efeito de hover nos cards de produto com feedback visual
+document.querySelectorAll('.product-card, .card').forEach(card => {
     card.addEventListener('mouseenter', function() {
         this.style.transform = 'translateY(-10px) scale(1.02)';
+        this.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
+        this.style.boxShadow = '0 8px 24px rgba(0,0,0,0.15)';
     });
     
     card.addEventListener('mouseleave', function() {
         this.style.transform = 'translateY(0) scale(1)';
+        this.style.boxShadow = '';
+    });
+    
+    // Feedback ao clicar
+    card.addEventListener('click', function(e) {
+        if (!e.target.closest('button, a')) {
+            this.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 150);
+        }
     });
 });
 
@@ -443,19 +740,40 @@ document.querySelectorAll('[data-bs-target^="#produto"]').forEach(btn => {
     });
 });
 
-// Rastreia cliques nos botões de compra dos modais
+// Rastreia cliques nos botões de compra dos modais com feedback visual
 document.addEventListener('click', (e) => {
     if (e.target.closest('.modal-footer .btn-success')) {
         const modal = e.target.closest('.modal');
         const productName = modal?.querySelector('.modal-title')?.textContent || 'Produto';
         trackEvent('Purchase Intent', 'Click Comprar', productName);
+        
+        const btn = e.target.closest('.btn-success');
+        const originalHTML = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Redirecionando...';
+        btn.disabled = true;
+        
         showAlert('Você será redirecionado para nossa loja em instantes!', 'success');
+        
+        setTimeout(() => {
+            btn.innerHTML = originalHTML;
+            btn.disabled = false;
+        }, 2000);
     }
     
     if (e.target.closest('.modal-footer .btn-primary')) {
         const modal = e.target.closest('.modal');
         const productName = modal?.querySelector('.modal-title')?.textContent || 'Produto';
         trackEvent('Quote Request', 'Click Orçamento', productName);
+        
+        const btn = e.target.closest('.btn-primary');
+        const originalHTML = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-check me-2"></i>Solicitado!';
+        btn.classList.add('btn-success');
+        
+        setTimeout(() => {
+            btn.innerHTML = originalHTML;
+            btn.classList.remove('btn-success');
+        }, 2000);
     }
 });
 
@@ -488,34 +806,35 @@ window.usetrafo = {
     scrollToTop: () => window.scrollTo({ top: 0, behavior: 'smooth' })
 };
 
-// Filtros da Loja
-document.addEventListener('DOMContentLoaded', function() {
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const lojaItems = document.querySelectorAll('.loja-item');
-
-    filterButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            // Remove active de todos os botões
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            // Adiciona active no botão clicado
-            this.classList.add('active');
-
-            const filter = this.getAttribute('data-filter');
-
-            // Filtra os produtos
-            lojaItems.forEach(item => {
-                if (filter === 'all') {
-                    item.classList.remove('hidden');
-                } else {
-                    const category = item.getAttribute('data-category');
-                    if (category === filter) {
-                        item.classList.remove('hidden');
-                    } else {
-                        item.classList.add('hidden');
-                    }
-                }
-            });
-        });
-    });
-});
+// Filtros da Loja - REMOVIDO: A lógica de filtros está agora em loja.html
+// Este código estava interferindo com a funcionalidade de múltiplas seleções
+// document.addEventListener('DOMContentLoaded', function() {
+//     const filterButtons = document.querySelectorAll('.filter-btn');
+//     const lojaItems = document.querySelectorAll('.loja-item');
+//
+//     filterButtons.forEach(button => {
+//         button.addEventListener('click', function() {
+//             // Remove active de todos os botões
+//             filterButtons.forEach(btn => btn.classList.remove('active'));
+//             // Adiciona active no botão clicado
+//             this.classList.add('active');
+//
+//             const filter = this.getAttribute('data-filter');
+//
+//             // Filtra os produtos
+//             lojaItems.forEach(item => {
+//                 if (filter === 'all') {
+//                     item.classList.remove('hidden');
+//                 } else {
+//                     const category = item.getAttribute('data-category');
+//                     if (category === filter) {
+//                         item.classList.remove('hidden');
+//                     } else {
+//                         item.classList.add('hidden');
+//                     }
+//                 }
+//             });
+//         });
+//     });
+// });
 

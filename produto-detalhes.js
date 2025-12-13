@@ -390,23 +390,39 @@ document.addEventListener('DOMContentLoaded', function() {
         const product = this.getAttribute('data-product');
         const name = this.getAttribute('data-name');
         const price = parseFloat(this.getAttribute('data-price'));
+        const image = produto.images && produto.images[0] ? produto.images[0] : '';
         
-        const item = carrinho.find(i => i.product === product);
-        if (item) {
-            item.quantity++;
+        // Usar o sistema de carrinho global se disponível
+        if (window.carrinhoManager) {
+            window.carrinhoManager.adicionarItem(product, name, price, image);
         } else {
-            carrinho.push({ product, name, price, quantity: 1 });
+            // Fallback para sistema antigo
+            const item = carrinho.find(i => i.product === product);
+            if (item) {
+                item.quantity++;
+            } else {
+                carrinho.push({ product, name, price, quantity: 1, image });
+            }
+            localStorage.setItem('carrinho', JSON.stringify(carrinho));
+            updateCartBadge();
         }
         
-        localStorage.setItem('carrinho', JSON.stringify(carrinho));
-        updateCartBadge();
-        
-        // Feedback visual
+        // Feedback visual aprimorado
+        const originalHTML = this.innerHTML;
         this.innerHTML = '<i class="fas fa-check me-2"></i> Adicionado!';
         this.classList.add('btn-success');
+        this.disabled = true;
+        
+        // Animação de pulso
+        this.style.transform = 'scale(1.1)';
         setTimeout(() => {
-            this.innerHTML = '<i class="fas fa-shopping-cart me-2"></i> Adicionar ao Carrinho';
+            this.style.transform = 'scale(1)';
+        }, 200);
+        
+        setTimeout(() => {
+            this.innerHTML = originalHTML;
             this.classList.remove('btn-success');
+            this.disabled = false;
         }, 2000);
     });
 });

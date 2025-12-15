@@ -1363,18 +1363,19 @@ document.addEventListener('DOMContentLoaded', function() {
     window.authManager = new AuthManager();
 });
 
-// Esconder menu hamburger quando passa do hero
+// Ajustar navbar quando passa do hero
 window.addEventListener('scroll', () => {
     const heroSection = document.querySelector('.hero-section');
-    const navbarCollapse = document.querySelector('.navbar-collapse');
+    const navbar = document.querySelector('.navbar');
     
-    if (heroSection && navbarCollapse) {
+    if (heroSection && navbar) {
         const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
         const scrollPosition = window.pageYOffset;
         
-        if (scrollPosition > heroBottom && navbarCollapse.classList.contains('show')) {
-            const bsCollapse = new bootstrap.Collapse(navbarCollapse);
-            bsCollapse.hide();
+        if (scrollPosition > heroBottom) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
         }
     }
 });

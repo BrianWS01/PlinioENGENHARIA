@@ -128,3 +128,4 @@ No dashboard do Supabase você pode:
 - JavaScript Client: https://supabase.com/docs/reference/javascript/introduction
 - Auth Guide: https://supabase.com/docs/guides/auth
 
+

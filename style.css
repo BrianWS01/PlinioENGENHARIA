@@ -525,7 +525,6 @@ link[rel="apple-touch-icon"] {
 .hero-cta .btn-hero-primary:hover {
     background-color: #f8f9fa;
     border-color: var(--primary-color);
-    transform: translateY(-3px);
     box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
     color: #010520;
 }
@@ -544,7 +543,6 @@ link[rel="apple-touch-icon"] {
 .hero-cta .btn-hero-secondary:hover {
     background-color: #010520;
     border-color: #ffffff;
-    transform: translateY(-3px);
     box-shadow: 0 6px 25px rgba(2, 9, 63, 0.4);
     color: #ffffff;
 }
@@ -576,7 +574,6 @@ link[rel="apple-touch-icon"] {
 
 .btn-primary:hover {
     background: #030d5a;
-    transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(2, 9, 63, 0.4);
 }
 
@@ -588,7 +585,6 @@ link[rel="apple-touch-icon"] {
 
 .btn-warning:hover {
     background: #e0a800;
-    transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
 }
 
@@ -621,7 +617,6 @@ link[rel="apple-touch-icon"] {
 .btn-outline-primary:hover {
     background: var(--primary-color);
     color: white;
-    transform: translateY(-3px);
 }
 
 .btn-outline-light {
@@ -632,7 +627,6 @@ link[rel="apple-touch-icon"] {
 .btn-outline-light:hover {
     background: white;
     color: var(--primary-color);
-    transform: translateY(-3px);
 }
 
 /* Cards */
@@ -715,7 +709,6 @@ link[rel="apple-touch-icon"] {
 }
 
 .product-card .btn:hover {
-    transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(2, 9, 63, 0.2);
 }
 
@@ -860,7 +853,6 @@ link[rel="apple-touch-icon"] {
 }
 
 .featured-product .btn:hover {
-    transform: translateY(-3px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
@@ -1105,6 +1097,35 @@ link[rel="apple-touch-icon"] {
 }
 
 @media (max-width: 768px) {
+    .comparacao-section {
+        padding: 3rem 0;
+    }
+    
+    .comparacao-icon-header {
+        width: 70px;
+        height: 70px;
+        font-size: 2rem;
+    }
+    
+    .comparacao-card {
+        margin-bottom: 2rem;
+    }
+    
+    .comparacao-card-header {
+        padding: 1.5rem;
+    }
+    
+    .comparacao-card-body {
+        padding: 1.5rem;
+    }
+    
+    .comparacao-features li {
+        font-size: 0.9rem;
+        padding: 0.5rem 0;
+    }
+}
+
+@media (max-width: 768px) {
     .comparacao-icon-header {
         width: 80px;
         height: 80px;
@@ -1136,7 +1157,7 @@ link[rel="apple-touch-icon"] {
 #produtosCarousel {
     position: relative;
     padding-top: 15px;
-    padding-bottom: 60px;
+    padding-bottom: 15px;
     padding-left: 40px;
     padding-right: 40px;
     overflow: visible;
@@ -1150,20 +1171,201 @@ link[rel="apple-touch-icon"] {
 }
 
 @media (max-width: 768px) {
+    /* Mobile: estilo similar ao transformadoresCarousel para Caixas */
     #produtosCarousel {
+        padding: 0 15px 80px;
+        border-radius: 16px;
+        overflow: visible;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    }
+    
+    #produtosCarousel .carousel-inner {
+        border-radius: 16px;
+        overflow: hidden;
+    }
+    
+    /* Transformar cards em estilo transformador-carousel-item no mobile */
+    #produtosCarousel .carousel-item .row {
+        margin: 0;
+    }
+    
+    /* Mobile: mostrar apenas 1 caixa por vez - esconder outras caixas no mesmo slide */
+    #produtosCarousel .carousel-item .col-md-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+        padding: 0;
+    }
+    
+    #produtosCarousel .carousel-item .col-md-4:not(:first-child) {
+        display: none;
+    }
+    
+    #produtosCarousel .product-card {
+        border: none;
+        border-radius: 0;
+        margin: 0;
+        box-shadow: none;
+        height: 450px;
+        position: relative;
+        overflow: hidden;
+        background-color: #f8f9fa;
+    }
+    
+    #produtosCarousel .product-card .card-img-top {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        background-color: #f8f9fa;
+    }
+    
+    #produtosCarousel .product-card .card-body {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(180deg, transparent 0%, rgba(2, 9, 63, 0.95) 100%);
+        padding: 2rem 1.5rem 1.5rem;
+        color: white;
+        border-radius: 0;
+    }
+    
+    #produtosCarousel .product-card .card-title {
+        color: white;
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+    
+    #produtosCarousel .product-card .card-text {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    /* Mostrar botões de compra no mobile */
+    #produtosCarousel .product-card .btn {
+        display: block !important;
+        width: 100%;
+        margin-bottom: 0.5rem;
+        font-size: 0.85rem;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        z-index: 10;
+        position: relative;
+    }
+    
+    #produtosCarousel .product-card .btn:last-child {
+        margin-bottom: 0;
+    }
+    
+    #produtosCarousel .product-card .btn-outline-primary {
+        background-color: rgba(255, 255, 255, 0.2);
+        border-color: white;
+        color: white;
+    }
+    
+    #produtosCarousel .product-card .btn-outline-primary:hover {
+        background-color: white;
+        color: var(--primary-color);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+    }
+    
+    #produtosCarousel .product-card .btn-primary {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+        color: white;
+    }
+    
+    #produtosCarousel .product-card .btn-primary:hover {
+        background-color: #010520;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(2, 9, 63, 0.4);
+    }
+    
+    #produtosCarousel .product-card .btn-warning {
+        background-color: var(--secondary-color);
+        border-color: var(--secondary-color);
+        color: white;
+    }
+    
+    #produtosCarousel .product-card .btn-warning:hover {
+        background-color: #e0a800;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255, 193, 7, 0.4);
+    }
+    
+    /* Ajustar card-body para acomodar botões */
+    #produtosCarousel .product-card .card-body {
+        padding-bottom: 1.5rem;
+    }
+    
+    #produtosCarousel .product-card:hover {
+        transform: none;
+        box-shadow: none;
+        margin: 0;
+    }
+    
+    #transformadoresIsoladoresCarousel,
+    #autotransformadoresCarousel {
         padding-top: 15px;
-        padding-bottom: 50px;
-        padding-left: 30px;
-        padding-right: 30px;
+        padding-bottom: 80px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+    /* Mobile: botões embaixo centralizados para TODOS os carrosséis de NOSSOS PRODUTOS */
+    #produtosCarousel .carousel-control-prev,
+    #produtosCarousel .carousel-control-next,
+    #transformadoresIsoladoresCarousel .carousel-control-prev,
+    #transformadoresIsoladoresCarousel .carousel-control-next,
+    #autotransformadoresCarousel .carousel-control-prev,
+    #autotransformadoresCarousel .carousel-control-next {
+        top: auto;
+        bottom: -60px;
+        transform: none;
+        display: block !important;
+    }
+    
+    #produtosCarousel .carousel-control-prev,
+    #transformadoresIsoladoresCarousel .carousel-control-prev,
+    #autotransformadoresCarousel .carousel-control-prev {
+        left: calc(50% - 60px);
+    }
+    
+    #produtosCarousel .carousel-control-next,
+    #transformadoresIsoladoresCarousel .carousel-control-next,
+    #autotransformadoresCarousel .carousel-control-next {
+        right: calc(50% - 60px);
+        left: auto;
+    }
+    
+    #produtosCarousel .carousel-control-prev:hover,
+    #produtosCarousel .carousel-control-next:hover,
+    #transformadoresIsoladoresCarousel .carousel-control-prev:hover,
+    #transformadoresIsoladoresCarousel .carousel-control-next:hover,
+    #autotransformadoresCarousel .carousel-control-prev:hover,
+    #autotransformadoresCarousel .carousel-control-next:hover {
+        transform: scale(1.1);
+    }
+    
+    /* Mobile: mostrar apenas 1 produto por vez em TODOS os carrosséis */
+    #transformadoresIsoladoresCarousel .carousel-item .row .col-md-4,
+    #autotransformadoresCarousel .carousel-item .row .col-md-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
     }
 }
 
-/* Carousel Controls - Setas */
+/* Carousel Controls - Setas - Desktop: nas laterais */
 .carousel-control-prev,
 .carousel-control-next {
     width: 50px;
     height: 50px;
     top: 50%;
+    bottom: auto;
     transform: translateY(-50%);
     background-color: rgba(2, 9, 63, 0.9);
     border-radius: 50%;
@@ -1180,6 +1382,7 @@ link[rel="apple-touch-icon"] {
 
 .carousel-control-next {
     right: -25px;
+    left: auto;
 }
 
 .carousel-control-prev:hover,
@@ -1187,6 +1390,14 @@ link[rel="apple-touch-icon"] {
     background-color: var(--primary-color);
     transform: translateY(-50%) scale(1.1);
     box-shadow: 0 6px 20px rgba(2, 9, 63, 0.4);
+}
+
+/* Esconder botões de navegação nos carrosséis de Transformadores Isoladores e Autotransformadores */
+#transformadoresIsoladoresCarousel .carousel-control-prev,
+#transformadoresIsoladoresCarousel .carousel-control-next,
+#autotransformadoresCarousel .carousel-control-prev,
+#autotransformadoresCarousel .carousel-control-next {
+    display: none !important;
 }
 
 .carousel-control-prev-icon,
@@ -1204,7 +1415,7 @@ link[rel="apple-touch-icon"] {
     bottom: auto;
     left: auto;
     transform: none;
-    margin: 18px 0 0;
+    margin: 20px 0 0;
     padding: 0;
     list-style: none;
     display: flex;
@@ -1281,7 +1492,7 @@ link[rel="apple-touch-icon"] {
 .transformadores-carousel {
     position: relative;
     margin: 2rem 0;
-    padding: 0 80px;
+    padding: 0 80px 20px;
     border-radius: 16px;
     overflow: visible;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
@@ -1294,6 +1505,39 @@ link[rel="apple-touch-icon"] {
 
 .produtos-section {
     overflow: visible;
+}
+
+/* Garantir que os carrosséis de Transformadores Isoladores e Autotransformadores não cortem o hover */
+#transformadoresIsoladoresCarousel,
+#autotransformadoresCarousel {
+    overflow: visible !important;
+    padding-top: 20px;
+    padding-bottom: 30px;
+}
+
+#transformadoresIsoladoresCarousel .carousel-inner,
+#autotransformadoresCarousel .carousel-inner {
+    overflow: visible !important;
+}
+
+#transformadoresIsoladoresCarousel .carousel-item,
+#autotransformadoresCarousel .carousel-item {
+    overflow: visible !important;
+}
+
+/* Garantir que os botões sejam clicáveis no mobile */
+@media (max-width: 768px) {
+    #transformadoresIsoladoresCarousel .product-card .btn,
+    #autotransformadoresCarousel .product-card .btn {
+        z-index: 10;
+        position: relative;
+        pointer-events: auto;
+    }
+    
+    #transformadoresIsoladoresCarousel .product-card,
+    #autotransformadoresCarousel .product-card {
+        z-index: 1;
+    }
 }
 
 /* Ocultar seção USETRAFO Solar */
@@ -1414,7 +1658,7 @@ link[rel="apple-touch-icon"] {
 /* Indicadores do carrossel de transformadores - Estilo pílula e bolinha */
 #transformadoresCarousel .carousel-indicators {
     position: absolute;
-    bottom: 10px;
+    bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
@@ -1494,6 +1738,9 @@ link[rel="apple-touch-icon"] {
     transition: all 0.3s ease;
     border: 2px solid var(--primary-color);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    top: 50%;
+    bottom: auto;
+    transform: translateY(-50%);
 }
 
 #transformadoresCarousel .carousel-control-prev {
@@ -1502,6 +1749,7 @@ link[rel="apple-touch-icon"] {
 
 #transformadoresCarousel .carousel-control-next {
     right: -80px;
+    left: auto;
 }
 
 #transformadoresCarousel .carousel-control-prev:hover,
@@ -1520,7 +1768,7 @@ link[rel="apple-touch-icon"] {
 /* Responsividade do carrossel de transformadores */
 @media (max-width: 992px) {
     .transformadores-carousel {
-        padding: 0 60px;
+        padding: 0 60px 20px;
     }
     
     #transformadoresCarousel .carousel-control-prev {
@@ -1534,7 +1782,7 @@ link[rel="apple-touch-icon"] {
 
 @media (max-width: 768px) {
     .transformadores-carousel {
-        padding: 0 50px;
+        padding: 0 15px 80px;
     }
     
     .transformador-carousel-item {
@@ -1553,24 +1801,38 @@ link[rel="apple-touch-icon"] {
         font-size: 1.2rem;
     }
     
+    /* Mobile: botões embaixo centralizados */
     #transformadoresCarousel .carousel-control-prev,
     #transformadoresCarousel .carousel-control-next {
         width: 50px;
         height: 50px;
+        top: auto;
+        bottom: -60px;
+        transform: none;
     }
     
     #transformadoresCarousel .carousel-control-prev {
-        left: -50px;
+        left: calc(50% - 60px);
     }
     
     #transformadoresCarousel .carousel-control-next {
-        right: -50px;
+        right: calc(50% - 60px);
+        left: auto;
+    }
+    
+    #transformadoresCarousel .carousel-control-prev:hover,
+    #transformadoresCarousel .carousel-control-next:hover {
+        transform: scale(1.1);
+    }
+    
+    #transformadoresCarousel .carousel-indicators {
+        bottom: 10px;
     }
 }
 
 @media (max-width: 576px) {
     .transformadores-carousel {
-        padding: 0 40px;
+        padding: 0 15px 80px;
     }
     
     .transformador-carousel-item {
@@ -1589,18 +1851,28 @@ link[rel="apple-touch-icon"] {
         font-size: 1rem;
     }
     
+    /* Mobile: botões embaixo centralizados */
     #transformadoresCarousel .carousel-control-prev,
     #transformadoresCarousel .carousel-control-next {
         width: 45px;
         height: 45px;
+        top: auto;
+        bottom: -60px;
+        transform: none;
     }
     
     #transformadoresCarousel .carousel-control-prev {
-        left: -40px;
+        left: calc(50% - 55px);
     }
     
     #transformadoresCarousel .carousel-control-next {
-        right: -40px;
+        right: calc(50% - 55px);
+        left: auto;
+    }
+    
+    #transformadoresCarousel .carousel-control-prev:hover,
+    #transformadoresCarousel .carousel-control-next:hover {
+        transform: scale(1.1);
     }
 }
 
@@ -1609,6 +1881,9 @@ link[rel="apple-touch-icon"] {
     .carousel-control-next {
         width: 40px;
         height: 40px;
+        top: 50%;
+        bottom: auto;
+        transform: translateY(-50%);
     }
     
     .carousel-control-prev {
@@ -1617,6 +1892,7 @@ link[rel="apple-touch-icon"] {
     
     .carousel-control-next {
         right: -15px;
+        left: auto;
     }
     
     .carousel-control-prev-icon,
@@ -1626,9 +1902,23 @@ link[rel="apple-touch-icon"] {
         height: 18px;
     }
     
+    .carousel-control-prev:hover,
+    .carousel-control-next:hover {
+        transform: scale(1.1);
+    }
+    
     .carousel-indicators {
-        bottom: -40px;
+        bottom: auto;
+        margin-top: 20px;
         gap: 10px;
+    }
+    
+    /* Mobile: mostrar apenas 1 produto por vez */
+    #produtosCarousel .carousel-item .row .col-md-4,
+    #transformadoresIsoladoresCarousel .carousel-item .row .col-md-6,
+    #autotransformadoresCarousel .carousel-item .row .col-md-6 {
+        flex: 0 0 100%;
+        max-width: 100%;
     }
     
     .carousel-indicators button {
@@ -1737,7 +2027,6 @@ link[rel="apple-touch-icon"] {
 }
 
 .solar-cta .btn-warning:hover {
-    transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
     background: linear-gradient(135deg, #ffed4e 0%, #ffd700 100%);
 }
@@ -1751,7 +2040,6 @@ link[rel="apple-touch-icon"] {
 .solar-cta .btn-outline-light:hover {
     background-color: rgba(255, 255, 255, 0.1);
     border-color: #ffffff;
-    transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
@@ -2527,7 +2815,6 @@ link[rel="apple-touch-icon"] {
 }
 
 .contato-form-body .btn:hover {
-    transform: translateY(-3px);
     box-shadow: 0 10px 30px rgba(2, 9, 63, 0.35);
 }
 
@@ -2589,6 +2876,13 @@ link[rel="apple-touch-icon"] {
     object-position: center;
     filter: brightness(1.2) drop-shadow(0 0 10px rgba(255, 255, 255, 0.1));
     transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.footer-logo img {
+    margin: 0 auto;
 }
 
 .footer-logo:hover {
@@ -2686,7 +2980,7 @@ link[rel="apple-touch-icon"] {
 }
 
 .footer-link:hover {
-    color: var(--primary-color);
+    color: var(--secondary-color) !important;
     transform: translateX(3px);
     text-decoration: none;
 }
@@ -2709,8 +3003,8 @@ link[rel="apple-touch-icon"] {
 }
 
 .footer-link-item:hover {
-    color: var(--primary-color);
-    background: rgba(2, 9, 63, 0.1);
+    color: var(--secondary-color) !important;
+    background: rgba(255, 193, 7, 0.1);
     padding-left: 0.5rem;
     text-decoration: none;
 }
@@ -2724,6 +3018,12 @@ link[rel="apple-touch-icon"] {
     color: rgba(255, 255, 255, 0.7);
     font-size: 0.95rem;
     line-height: 1.6;
+    text-align: center;
+}
+
+/* Centralizar apenas o primeiro footer-text (descrição principal) */
+.col-lg-3.col-md-6:first-child .footer-text {
+    text-align: center;
 }
 
 .footer-contact-item,
@@ -2784,12 +3084,24 @@ link[rel="apple-touch-icon"] {
 
 .footer-bottom {
     background: rgba(0, 0, 0, 0.4);
-    padding: 0.75rem 0;
+    padding: 1rem 0;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     position: relative;
     z-index: 1;
     backdrop-filter: blur(10px);
     margin-bottom: 0;
+    text-align: center;
+}
+
+.footer-bottom .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-bottom .row {
+    width: 100%;
+    justify-content: center;
 }
 
 .footer-bottom::before {
@@ -2807,6 +3119,10 @@ link[rel="apple-touch-icon"] {
     font-size: 0.95rem;
     display: flex;
     align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 0 auto;
+    width: 100%;
 }
 
 .footer-copyright i {
@@ -2819,7 +3135,12 @@ link[rel="apple-touch-icon"] {
     font-size: 0.95rem;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
+    text-align: center;
+    margin: 0 auto;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 0.25rem;
 }
 
 .footer-dev-link {
@@ -3131,7 +3452,6 @@ link[rel="apple-touch-icon"] {
 }
 
 .product-modal-footer .btn:hover {
-    transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
@@ -3160,7 +3480,6 @@ link[rel="apple-touch-icon"] {
 
 .modal-footer .btn-success:hover {
     background: #218838;
-    transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
 }
 
@@ -3470,6 +3789,13 @@ section {
     .hero-logo {
         max-height: 300px;
         margin-bottom: 2rem;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+    
+    .hero-section .col-lg-6:first-child {
+        text-align: center;
     }
     
     .hero-title {
@@ -3621,6 +3947,23 @@ section {
     
     .footer-bottom .col-md-6 {
         width: 100%;
+        text-align: center !important;
+    }
+    
+    /* Footer mobile - centralizar tudo */
+    .footer-section .row > div {
+        text-align: center !important;
+    }
+    
+    .footer-links ul,
+    .footer-contact ul,
+    .footer-info ul {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .footer-title {
         text-align: center !important;
     }
     
@@ -3799,10 +4142,18 @@ section {
     
     .footer-logo {
         max-width: 120px;
+        display: flex;
+        justify-content: center;
+        margin: 0 auto;
     }
     
     .footer-description {
         font-size: 0.9rem;
+    }
+    
+    /* Centralizar texto no mobile também */
+    .col-lg-3.col-md-6:first-child .footer-text {
+        text-align: center !important;
     }
     
     .footer-title {
@@ -3824,14 +4175,32 @@ section {
         text-align: center;
     }
     
+    .footer-bottom .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .footer-bottom .row {
+        width: 100%;
+        justify-content: center;
+    }
+    
     .footer-copyright,
     .footer-developer {
         font-size: 0.85rem;
         margin-bottom: 0.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        text-align: center;
     }
     
     .footer-developer {
         margin-bottom: 0;
+        flex-wrap: wrap;
+        gap: 0.25rem;
     }
     
     .personalizado-card-image {
@@ -4183,6 +4552,15 @@ hr {
 @media (min-width: 1400px) {
     .container {
         max-width: 1320px;
+    }
+}
+
+/* Desktop: manter layout normal com múltiplos produtos */
+@media (min-width: 992px) {
+    #autotransformadoresCarousel .product-card,
+    #transformadoresIsoladoresCarousel .product-card,
+    #produtosCarousel .product-card {
+        max-width: 100%;
     }
 }
 

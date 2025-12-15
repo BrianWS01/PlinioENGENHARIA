@@ -1356,3 +1356,19 @@ document.addEventListener('DOMContentLoaded', function() {
     window.authManager = new AuthManager();
 });
 
+// Esconder menu hamburger quando passa do hero
+window.addEventListener('scroll', () => {
+    const heroSection = document.querySelector('.hero-section');
+    const navbarCollapse = document.querySelector('.navbar-collapse');
+    
+    if (heroSection && navbarCollapse) {
+        const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+        const scrollPosition = window.pageYOffset;
+        
+        if (scrollPosition > heroBottom && navbarCollapse.classList.contains('show')) {
+            const bsCollapse = new bootstrap.Collapse(navbarCollapse);
+            bsCollapse.hide();
+        }
+    }
+});
+

@@ -83,13 +83,7 @@
                         <a class="nav-link" href="#contato">Contato</a>
                     </li>
                     <li class="nav-item">
-                        <button class="btn btn-primary position-relative ms-2" id="btnCarrinho" type="button" aria-label="Abrir carrinho de compras" aria-describedby="carrinhoBadge">
-                            <i class="fas fa-shopping-cart" aria-hidden="true"></i>
-                            <span class="carrinho-badge" id="carrinhoBadge" role="status" aria-live="polite">0</span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <div class="dropdown ms-2">
+                        <div class="dropdown me-2">
                             <button class="btn btn-outline-primary dropdown-toggle" type="button" id="userMenuDropdown" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Menu do usuário">
                                 <i class="fas fa-user" aria-hidden="true"></i>
                                 <span class="d-none d-md-inline ms-2" id="userNameDisplay">Conta</span>
@@ -118,6 +112,12 @@
                                 </li>
                             </ul>
                         </div>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-primary position-relative" id="btnCarrinho" type="button" aria-label="Abrir carrinho de compras" aria-describedby="carrinhoBadge">
+                            <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                            <span class="carrinho-badge" id="carrinhoBadge" role="status" aria-live="polite">0</span>
+                        </button>
                     </li>
                 </ul>
             </div>
@@ -240,9 +240,11 @@
                     <p class="lead mb-4">
                         Na <strong>USETrafo</strong>, trabalhamos com um propósito claro: garantir que cada cliente encontre exatamente o transformador ideal para seu projeto, com total segurança e tranquilidade. Com mais de 20 anos de experiência, nossa trajetória é construída em relacionamentos sólidos, conhecimento técnico acumulado e uma rede ampla de parceiros que nos permite entregar soluções precisas para qualquer demanda.
                     </p>
-                    <button class="btn btn-primary btn-lg mt-2" data-bs-toggle="modal" data-bs-target="#sobreModal">
-                        <i class="fas fa-info-circle me-2"></i> Conheça mais sobre nós
-                    </button>
+                    <div class="text-center">
+                        <button class="btn btn-primary btn-lg mt-2" data-bs-toggle="modal" data-bs-target="#sobreModal">
+                            <i class="fas fa-info-circle me-2"></i> Conheça mais sobre nós
+                        </button>
+                    </div>
                 </div>
             </div>
             
@@ -322,6 +324,7 @@
             </div>
             <div id="produtosCarousel" class="carousel slide mb-5" data-bs-ride="carousel" role="region" aria-label="Carrossel de produtos - Caixas">
                 <div class="carousel-inner">
+                    <!-- Slide 1: Caixa B -->
                     <div class="carousel-item active">
                         <div class="row g-4">
                             <div class="col-md-4">
@@ -386,8 +389,59 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Slide 2: Caixa C -->
                     <div class="carousel-item">
-                        <div class="row g-4 justify-content-center">
+                        <div class="row g-4">
+                            <div class="col-md-4">
+                                <div class="card product-card h-100">
+                                    <img src="src/imgs/C (1) 1.png" alt="Caixa C - Transformador elétrico linha C" class="card-img-top" loading="lazy">
+                                    <div class="card-body d-flex flex-column">
+                                        <h5 class="card-title">Caixa C</h5>
+                                        <p class="card-text">Equipamento desenvolvido para aplicações específicas com alta qualidade e confiabilidade.</p>
+                                        <div class="mt-auto">
+                                            <button class="btn btn-outline-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#produto2Modal" aria-label="Ver mais informações sobre Caixa C">
+                                                <i class="fas fa-info-circle me-2" aria-hidden="true"></i> Saiba Mais
+                                            </button>
+                                            <a href="produto-detalhes.html?produto=caixa-c" class="btn btn-primary w-100 mb-2" data-product="caixa-c">
+                                                <i class="fas fa-shopping-cart me-2"></i> Comprar na nossa loja
+                                            </a>
+                                            <a href="#" class="btn btn-warning w-100 btn-mercado-livre" data-mercado-livre="caixa-c" target="_blank">
+                                                <i class="fab fa-mercadolivre me-2"></i> Comprar no Mercado Livre
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 3: Caixa D -->
+                    <div class="carousel-item">
+                        <div class="row g-4">
+                            <div class="col-md-4">
+                                <div class="card product-card h-100">
+                                    <img src="src/imgs/D (2) 1.png" alt="Caixa D - Transformador elétrico linha D" class="card-img-top" loading="lazy">
+                                    <div class="card-body d-flex flex-column">
+                                        <h5 class="card-title">Caixa D</h5>
+                                        <p class="card-text">Equipamento desenvolvido para aplicações específicas com alta qualidade e confiabilidade.</p>
+                                        <div class="mt-auto">
+                                            <button class="btn btn-outline-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#produto3Modal" aria-label="Ver mais informações sobre Caixa D">
+                                                <i class="fas fa-info-circle me-2" aria-hidden="true"></i> Saiba Mais
+                                            </button>
+                                            <a href="produto-detalhes.html?produto=caixa-d" class="btn btn-primary w-100 mb-2" data-product="caixa-d">
+                                                <i class="fas fa-shopping-cart me-2"></i> Comprar na nossa loja
+                                            </a>
+                                            <a href="#" class="btn btn-warning w-100 btn-mercado-livre" data-mercado-livre="caixa-d" target="_blank">
+                                                <i class="fab fa-mercadolivre me-2"></i> Comprar no Mercado Livre
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 4: Caixa E -->
+                    <div class="carousel-item">
+                        <div class="row g-4">
                             <div class="col-md-4">
                                 <div class="card product-card h-100">
                                     <img src="src/imgs/E (1) 1.png" alt="Caixa E - Transformador elétrico linha E" class="card-img-top" loading="lazy">
@@ -408,6 +462,11 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <!-- Slide 5: Caixa F -->
+                    <div class="carousel-item">
+                        <div class="row g-4">
                             <div class="col-md-4">
                                 <div class="card product-card h-100">
                                     <img src="src/imgs/F (1) 1.png" alt="Caixa F - Transformador elétrico linha F" class="card-img-top" loading="lazy">
@@ -454,8 +513,8 @@
             <div id="transformadoresIsoladoresCarousel" class="carousel slide mb-5" data-bs-ride="carousel" role="region" aria-label="Carrossel de transformadores isoladores">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <div class="row g-4">
-                            <div class="col-md-6">
+                        <div class="row g-4 justify-content-center">
+                            <div class="col-md-4">
                                 <div class="card product-card h-100">
                                     <img src="src/imgs/D (3) 1.png" alt="Transformador Isolador Linha D - Isolamento galvânico completo" class="card-img-top" loading="lazy">
                                     <div class="card-body d-flex flex-column">
@@ -475,7 +534,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="card product-card h-100">
                                     <img src="src/imgs/F (3) 1.png" alt="Transformador Isolador Linha F - Proteção para equipamentos sensíveis" class="card-img-top" loading="lazy">
                                     <div class="card-body d-flex flex-column">
@@ -498,14 +557,6 @@
                         </div>
                     </div>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#transformadoresIsoladoresCarousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Anterior</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#transformadoresIsoladoresCarousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Próximo</span>
-                </button>
             </div>
 
             <!-- Seção Autotransformadores -->
@@ -521,8 +572,8 @@
             <div id="autotransformadoresCarousel" class="carousel slide mb-5" data-bs-ride="carousel" role="region" aria-label="Carrossel de autotransformadores">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <div class="row g-4">
-                            <div class="col-md-6">
+                        <div class="row g-4 justify-content-center">
+                            <div class="col-md-4">
                                 <div class="card product-card h-100">
                                     <img src="src/imgs/C (3) 1.png" alt="Autotransformador Linha C - Solução econômica para conversão de tensão" class="card-img-top" loading="lazy">
                                     <div class="card-body d-flex flex-column">
@@ -542,7 +593,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="card product-card h-100">
                                     <img src="src/imgs/D (2) 1.png" alt="Autotransformador Linha D - Eficiência energética e economia" class="card-img-top" loading="lazy">
                                     <div class="card-body d-flex flex-column">
@@ -565,14 +616,6 @@
                         </div>
                     </div>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#autotransformadoresCarousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Anterior</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#autotransformadoresCarousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Próximo</span>
-                </button>
             </div>
         </div>
     </section>
@@ -1016,9 +1059,11 @@
                             </div>
                         </div>
                         
-                        <a href="#contato" class="btn btn-primary btn-lg">
-                            <i class="fas fa-envelope me-2"></i> Fale Com a Nossa Equipe
-                        </a>
+                        <div class="text-center">
+                            <a href="#contato" class="btn btn-primary btn-lg">
+                                <i class="fas fa-envelope me-2"></i> Fale Com a Nossa Equipe
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1232,13 +1277,11 @@
         <div class="footer-bottom">
             <div class="container">
                 <div class="row align-items-center">
-                    <div class="col-md-6 mb-3 mb-md-0">
-                        <p class="mb-0 footer-copyright">
+                    <div class="col-12 text-center">
+                        <p class="mb-2 footer-copyright">
                             <i class="fas fa-copyright me-2"></i>
                             2025 USETRAFO. Todos os direitos reservados.
                         </p>
-                    </div>
-                    <div class="col-md-6 text-md-end">
                         <p class="mb-0 footer-developer">
                             Desenvolvido por<span style="margin: 0 0.5rem;"></span>
                             <a href="https://brianws01.github.io/WoodCompany/" target="_blank" rel="noopener noreferrer" class="footer-dev-link">

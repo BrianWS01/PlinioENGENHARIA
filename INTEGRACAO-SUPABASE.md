@@ -94,3 +94,4 @@ O sistema tem **fallback para localStorage**:
 4. Veja os logs no console do navegador (F12)
 5. Veja os logs no dashboard do Supabase
 
+

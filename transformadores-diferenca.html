@@ -206,7 +206,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
                         <a class="nav-link" href="index.html#sobre">Sobre</a>
                     </li>
@@ -218,6 +218,43 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="index.html#contato">Contato</a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="dropdown me-2">
+                            <button class="btn btn-outline-light dropdown-toggle" type="button" id="userMenuDropdown" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Menu do usuário">
+                                <i class="fas fa-user" aria-hidden="true"></i>
+                                <span class="d-none d-md-inline ms-2" id="userNameDisplay">Conta</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenuDropdown" id="userMenu">
+                                <li id="menuItemLogin" style="display: none;">
+                                    <a class="dropdown-item" href="login.html">
+                                        <i class="fas fa-sign-in-alt me-2"></i>Entrar
+                                    </a>
+                                </li>
+                                <li id="menuItemRegister" style="display: none;">
+                                    <a class="dropdown-item" href="registro.html">
+                                        <i class="fas fa-user-plus me-2"></i>Criar Conta
+                                    </a>
+                                </li>
+                                <li id="menuItemConfig" style="display: none;">
+                                    <a class="dropdown-item" href="configuracoes.html">
+                                        <i class="fas fa-cog me-2"></i>Configurações
+                                    </a>
+                                </li>
+                                <li id="menuItemLogout" style="display: none;">
+                                    <hr class="dropdown-divider">
+                                    <a class="dropdown-item text-danger" href="#" id="btnLogout">
+                                        <i class="fas fa-sign-out-alt me-2"></i>Sair
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-primary position-relative" id="btnCarrinho" type="button" aria-label="Abrir carrinho de compras" aria-describedby="carrinhoBadge">
+                            <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                            <span class="carrinho-badge" id="carrinhoBadge" role="status" aria-live="polite">0</span>
+                        </button>
                     </li>
                 </ul>
             </div>

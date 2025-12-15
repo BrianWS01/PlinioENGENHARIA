@@ -161,6 +161,27 @@ link[rel="apple-touch-icon"] {
     align-items: center;
 }
 
+/* Header padrão - Desktop mostra links, mobile mostra hambúrguer */
+@media (min-width: 992px) {
+    /* Esconder completamente o botão hambúrguer no desktop */
+    .navbar .navbar-toggler {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        width: 0 !important;
+        height: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border: none !important;
+        overflow: hidden !important;
+    }
+    
+    /* Mostrar o menu collapse no desktop */
+    .navbar-collapse {
+        display: flex !important;
+    }
+}
+
 @media (max-width: 991px) {
     .navbar-nav {
         padding: 1rem 0;
@@ -240,9 +261,6 @@ link[rel="apple-touch-icon"] {
     border: 2px solid var(--primary-color);
     border-radius: 4px;
     padding: 0.5rem 0.75rem;
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
     z-index: 1000;
 }
 

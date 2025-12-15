@@ -567,6 +567,11 @@ if (heroSection) {
 
 // Adiciona efeito de hover nos cards de produto com feedback visual
 document.querySelectorAll('.product-card, .card').forEach(card => {
+    // Excluir o card do guia completo
+    if (card.querySelector('#linkGuiaCompleto') || card.querySelector('a[href*="transformadores-diferenca.html"]')) {
+        return; // Não adicionar listeners neste card
+    }
+    
     card.addEventListener('mouseenter', function() {
         this.style.transform = 'translateY(-10px) scale(1.02)';
         this.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
@@ -580,12 +585,14 @@ document.querySelectorAll('.product-card, .card').forEach(card => {
     
     // Feedback ao clicar
     card.addEventListener('click', function(e) {
-        if (!e.target.closest('button, a')) {
-            this.style.transform = 'scale(0.98)';
-            setTimeout(() => {
-                this.style.transform = '';
-            }, 150);
+        // Não fazer nada se clicar em link ou botão
+        if (e.target.closest('button, a')) {
+            return;
         }
+        this.style.transform = 'scale(0.98)';
+        setTimeout(() => {
+            this.style.transform = '';
+        }, 150);
     });
 });
 
@@ -1371,4 +1378,42 @@ window.addEventListener('scroll', () => {
         }
     }
 });
+
+// Garantir que o link do guia completo funcione corretamente
+document.addEventListener('DOMContentLoaded', function() {
+    // Função para navegar para a página do guia
+    function navegarParaGuia(e) {
+        e.stopPropagation(); // Impede que outros event listeners interceptem
+        e.preventDefault(); // Previne comportamento padrão
+        // Navegação direta
+        window.location.href = 'transformadores-diferenca.html';
+        return false;
+    }
+    
+    // Aguardar um pouco para garantir que o DOM está totalmente carregado
+    setTimeout(function() {
+        // Link específico pelo ID
+        const linkGuiaCompleto = document.getElementById('linkGuiaCompleto');
+        if (linkGuiaCompleto) {
+            // Remover qualquer listener anterior
+            const novoLink = linkGuiaCompleto.cloneNode(true);
+            linkGuiaCompleto.parentNode.replaceChild(novoLink, linkGuiaCompleto);
+            
+            // Adicionar listener com prioridade máxima
+            novoLink.addEventListener('click', navegarParaGuia, true);
+            novoLink.addEventListener('click', function(e) {
+                e.stopImmediatePropagation();
+            }, true);
+        }
+        
+        // Todos os links para transformadores-diferenca.html
+        document.querySelectorAll('a[href*="transformadores-diferenca.html"]').forEach(link => {
+            link.addEventListener('click', navegarParaGuia, true);
+            link.addEventListener('click', function(e) {
+                e.stopImmediatePropagation();
+            }, true);
+        });
+    }, 100);
+});
+
 

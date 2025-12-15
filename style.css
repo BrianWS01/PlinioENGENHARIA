@@ -1170,6 +1170,21 @@ link[rel="apple-touch-icon"] {
     overflow: visible;
 }
 
+/* Desktop: Centralizar quando há apenas 2 caixas no slide */
+@media (min-width: 768px) {
+    #produtosCarousel .carousel-item .row {
+        justify-content: center;
+    }
+    
+    /* Quando há apenas 2 col-md-4 no slide, garantir que fiquem centralizadas */
+    #produtosCarousel .carousel-item .row .col-md-4 {
+        flex: 0 0 auto;
+        max-width: 33.333333%;
+    }
+    
+    /* Se houver apenas 2 elementos, eles ficarão centralizados devido ao justify-content: center */
+}
+
 @media (max-width: 768px) {
     /* Mobile: estilo similar ao transformadoresCarousel para Caixas */
     #produtosCarousel {
@@ -1200,113 +1215,8 @@ link[rel="apple-touch-icon"] {
         display: none;
     }
     
-    #produtosCarousel .product-card {
-        border: none;
-        border-radius: 0;
-        margin: 0;
-        box-shadow: none;
-        height: 450px;
-        position: relative;
-        overflow: hidden;
-        background-color: #f8f9fa;
-    }
-    
-    #produtosCarousel .product-card .card-img-top {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        background-color: #f8f9fa;
-    }
-    
-    #produtosCarousel .product-card .card-body {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: linear-gradient(180deg, transparent 0%, rgba(2, 9, 63, 0.95) 100%);
-        padding: 2rem 1.5rem 1.5rem;
-        color: white;
-        border-radius: 0;
-    }
-    
-    #produtosCarousel .product-card .card-title {
-        color: white;
-        font-size: 1.5rem;
-        font-weight: bold;
-        margin-bottom: 0.5rem;
-    }
-    
-    #produtosCarousel .product-card .card-text {
-        color: rgba(255, 255, 255, 0.9);
-        font-size: 1rem;
-        margin-bottom: 1rem;
-    }
-    
-    /* Mostrar botões de compra no mobile */
-    #produtosCarousel .product-card .btn {
-        display: block !important;
-        width: 100%;
-        margin-bottom: 0.5rem;
-        font-size: 0.85rem;
-        padding: 0.5rem 1rem;
-        border-radius: 8px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        z-index: 10;
-        position: relative;
-    }
-    
-    #produtosCarousel .product-card .btn:last-child {
-        margin-bottom: 0;
-    }
-    
-    #produtosCarousel .product-card .btn-outline-primary {
-        background-color: rgba(255, 255, 255, 0.2);
-        border-color: white;
-        color: white;
-    }
-    
-    #produtosCarousel .product-card .btn-outline-primary:hover {
-        background-color: white;
-        color: var(--primary-color);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
-    }
-    
-    #produtosCarousel .product-card .btn-primary {
-        background-color: var(--primary-color);
-        border-color: var(--primary-color);
-        color: white;
-    }
-    
-    #produtosCarousel .product-card .btn-primary:hover {
-        background-color: #010520;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(2, 9, 63, 0.4);
-    }
-    
-    #produtosCarousel .product-card .btn-warning {
-        background-color: var(--secondary-color);
-        border-color: var(--secondary-color);
-        color: white;
-    }
-    
-    #produtosCarousel .product-card .btn-warning:hover {
-        background-color: #e0a800;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(255, 193, 7, 0.4);
-    }
-    
-    /* Ajustar card-body para acomodar botões */
-    #produtosCarousel .product-card .card-body {
-        padding-bottom: 1.5rem;
-    }
-    
-    #produtosCarousel .product-card:hover {
-        transform: none;
-        box-shadow: none;
-        margin: 0;
-    }
+    /* Cards de Caixas no mobile - manter estilo do desktop (card normal) */
+    /* Apenas garantir que mostre 1 produto por vez e botões embaixo */
     
     #transformadoresIsoladoresCarousel,
     #autotransformadoresCarousel {
@@ -1316,9 +1226,7 @@ link[rel="apple-touch-icon"] {
         padding-right: 15px;
     }
     
-    /* Mobile: botões embaixo centralizados para TODOS os carrosséis de NOSSOS PRODUTOS */
-    #produtosCarousel .carousel-control-prev,
-    #produtosCarousel .carousel-control-next,
+    /* Mobile: botões embaixo centralizados para Transformadores Isoladores e Autotransformadores */
     #transformadoresIsoladoresCarousel .carousel-control-prev,
     #transformadoresIsoladoresCarousel .carousel-control-next,
     #autotransformadoresCarousel .carousel-control-prev,
@@ -1329,26 +1237,82 @@ link[rel="apple-touch-icon"] {
         display: block !important;
     }
     
-    #produtosCarousel .carousel-control-prev,
     #transformadoresIsoladoresCarousel .carousel-control-prev,
     #autotransformadoresCarousel .carousel-control-prev {
         left: calc(50% - 60px);
     }
     
-    #produtosCarousel .carousel-control-next,
     #transformadoresIsoladoresCarousel .carousel-control-next,
     #autotransformadoresCarousel .carousel-control-next {
         right: calc(50% - 60px);
         left: auto;
     }
     
-    #produtosCarousel .carousel-control-prev:hover,
-    #produtosCarousel .carousel-control-next:hover,
     #transformadoresIsoladoresCarousel .carousel-control-prev:hover,
     #transformadoresIsoladoresCarousel .carousel-control-next:hover,
     #autotransformadoresCarousel .carousel-control-prev:hover,
     #autotransformadoresCarousel .carousel-control-next:hover {
         transform: scale(1.1);
+    }
+    
+    /* Mobile: botões de Caixas dentro do card, abaixo do botão Mercado Livre */
+    #produtosCarousel {
+        position: relative;
+        padding-bottom: 0 !important;
+    }
+    
+    #produtosCarousel .carousel-control-prev,
+    #produtosCarousel .carousel-control-next {
+        position: absolute;
+        top: auto;
+        bottom: 10px;
+        transform: none;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background-color: rgba(2, 9, 63, 0.9);
+        border-radius: 50%;
+        opacity: 1;
+        border: 2px solid white;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        z-index: 15;
+        margin: 0;
+    }
+    
+    #produtosCarousel .carousel-control-prev {
+        left: calc(50% - 50px);
+        right: auto;
+    }
+    
+    #produtosCarousel .carousel-control-next {
+        right: calc(50% - 50px);
+        left: auto;
+    }
+    
+    #produtosCarousel .carousel-control-prev:hover,
+    #produtosCarousel .carousel-control-next:hover {
+        transform: scale(1.1);
+        background-color: rgba(2, 9, 63, 1);
+    }
+    
+    /* Ajustar padding do card-body para acomodar os botões */
+    #produtosCarousel .product-card {
+        position: relative;
+        overflow: visible;
+        margin-bottom: 60px;
+    }
+    
+    #produtosCarousel .product-card .card-body {
+        padding-bottom: 1rem;
+        padding-top: 1rem;
+        position: relative;
+    }
+    
+    /* Subir os botões dentro do card */
+    #produtosCarousel .product-card .card-body .mt-auto {
+        margin-top: 0.5rem !important;
     }
     
     /* Mobile: mostrar apenas 1 produto por vez em TODOS os carrosséis */

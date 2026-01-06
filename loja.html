@@ -263,6 +263,100 @@
                 padding: 0.4rem 0.8rem;
             }
         }
+
+        /* Estilos da Calculadora */
+        #calculadoraContainer {
+            transition: all 0.3s ease;
+        }
+
+        #calculadoraContainer .card {
+            border: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        #calculadoraContainer .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        #calculadoraContainer .form-control:focus,
+        #calculadoraContainer .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(2, 9, 63, 0.25);
+        }
+
+        /* Estilos das Abas */
+        #calculadoraTabs .nav-link {
+            color: #6c757d;
+            border: 1px solid #dee2e6;
+            border-radius: 0.375rem 0.375rem 0 0;
+            transition: all 0.3s ease;
+        }
+
+        #calculadoraTabs .nav-link:hover {
+            color: var(--primary-color);
+            background-color: #f8f9fa;
+        }
+
+        #calculadoraTabs .nav-link.active {
+            color: white;
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        #calculadoraTabs .nav-link i {
+            margin-right: 0.5rem;
+        }
+
+        .tab-content {
+            padding-top: 1.5rem;
+        }
+
+        .tab-pane .table {
+            margin-bottom: 0;
+        }
+
+        .tab-pane .table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            border-color: var(--primary-color);
+        }
+
+        .tab-pane .table-success {
+            background-color: rgba(40, 167, 69, 0.1);
+        }
+
+        .tab-pane .bg-light {
+            background-color: #f8f9fa !important;
+        }
+
+        @media (max-width: 768px) {
+            #calculadoraContainer .row.g-4 > div {
+                margin-bottom: 1rem;
+            }
+
+            #calculadoraTabs .nav-link {
+                font-size: 0.85rem;
+                padding: 0.5rem 0.75rem;
+            }
+
+            #calculadoraTabs .nav-link i {
+                display: none;
+            }
+        }
+
+        @media (max-width: 576px) {
+            #calculadoraTabs {
+                flex-wrap: wrap;
+            }
+
+            #calculadoraTabs .nav-item {
+                flex: 0 0 50%;
+                margin-bottom: 0.5rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -443,6 +537,332 @@
                 </div>
                 <h1 class="display-4 fw-bold mb-3">Nossa Loja</h1>
                 <p class="lead text-muted">Compre nossos produtos diretamente pela nossa loja online</p>
+            </div>
+
+            <!-- Calculadora de Transformadores -->
+            <div class="row mb-5">
+                <div class="col-12">
+                    <div class="card shadow-sm border-0" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center mb-4">
+                                <div class="me-3">
+                                    <i class="fas fa-calculator fa-2x text-primary"></i>
+                                </div>
+                                <div>
+                                    <h3 class="mb-1 fw-bold">Calculadora de Transformadores</h3>
+                                    <p class="text-muted mb-0">Calcule a potência e especificações ideais para seu projeto</p>
+                                </div>
+                                <button class="btn btn-sm btn-outline-primary ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#calculadoraContainer" aria-expanded="true" id="btnToggleCalculadora">
+                                    <i class="fas fa-chevron-up me-2"></i>Ocultar Calculadora
+                                </button>
+                            </div>
+                            
+                            <div class="collapse show" id="calculadoraContainer">
+                                <!-- Abas de Navegação -->
+                                <ul class="nav nav-pills nav-justified mb-4" id="calculadoraTabs" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="tab-hp-kva" data-bs-toggle="tab" data-bs-target="#calc-hp-kva" type="button" role="tab">
+                                            <i class="fas fa-horse me-2"></i>HP → kVA
+                                        </button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="tab-kva-corrente" data-bs-toggle="tab" data-bs-target="#calc-kva-corrente" type="button" role="tab">
+                                            <i class=></i>kVA → Corrente
+                                        </button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="tab-corrente-kva" data-bs-toggle="tab" data-bs-target="#calc-corrente-kva" type="button" role="tab">
+                                            <i class="fas fa-exchange-alt me-2"></i>Corrente → kVA
+                                        </button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="tab-kw-kva" data-bs-toggle="tab" data-bs-target="#calc-kw-kva" type="button" role="tab">
+                                            <i class="fas fa-tachometer-alt me-2"></i>kW → kVA
+                                        </button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="tab-watts-kva" data-bs-toggle="tab" data-bs-target="#calc-watts-kva" type="button" role="tab">
+                                            <i class="fas fa-bolt me-2"></i>Watts → kVA
+                                        </button>
+                                    </li>
+                                </ul>
+
+                                <!-- Conteúdo das Abas -->
+                                <div class="tab-content" id="calculadoraTabContent">
+                                    <!-- Aba 1: HP para kVA -->
+                                    <div class="tab-pane fade show active" id="calc-hp-kva" role="tabpanel">
+                                        <div class="row g-4">
+                                            <div class="col-md-6">
+                                                <div class="card bg-white h-100">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title mb-4">
+                                                            <i class="fas fa-edit me-2 text-primary"></i>Dados de Entrada
+                                                        </h5>
+                                                        <div class="mb-3">
+                                                            <label for="calcHP" class="form-label fw-semibold">
+                                                                HP / CV <span class="text-danger">*</span>
+                                                            </label>
+                                                            <input type="number" class="form-control" id="calcHP" placeholder="Ex: 20" step="0.01" min="0">
+                                                            <small class="form-text text-muted">Potência em Horsepower ou Cavalo-Vapor</small>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="calcTensaoMotor" class="form-label fw-semibold">
+                                                                Tensão do Motor (V) <span class="text-danger">*</span>
+                                                            </label>
+                                                            <input type="number" class="form-control" id="calcTensaoMotor" placeholder="Ex: 220" step="0.01" min="0">
+                                                            <small class="form-text text-muted">Tensão de alimentação do motor</small>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="calcRendimento" class="form-label fw-semibold">
+                                                                Rendimento (η) <span class="text-danger">*</span>
+                                                            </label>
+                                                            <input type="number" class="form-control" id="calcRendimento" placeholder="Ex: 0.8" step="0.01" min="0" max="1">
+                                                            <small class="form-text text-muted">Rendimento do motor (0 a 1)</small>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="calcFatorPotencia" class="form-label fw-semibold">
+                                                                Fator de Potência (cos φ) <span class="text-danger">*</span>
+                                                            </label>
+                                                            <input type="number" class="form-control" id="calcFatorPotencia" placeholder="Ex: 0.8" step="0.01" min="0" max="1">
+                                                            <small class="form-text text-muted">Fator de potência do motor (0 a 1)</small>
+                                                        </div>
+                                                        <div class="alert alert-info">
+                                                            <i class="fas fa-info-circle me-2"></i>
+                                                            <small><strong>OBS.:</strong> Cálculo para motores trifásicos</small>
+                                                        </div>
+                                                        <button type="button" class="btn btn-primary w-100" onclick="calcularHPkVA()">
+                                                            <i class="fas fa-calculator me-2"></i>Calcular
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="card bg-white h-100">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title mb-4">
+                                                            <i class="fas fa-chart-line me-2 text-success"></i>Resultados
+                                                        </h5>
+                                                        <div id="resultadoHPkVA" class="text-center text-muted py-5">
+                                                            <i class="fas fa-info-circle fa-3x mb-3 opacity-50"></i>
+                                                            <p class="mb-0">Preencha os campos e clique em "Calcular"</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Aba 2: kVA e Tensão para Corrente -->
+                                    <div class="tab-pane fade" id="calc-kva-corrente" role="tabpanel">
+                                        <div class="row g-4">
+                                            <div class="col-md-6">
+                                                <div class="card bg-white h-100">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title mb-4">
+                                                            <i class="fas fa-edit me-2 text-primary"></i>Dados de Entrada
+                                                        </h5>
+                                                        <div class="mb-3">
+                                                            <label for="calcKVA" class="form-label fw-semibold">
+                                                                Potência (kVA) <span class="text-danger">*</span>
+                                                            </label>
+                                                            <input type="number" class="form-control" id="calcKVA" placeholder="Ex: 1.5" step="0.01" min="0">
+                                                            <small class="form-text text-muted">Potência aparente em kVA</small>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="calcTensao" class="form-label fw-semibold">
+                                                                Tensão (V) <span class="text-danger">*</span>
+                                                            </label>
+                                                            <input type="number" class="form-control" id="calcTensao" placeholder="Ex: 220" step="0.01" min="0">
+                                                            <small class="form-text text-muted">Tensão do sistema</small>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="calcFaseCorrente" class="form-label fw-semibold">
+                                                                Tipo de Sistema
+                                                            </label>
+                                                            <select class="form-select" id="calcFaseCorrente">
+                                                                <option value="monofasico">Monofásico</option>
+                                                                <option value="trifasico" selected>Trifásico</option>
+                                                            </select>
+                                                        </div>
+                                                        <button type="button" class="btn btn-primary w-100" onclick="calcularKVACorrente()">
+                                                            <i class="fas fa-calculator me-2"></i>Calcular
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="card bg-white h-100">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title mb-4">
+                                                            <i class="fas fa-chart-line me-2 text-success"></i>Resultados
+                                                        </h5>
+                                                        <div id="resultadoKVACorrente" class="text-center text-muted py-5">
+                                                            <i class="fas fa-info-circle fa-3x mb-3 opacity-50"></i>
+                                                            <p class="mb-0">Preencha os campos e clique em "Calcular"</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Aba 3: Corrente e Tensão para kVA -->
+                                    <div class="tab-pane fade" id="calc-corrente-kva" role="tabpanel">
+                                        <div class="row g-4">
+                                            <div class="col-md-6">
+                                                <div class="card bg-white h-100">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title mb-4">
+                                                            <i class="fas fa-edit me-2 text-primary"></i>Dados de Entrada
+                                                        </h5>
+                                                        <div class="mb-3">
+                                                            <label for="calcCorrente" class="form-label fw-semibold">
+                                                                Corrente (A) <span class="text-danger">*</span>
+                                                            </label>
+                                                            <input type="number" class="form-control" id="calcCorrente" placeholder="Ex: 50" step="0.01" min="0">
+                                                            <small class="form-text text-muted">Corrente em Amperes</small>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="calcTensaoCorrente" class="form-label fw-semibold">
+                                                                Tensão (V) <span class="text-danger">*</span>
+                                                            </label>
+                                                            <input type="number" class="form-control" id="calcTensaoCorrente" placeholder="Ex: 380" step="0.01" min="0">
+                                                            <small class="form-text text-muted">Tensão do sistema</small>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="calcFaseCorrenteKVA" class="form-label fw-semibold">
+                                                                Tipo de Sistema
+                                                            </label>
+                                                            <select class="form-select" id="calcFaseCorrenteKVA">
+                                                                <option value="monofasico">Monofásico</option>
+                                                                <option value="trifasico" selected>Trifásico</option>
+                                                            </select>
+                                                        </div>
+                                                        <button type="button" class="btn btn-primary w-100" onclick="calcularCorrenteKVA()">
+                                                            <i class="fas fa-calculator me-2"></i>Calcular
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="card bg-white h-100">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title mb-4">
+                                                            <i class="fas fa-chart-line me-2 text-success"></i>Resultados
+                                                        </h5>
+                                                        <div id="resultadoCorrenteKVA" class="text-center text-muted py-5">
+                                                            <i class="fas fa-info-circle fa-3x mb-3 opacity-50"></i>
+                                                            <p class="mb-0">Preencha os campos e clique em "Calcular"</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Aba 4: kW para kVA -->
+                                    <div class="tab-pane fade" id="calc-kw-kva" role="tabpanel">
+                                        <div class="row g-4">
+                                            <div class="col-md-6">
+                                                <div class="card bg-white h-100">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title mb-4">
+                                                            <i class="fas fa-edit me-2 text-primary"></i>Dados de Entrada
+                                                        </h5>
+                                                        <div class="mb-3">
+                                                            <label for="calcKW" class="form-label fw-semibold">
+                                                                Potência (kW) <span class="text-danger">*</span>
+                                                            </label>
+                                                            <input type="number" class="form-control" id="calcKW" placeholder="Ex: 3.6" step="0.01" min="0">
+                                                            <small class="form-text text-muted">Potência ativa em Kilowatts</small>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="calcFatorPotenciaKW" class="form-label fw-semibold">
+                                                                Fator de Potência (cos φ) <span class="text-danger">*</span>
+                                                            </label>
+                                                            <input type="number" class="form-control" id="calcFatorPotenciaKW" placeholder="Ex: 0.8" step="0.01" min="0" max="1">
+                                                            <small class="form-text text-muted">Fator de potência (0 a 1)</small>
+                                                        </div>
+                                                        <button type="button" class="btn btn-primary w-100" onclick="calcularKWKVA()">
+                                                            <i class="fas fa-calculator me-2"></i>Calcular
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="card bg-white h-100">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title mb-4">
+                                                            <i class="fas fa-chart-line me-2 text-success"></i>Resultados
+                                                        </h5>
+                                                        <div id="resultadoKWKVA" class="text-center text-muted py-5">
+                                                            <i class="fas fa-info-circle fa-3x mb-3 opacity-50"></i>
+                                                            <p class="mb-0">Preencha os campos e clique em "Calcular"</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Aba 5: Watts para kVA -->
+                                    <div class="tab-pane fade" id="calc-watts-kva" role="tabpanel">
+                                        <div class="row g-4">
+                                            <div class="col-md-6">
+                                                <div class="card bg-white h-100">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title mb-4">
+                                                            <i class="fas fa-edit me-2 text-primary"></i>Dados de Entrada
+                                                        </h5>
+                                                        <div class="mb-3">
+                                                            <label for="calcWatts" class="form-label fw-semibold">
+                                                                Potência (W) <span class="text-danger">*</span>
+                                                            </label>
+                                                            <input type="number" class="form-control" id="calcWatts" placeholder="Ex: 9500" step="0.01" min="0">
+                                                            <small class="form-text text-muted">Potência ativa em Watts</small>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="calcFatorPotenciaWatts" class="form-label fw-semibold">
+                                                                Fator de Potência (cos φ) <span class="text-danger">*</span>
+                                                            </label>
+                                                            <input type="number" class="form-control" id="calcFatorPotenciaWatts" placeholder="Ex: 0.8" step="0.01" min="0" max="1">
+                                                            <small class="form-text text-muted">Fator de potência (0 a 1)</small>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="calcTipoWatts" class="form-label fw-semibold">
+                                                                Tipo de Resultado
+                                                            </label>
+                                                            <select class="form-select" id="calcTipoWatts">
+                                                                <option value="kva">kVA</option>
+                                                                <option value="va">VA</option>
+                                                            </select>
+                                                        </div>
+                                                        <button type="button" class="btn btn-primary w-100" onclick="calcularWattsKVA()">
+                                                            <i class="fas fa-calculator me-2"></i>Calcular
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="card bg-white h-100">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title mb-4">
+                                                            <i class="fas fa-chart-line me-2 text-success"></i>Resultados
+                                                        </h5>
+                                                        <div id="resultadoWattsKVA" class="text-center text-muted py-5">
+                                                            <i class="fas fa-info-circle fa-3x mb-3 opacity-50"></i>
+                                                            <p class="mb-0">Preencha os campos e clique em "Calcular"</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Contador de Resultados -->
@@ -1846,6 +2266,433 @@
         
         // Inicializar carrinho
         atualizarCarrinho();
+
+        // ============================================
+        // CALCULADORAS DE GRANDEZAS ELÉTRICAS
+        // ============================================
+        
+        const btnToggleCalculadora = document.getElementById('btnToggleCalculadora');
+
+        // Toggle do botão de mostrar/ocultar calculadora
+        if (btnToggleCalculadora) {
+            const calculadoraContainer = document.getElementById('calculadoraContainer');
+            calculadoraContainer.addEventListener('show.bs.collapse', () => {
+                btnToggleCalculadora.innerHTML = '<i class="fas fa-chevron-up me-2"></i>Ocultar Calculadora';
+            });
+            calculadoraContainer.addEventListener('hide.bs.collapse', () => {
+                btnToggleCalculadora.innerHTML = '<i class="fas fa-chevron-down me-2"></i>Mostrar Calculadora';
+            });
+        }
+
+        // Função auxiliar para formatar números
+        function formatarNumero(num, decimais = 2) {
+            return num.toFixed(decimais).replace('.', ',');
+        }
+
+        // 1. CALCULADORA HP → kVA e Corrente do Motor
+        function calcularHPkVA() {
+            const hp = parseFloat(document.getElementById('calcHP').value);
+            const tensaoMotor = parseFloat(document.getElementById('calcTensaoMotor').value);
+            const rendimento = parseFloat(document.getElementById('calcRendimento').value);
+            const fatorPotencia = parseFloat(document.getElementById('calcFatorPotencia').value);
+
+            // Validação
+            if (!hp || !tensaoMotor || !rendimento || !fatorPotencia) {
+                alert('Por favor, preencha todos os campos obrigatórios');
+                return;
+            }
+
+            if (hp <= 0 || tensaoMotor <= 0 || rendimento <= 0 || rendimento > 1 || fatorPotencia <= 0 || fatorPotencia > 1) {
+                alert('Verifique os valores informados');
+                return;
+            }
+
+            // Cálculos
+            const kW = hp * 0.7457; // Conversão HP para kW
+            const kVA = kW / (rendimento * fatorPotencia);
+            const correnteMotor = (kVA * 1000) / (Math.sqrt(3) * tensaoMotor);
+
+            // Exibir resultados
+            document.getElementById('resultadoHPkVA').innerHTML = `
+                <div class="alert alert-success">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <strong>Resultados Calculados</strong>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="table-primary">
+                            <tr>
+                                <th>Grandeza</th>
+                                <th class="text-end">Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><i class="fas fa-horse me-2 text-warning"></i>Potência (HP/CV)</td>
+                                <td class="text-end"><strong>${formatarNumero(hp)}</strong></td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-tachometer-alt me-2 text-info"></i>Potência (kW)</td>
+                                <td class="text-end"><strong>${formatarNumero(kW)} kW</strong></td>
+                            </tr>
+                            <tr class="table-success">
+                                <td><i class="fas fa-bolt me-2 text-primary"></i>Potência Aparente (kVA)</td>
+                                <td class="text-end"><strong>${formatarNumero(kVA)} kVA</strong></td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-bolt me-2 text-warning"></i>Tensão do Motor</td>
+                                <td class="text-end"><strong>${formatarNumero(tensaoMotor)} V</strong></td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-percentage me-2 text-info"></i>Rendimento (η)</td>
+                                <td class="text-end"><strong>${formatarNumero(rendimento * 100)}%</strong></td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-percentage me-2 text-info"></i>Fator de Potência (cos φ)</td>
+                                <td class="text-end"><strong>${formatarNumero(fatorPotencia * 100)}%</strong></td>
+                            </tr>
+                            <tr class="table-success">
+                                <td><i class="fas fa-current me-2"></i>Corrente do Motor (A)</td>
+                                <td class="text-end"><strong>${formatarNumero(correnteMotor)} A</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="alert alert-info mt-3">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <small><strong>OBS.:</strong> Cálculo para motores trifásicos</small>
+                </div>
+            `;
+        }
+
+        // 2. CALCULADORA kVA e Tensão → Corrente
+        function calcularKVACorrente() {
+            const kva = parseFloat(document.getElementById('calcKVA').value);
+            const tensao = parseFloat(document.getElementById('calcTensao').value);
+            const fase = document.getElementById('calcFaseCorrente').value;
+
+            // Validação
+            if (!kva || !tensao) {
+                alert('Por favor, preencha todos os campos obrigatórios');
+                return;
+            }
+
+            if (kva <= 0 || tensao <= 0) {
+                alert('Os valores devem ser maiores que zero');
+                return;
+            }
+
+            // Cálculo
+            let corrente;
+            if (fase === 'trifasico') {
+                corrente = (kva * 1000) / (Math.sqrt(3) * tensao);
+            } else {
+                corrente = (kva * 1000) / tensao;
+            }
+
+            // Exibir resultados
+            document.getElementById('resultadoKVACorrente').innerHTML = `
+                <div class="alert alert-success">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <strong>Resultado Calculado</strong>
+                </div>
+                <div class="text-center py-4">
+                    <div class="p-4 bg-light rounded mb-3">
+                        <small class="text-muted d-block mb-2">Corrente</small>
+                        <h2 class="mb-0 text-primary">${formatarNumero(corrente)} A</h2>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td><i class="fas fa-tachometer-alt me-2"></i>Potência (kVA)</td>
+                                    <td class="text-end"><strong>${formatarNumero(kva)} kVA</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fas fa-bolt me-2"></i>Tensão (V)</td>
+                                    <td class="text-end"><strong>${formatarNumero(tensao)} V</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fas fa-cog me-2"></i>Tipo</td>
+                                    <td class="text-end"><strong>${fase === 'trifasico' ? 'Trifásico' : 'Monofásico'}</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 3. CALCULADORA Corrente e Tensão → kVA
+        function calcularCorrenteKVA() {
+            const corrente = parseFloat(document.getElementById('calcCorrente').value);
+            const tensao = parseFloat(document.getElementById('calcTensaoCorrente').value);
+            const fase = document.getElementById('calcFaseCorrenteKVA').value;
+
+            // Validação
+            if (!corrente || !tensao) {
+                alert('Por favor, preencha todos os campos obrigatórios');
+                return;
+            }
+
+            if (corrente <= 0 || tensao <= 0) {
+                alert('Os valores devem ser maiores que zero');
+                return;
+            }
+
+            // Cálculo
+            let kva;
+            if (fase === 'trifasico') {
+                kva = (corrente * tensao * Math.sqrt(3)) / 1000;
+            } else {
+                kva = (corrente * tensao) / 1000;
+            }
+
+            // Exibir resultados
+            document.getElementById('resultadoCorrenteKVA').innerHTML = `
+                <div class="alert alert-success">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <strong>Resultado Calculado</strong>
+                </div>
+                <div class="text-center py-4">
+                    <div class="p-4 bg-light rounded mb-3">
+                        <small class="text-muted d-block mb-2">Potência Aparente</small>
+                        <h2 class="mb-0 text-primary">${formatarNumero(kva)} kVA</h2>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td><i class="fas fa-current me-2"></i>Corrente (A)</td>
+                                    <td class="text-end"><strong>${formatarNumero(corrente)} A</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fas fa-bolt me-2"></i>Tensão (V)</td>
+                                    <td class="text-end"><strong>${formatarNumero(tensao)} V</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fas fa-cog me-2"></i>Tipo</td>
+                                    <td class="text-end"><strong>${fase === 'trifasico' ? 'Trifásico' : 'Monofásico'}</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 4. CALCULADORA kW → kVA
+        function calcularKWKVA() {
+            const kw = parseFloat(document.getElementById('calcKW').value);
+            const fatorPotencia = parseFloat(document.getElementById('calcFatorPotenciaKW').value);
+
+            // Validação
+            if (!kw || !fatorPotencia) {
+                alert('Por favor, preencha todos os campos obrigatórios');
+                return;
+            }
+
+            if (kw <= 0 || fatorPotencia <= 0 || fatorPotencia > 1) {
+                alert('Verifique os valores informados');
+                return;
+            }
+
+            // Cálculo
+            const kva = kw / fatorPotencia;
+
+            // Exibir resultados
+            document.getElementById('resultadoKWKVA').innerHTML = `
+                <div class="alert alert-success">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <strong>Resultado Calculado</strong>
+                </div>
+                <div class="text-center py-4">
+                    <div class="p-4 bg-light rounded mb-3">
+                        <small class="text-muted d-block mb-2">Potência Aparente</small>
+                        <h2 class="mb-0 text-primary">${formatarNumero(kva)} kVA</h2>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td><i class="fas fa-tachometer-alt me-2"></i>Potência Ativa (kW)</td>
+                                    <td class="text-end"><strong>${formatarNumero(kw)} kW</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fas fa-percentage me-2"></i>Fator de Potência (cos φ)</td>
+                                    <td class="text-end"><strong>${formatarNumero(fatorPotencia * 100)}%</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 5. CALCULADORA Watts → kVA ou VA
+        function calcularWattsKVA() {
+            const watts = parseFloat(document.getElementById('calcWatts').value);
+            const fatorPotencia = parseFloat(document.getElementById('calcFatorPotenciaWatts').value);
+            const tipo = document.getElementById('calcTipoWatts').value;
+
+            // Validação
+            if (!watts || !fatorPotencia) {
+                alert('Por favor, preencha todos os campos obrigatórios');
+                return;
+            }
+
+            if (watts <= 0 || fatorPotencia <= 0 || fatorPotencia > 1) {
+                alert('Verifique os valores informados');
+                return;
+            }
+
+            // Cálculo
+            let resultado, unidade, valorFormatado;
+            if (tipo === 'kva') {
+                resultado = (watts / fatorPotencia) / 1000;
+                unidade = 'kVA';
+                valorFormatado = formatarNumero(resultado);
+            } else {
+                resultado = watts / fatorPotencia;
+                unidade = 'VA';
+                valorFormatado = formatarNumero(resultado);
+            }
+
+            // Exibir resultados
+            document.getElementById('resultadoWattsKVA').innerHTML = `
+                <div class="alert alert-success">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <strong>Resultado Calculado</strong>
+                </div>
+                <div class="text-center py-4">
+                    <div class="p-4 bg-light rounded mb-3">
+                        <small class="text-muted d-block mb-2">Potência Aparente</small>
+                        <h2 class="mb-0 text-primary">${valorFormatado} ${unidade}</h2>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td><i class="fas fa-bolt me-2"></i>Potência Ativa (W)</td>
+                                    <td class="text-end"><strong>${formatarNumero(watts)} W</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fas fa-percentage me-2"></i>Fator de Potência (cos φ)</td>
+                                    <td class="text-end"><strong>${formatarNumero(fatorPotencia * 100)}%</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Adicionar suporte para Enter em todos os campos de entrada
+        document.addEventListener('DOMContentLoaded', () => {
+            // HP → kVA
+            ['calcHP', 'calcTensaoMotor', 'calcRendimento', 'calcFatorPotencia'].forEach(id => {
+                const campo = document.getElementById(id);
+                if (campo) {
+                    campo.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter') calcularHPkVA();
+                    });
+                }
+            });
+
+            // kVA → Corrente
+            ['calcKVA', 'calcTensao'].forEach(id => {
+                const campo = document.getElementById(id);
+                if (campo) {
+                    campo.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter') calcularKVACorrente();
+                    });
+                }
+            });
+
+            // Corrente → kVA
+            ['calcCorrente', 'calcTensaoCorrente'].forEach(id => {
+                const campo = document.getElementById(id);
+                if (campo) {
+                    campo.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter') calcularCorrenteKVA();
+                    });
+                }
+            });
+
+            // kW → kVA
+            ['calcKW', 'calcFatorPotenciaKW'].forEach(id => {
+                const campo = document.getElementById(id);
+                if (campo) {
+                    campo.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter') calcularKWKVA();
+                    });
+                }
+            });
+
+            // Watts → kVA/VA
+            ['calcWatts', 'calcFatorPotenciaWatts'].forEach(id => {
+                const campo = document.getElementById(id);
+                if (campo) {
+                    campo.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter') calcularWattsKVA();
+                    });
+                }
+            });
+        });
+
+        // Event delegation para botões gerados dinamicamente
+        document.addEventListener('click', (e) => {
+            // Botão Adicionar ao Carrinho da calculadora
+            if (e.target.id === 'btnAdicionarAoCarrinho' || e.target.closest('#btnAdicionarAoCarrinho')) {
+                e.preventDefault();
+                const tensaoPrimaria = document.getElementById('calcTensaoPrimaria').value;
+                const tensaoSecundaria = document.getElementById('calcTensaoSecundaria').value;
+                const potencia = document.getElementById('calcPotencia').value;
+                const fase = document.getElementById('calcFase').value;
+                
+                const nomeProduto = `Transformador ${fase === 'trifasico' ? 'Trifásico' : 'Monofásico'} ${potencia}kVA ${tensaoPrimaria}V/${tensaoSecundaria}V`;
+                
+                // Adicionar ao carrinho (se o carrinhoManager existir)
+                if (typeof carrinhoManager !== 'undefined') {
+                    carrinhoManager.adicionarItem(
+                        `calc-${Date.now()}`,
+                        nomeProduto,
+                        0, // Preço será consultado
+                        ''
+                    );
+                    
+                    if (window.authManager) {
+                        window.authManager.showAlert('Produto adicionado ao carrinho! Consulte o preço na página de detalhes.', 'success');
+                    } else {
+                        alert('Produto adicionado ao carrinho! Consulte o preço na página de detalhes.');
+                    }
+                } else {
+                    alert('Produto calculado! Entre em contato para solicitar orçamento.');
+                }
+            }
+
+            // Botão Solicitar Orçamento da calculadora
+            if (e.target.id === 'btnSolicitarOrcamento' || e.target.closest('#btnSolicitarOrcamento')) {
+                e.preventDefault();
+                const tensaoPrimaria = document.getElementById('calcTensaoPrimaria').value;
+                const tensaoSecundaria = document.getElementById('calcTensaoSecundaria').value;
+                const potencia = document.getElementById('calcPotencia').value;
+                const frequencia = document.getElementById('calcFrequencia').value;
+                const fase = document.getElementById('calcFase').value;
+                
+                // Redirecionar para página de contato com os dados pré-preenchidos
+                const params = new URLSearchParams({
+                    origem: 'calculadora',
+                    potencia: potencia,
+                    tensao_primaria: tensaoPrimaria,
+                    tensao_secundaria: tensaoSecundaria,
+                    frequencia: frequencia,
+                    fase: fase
+                });
+                
+                window.location.href = `index.html#contato?${params.toString()}`;
+            }
+        });
     </script>
 </body>
 </html>

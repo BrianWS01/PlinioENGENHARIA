@@ -129,3 +129,8 @@ No dashboard do Supabase você pode:
 - Auth Guide: https://supabase.com/docs/guides/auth
 
 
+
+
+
+
+

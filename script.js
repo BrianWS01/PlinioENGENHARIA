@@ -1,23 +1,37 @@
-// Scroll suave para links do menu
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-            
-            // Fecha o menu mobile após clicar
-            const navbarCollapse = document.querySelector('.navbar-collapse');
-            if (navbarCollapse.classList.contains('show')) {
-                const bsCollapse = new bootstrap.Collapse(navbarCollapse);
-                bsCollapse.hide();
+// Scroll suave para links do menu (apenas links de âncora)
+function configurarScrollSuave() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            // Verificar se é um link de âncora válido (não um link externo)
+            const href = this.getAttribute('href');
+            if (href && href.startsWith('#') && href.length > 1) {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Fecha o menu mobile após clicar
+                    const navbarCollapse = document.querySelector('.navbar-collapse');
+                    if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+                        const bsCollapse = new bootstrap.Collapse(navbarCollapse);
+                        bsCollapse.hide();
+                    }
+                }
             }
-        }
+            // Se não for um link de âncora válido, permite o comportamento padrão
+        });
     });
-});
+}
+
+// Executar quando DOM estiver pronto
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', configurarScrollSuave);
+} else {
+    configurarScrollSuave();
+}
 
 // Sistema completo de carrinho
 class CarrinhoManager {
@@ -1093,7 +1107,29 @@ class AuthManager {
                     
                     if (profileError) {
                         console.error('Erro ao criar perfil:', profileError);
-                        // Continuar mesmo se der erro no perfil (pode ser criado depois)
+                        // Tentar criar perfil novamente após um pequeno delay
+                        // (pode ser problema de timing com RLS)
+                        setTimeout(async () => {
+                            const { error: retryError } = await this.supabase
+                                .from('user_profiles')
+                                .insert([
+                                    {
+                                        user_id: authData.user.id,
+                                        nome: nome,
+                                        telefone: telefone || null,
+                                        data_cadastro: new Date().toISOString()
+                                    }
+                                ]);
+                            
+                            if (retryError) {
+                                console.error('Erro ao criar perfil (tentativa 2):', retryError);
+                                this.showAlert('Conta criada, mas houve um problema ao salvar o perfil. Tente fazer login novamente.', 'warning');
+                            } else {
+                                console.log('Perfil criado com sucesso na tentativa 2');
+                            }
+                        }, 1000);
+                    } else {
+                        console.log('Perfil criado com sucesso!');
                     }
                     
                     // Fazer login automaticamente
@@ -1380,41 +1416,30 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Garantir que o link do guia completo funcione corretamente
-document.addEventListener('DOMContentLoaded', function() {
-    // Função para navegar para a página do guia
-    function navegarParaGuia(e) {
-        e.stopPropagation(); // Impede que outros event listeners interceptem
-        e.preventDefault(); // Previne comportamento padrão
-        // Navegação direta
-        window.location.href = 'transformadores-diferenca.html';
-        return false;
-    }
-    
-    // Aguardar um pouco para garantir que o DOM está totalmente carregado
-    setTimeout(function() {
-        // Link específico pelo ID
-        const linkGuiaCompleto = document.getElementById('linkGuiaCompleto');
-        if (linkGuiaCompleto) {
-            // Remover qualquer listener anterior
-            const novoLink = linkGuiaCompleto.cloneNode(true);
-            linkGuiaCompleto.parentNode.replaceChild(novoLink, linkGuiaCompleto);
-            
-            // Adicionar listener com prioridade máxima
-            novoLink.addEventListener('click', navegarParaGuia, true);
-            novoLink.addEventListener('click', function(e) {
-                e.stopImmediatePropagation();
-            }, true);
-        }
-        
-        // Todos os links para transformadores-diferenca.html
-        document.querySelectorAll('a[href*="transformadores-diferenca.html"]').forEach(link => {
-            link.addEventListener('click', navegarParaGuia, true);
-            link.addEventListener('click', function(e) {
-                e.stopImmediatePropagation();
-            }, true);
-        });
-    }, 100);
-});
+// Garantir que links externos funcionem corretamente (login, registro, loja, etc)
+function garantirNavegacaoLinks() {
+    // Permitir navegação normal para todos os links externos
+    document.querySelectorAll('a[href$=".html"]:not([href^="#"])').forEach(link => {
+        // Adicionar listener que apenas fecha o menu mobile, mas permite navegação
+        link.addEventListener('click', function(e) {
+            // Apenas fecha o menu mobile se estiver aberto
+            const navbarCollapse = document.querySelector('.navbar-collapse');
+            if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+                const bsCollapse = new bootstrap.Collapse(navbarCollapse);
+                bsCollapse.hide();
+            }
+            // NÃO previne o comportamento padrão - permite navegação normal do navegador
+            // O navegador vai fazer a navegação normalmente
+        }, false); // false = bubble phase, não captura
+    });
+}
+
+// Executar quando DOM estiver pronto
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', garantirNavegacaoLinks);
+} else {
+    // DOM já está carregado
+    garantirNavegacaoLinks();
+}
 
 

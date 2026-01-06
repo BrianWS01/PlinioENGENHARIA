@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Supabase</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .status {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Debug Supabase</h1>
+    
+    <div id="status"></div>
+    
+    <h2>Teste de Conexão</h2>
+    <button onclick="testConnection()">Testar Conexão</button>
+    
+    <h2>Teste de Registro</h2>
+    <form id="testForm">
+        <input type="text" id="testNome" placeholder="Nome" required><br><br>
+        <input type="email" id="testEmail" placeholder="Email" required><br><br>
+        <input type="password" id="testSenha" placeholder="Senha" required><br><br>
+        <button type="submit">Criar Conta de Teste</button>
+    </form>
+    
+    <div id="results"></div>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script>
+        // Verificar se o arquivo foi carregado
+        console.log('Supabase URL:', typeof SUPABASE_URL !== 'undefined' ? SUPABASE_URL : 'NÃO DEFINIDO');
+        console.log('Supabase Key:', typeof SUPABASE_ANON_KEY !== 'undefined' ? SUPABASE_ANON_KEY.substring(0, 20) + '...' : 'NÃO DEFINIDO');
+    </script>
+    <script>
+        let supabaseClient = null;
+        
+        function addStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('status');
+            const div = document.createElement('div');
+            div.className = `status ${type}`;
+            div.textContent = message;
+            statusDiv.appendChild(div);
+        }
+        
+        function addResult(title, data) {
+            const resultsDiv = document.getElementById('results');
+            const div = document.createElement('div');
+            div.innerHTML = `<h3>${title}</h3><pre>${JSON.stringify(data, null, 2)}</pre>`;
+            resultsDiv.appendChild(div);
+        }
+        
+        // Verificar inicialização (aguardar scripts carregarem)
+        window.addEventListener('DOMContentLoaded', () => {
+            // Aguardar um pouco para os scripts carregarem
+            setTimeout(() => {
+                addStatus('Verificando configuração...', 'info');
+                
+                // Debug: verificar o que está definido
+                addStatus(`typeof SUPABASE_URL: ${typeof SUPABASE_URL}`, 'info');
+                addStatus(`typeof SUPABASE_ANON_KEY: ${typeof SUPABASE_ANON_KEY}`, 'info');
+                
+                if (typeof SUPABASE_URL === 'undefined' || typeof SUPABASE_ANON_KEY === 'undefined') {
+                    addStatus('❌ SUPABASE_URL ou SUPABASE_ANON_KEY não definidos!', 'error');
+                    addStatus('Verifique se o arquivo supabase-config.js está sendo carregado corretamente.', 'error');
+                    return;
+                }
+                
+                if (SUPABASE_URL === 'COLE_SUA_PROJECT_URL_AQUI' || SUPABASE_ANON_KEY === 'COLE_SUA_ANON_KEY_AQUI') {
+                    addStatus('❌ Credenciais ainda não foram configuradas!', 'error');
+                    return;
+                }
+                
+                addStatus('✅ Credenciais encontradas!', 'success');
+                addStatus(`URL: ${SUPABASE_URL.substring(0, 30)}...`, 'info');
+                
+                if (typeof supabase === 'undefined') {
+                    addStatus('❌ Biblioteca Supabase não carregada!', 'error');
+                    return;
+                }
+                
+                try {
+                    supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                    addStatus('✅ Cliente Supabase criado com sucesso!', 'success');
+                } catch (error) {
+                    addStatus(`❌ Erro ao criar cliente: ${error.message}`, 'error');
+                    console.error('Erro completo:', error);
+                }
+            }, 500);
+        });
+        
+        async function testConnection() {
+            if (!supabaseClient) {
+                addStatus('❌ Cliente Supabase não inicializado!', 'error');
+                return;
+            }
+            
+            addStatus('Testando conexão...', 'info');
+            
+            try {
+                // Testar se consegue acessar auth
+                const { data, error } = await supabaseClient.auth.getSession();
+                
+                if (error) {
+                    addStatus(`❌ Erro na conexão: ${error.message}`, 'error');
+                    addResult('Erro', error);
+                } else {
+                    addStatus('✅ Conexão OK!', 'success');
+                    addResult('Sessão Atual', data);
+                }
+            } catch (error) {
+                addStatus(`❌ Erro: ${error.message}`, 'error');
+                addResult('Erro Completo', error);
+            }
+        }
+        
+        document.getElementById('testForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (!supabaseClient) {
+                addStatus('❌ Cliente Supabase não inicializado!', 'error');
+                return;
+            }
+            
+            const nome = document.getElementById('testNome').value;
+            const email = document.getElementById('testEmail').value;
+            const senha = document.getElementById('testSenha').value;
+            
+            addStatus('Criando conta de teste...', 'info');
+            
+            try {
+                // Criar usuário
+                const { data: authData, error: authError } = await supabaseClient.auth.signUp({
+                    email: email,
+                    password: senha,
+                    options: {
+                        data: {
+                            nome: nome
+                        }
+                    }
+                });
+                
+                if (authError) {
+                    addStatus(`❌ Erro ao criar usuário: ${authError.message}`, 'error');
+                    addResult('Erro Auth', authError);
+                    return;
+                }
+                
+                addStatus('✅ Usuário criado no Auth!', 'success');
+                addResult('Dados do Auth', authData);
+                
+                // Criar perfil
+                if (authData.user) {
+                    const { data: profileData, error: profileError } = await supabaseClient
+                        .from('user_profiles')
+                        .insert([
+                            {
+                                user_id: authData.user.id,
+                                nome: nome,
+                                telefone: null,
+                                data_cadastro: new Date().toISOString()
+                            }
+                        ])
+                        .select();
+                    
+                    if (profileError) {
+                        addStatus(`❌ Erro ao criar perfil: ${profileError.message}`, 'error');
+                        addResult('Erro Profile', profileError);
+                    } else {
+                        addStatus('✅ Perfil criado com sucesso!', 'success');
+                        addResult('Dados do Perfil', profileData);
+                    }
+                }
+                
+            } catch (error) {
+                addStatus(`❌ Erro: ${error.message}`, 'error');
+                addResult('Erro Completo', error);
+            }
+        });
+    </script>
+</body>
+</html>
+

@@ -95,3 +95,8 @@ O sistema tem **fallback para localStorage**:
 5. Veja os logs no dashboard do Supabase
 
 
+
+
+
+
+

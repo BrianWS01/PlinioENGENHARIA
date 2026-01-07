@@ -970,7 +970,7 @@ class AuthManager {
         const email = document.getElementById('loginEmail').value;
         const senha = document.getElementById('loginPassword').value;
         
-        // Se Supabase estiver disponível, usar autenticação do Supabase
+        // Se Supabase estiver disponível, tentar autenticação do Supabase primeiro
         if (this.supabase) {
             try {
                 const { data, error } = await this.supabase.auth.signInWithPassword({
@@ -979,12 +979,19 @@ class AuthManager {
                 });
                 
                 if (error) {
-                    this.showAlert(error.message || 'E-mail ou senha incorretos!', 'danger');
-                    return;
-                }
-                
-                if (data.user) {
-                    // Buscar perfil do usuário
+                    // Se erro de credenciais inválidas, tentar fallback para localStorage
+                    if (error.message && (error.message.includes('Invalid login credentials') || 
+                        error.message.includes('Email not confirmed') || 
+                        error.message.includes('User not found'))) {
+                        
+                        console.log('Supabase falhou, tentando fallback localStorage...');
+                        // Continuar para o fallback abaixo
+                    } else {
+                        this.showAlert(error.message || 'E-mail ou senha incorretos!', 'danger');
+                        return;
+                    }
+                } else if (data.user) {
+                    // Login com Supabase bem-sucedido
                     const { data: profile } = await this.supabase
                         .from('user_profiles')
                         .select('*')
@@ -999,21 +1006,15 @@ class AuthManager {
                         dataCadastro: profile?.data_cadastro || data.user.created_at
                     };
                     
-                    // Fechar modal se existir
                     const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
                     if (modal) modal.hide();
                     
-                    // Atualizar menu
                     this.atualizarMenuUsuario();
-                    
-                    // Mostrar mensagem de sucesso
                     this.showAlert('Login realizado com sucesso!', 'success');
                     
-                    // Limpar formulário
                     const loginForm = document.getElementById('loginForm');
                     if (loginForm) loginForm.reset();
                     
-                    // Redirecionar se houver parâmetro redirect
                     const urlParams = new URLSearchParams(window.location.search);
                     const redirect = urlParams.get('redirect');
                     if (redirect) {
@@ -1021,34 +1022,43 @@ class AuthManager {
                             window.location.href = redirect;
                         }, 1500);
                     }
+                    return;
                 }
             } catch (error) {
-                console.error('Erro no login:', error);
-                this.showAlert('Erro ao fazer login. Tente novamente.', 'danger');
+                console.error('Erro no login Supabase:', error);
+                // Continuar para fallback
+            }
+        }
+        
+        // Fallback para localStorage (migração gradual ou quando Supabase falha)
+        const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+        const usuario = usuarios.find(u => u.email === email && u.senha === senha);
+        
+        if (usuario) {
+            const usuarioSemSenha = { ...usuario };
+            delete usuarioSemSenha.senha;
+            
+            localStorage.setItem('usuarioLogado', JSON.stringify(usuarioSemSenha));
+            this.usuarioLogado = usuarioSemSenha;
+            
+            const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+            if (modal) modal.hide();
+            
+            this.atualizarMenuUsuario();
+            this.showAlert('Login realizado com sucesso!', 'success');
+            
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) loginForm.reset();
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const redirect = urlParams.get('redirect');
+            if (redirect) {
+                setTimeout(() => {
+                    window.location.href = redirect;
+                }, 1500);
             }
         } else {
-            // Fallback para localStorage (migração gradual)
-            const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
-            const usuario = usuarios.find(u => u.email === email && u.senha === senha);
-            
-            if (usuario) {
-                const usuarioSemSenha = { ...usuario };
-                delete usuarioSemSenha.senha;
-                
-                localStorage.setItem('usuarioLogado', JSON.stringify(usuarioSemSenha));
-                this.usuarioLogado = usuarioSemSenha;
-                
-                const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
-                if (modal) modal.hide();
-                
-                this.atualizarMenuUsuario();
-                this.showAlert('Login realizado com sucesso!', 'success');
-                
-                const loginForm = document.getElementById('loginForm');
-                if (loginForm) loginForm.reset();
-            } else {
-                this.showAlert('E-mail ou senha incorretos!', 'danger');
-            }
+            this.showAlert('E-mail ou senha incorretos!', 'danger');
         }
     }
     

@@ -162,7 +162,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="index.html">
-                <img src="src/imgs/ChatGPT Image 10 de dez. de 2025, 13_41_48 9.svg" alt="USETRAFO" class="img-fluid" loading="eager">
+                <img src="src/imgs/WhatsApp Image 2026-01-07 at 07.40.38 1.svg" alt="USETRAFO" class="img-fluid" loading="eager">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -196,7 +196,7 @@
                 <!-- Logo USETRAFO à Esquerda -->
                 <div class="col-lg-6 text-center mb-4 mb-lg-0">
                     <div class="login-logo-container">
-                        <img src="src/imgs/ChatGPT Image 10 de dez. de 2025, 13_41_48 9 (1).png" alt="USETRAFO - Logo" class="login-logo" loading="lazy">
+                        <img src="src/imgs/WhatsApp Image 2026-01-07 at 07.40.38 1.svg" alt="USETRAFO - Logo" class="login-logo" loading="lazy">
                     </div>
                 </div>
                 
@@ -252,7 +252,7 @@
             <div class="row">
                 <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
                     <div class="footer-logo mb-3">
-                        <img src="src/imgs/ChatGPT Image 10 de dez. de 2025, 13_41_48 9.svg" alt="USETRAFO - Logo" class="img-fluid" style="max-height: 80px;" loading="lazy">
+                        <img src="src/imgs/WhatsApp Image 2026-01-07 at 07.40.38 1.svg" alt="USETRAFO - Logo" class="img-fluid" style="max-height: 80px;" loading="lazy">
                     </div>
                     <p class="footer-text">Transformadores elétricos de alta qualidade há mais de 30 anos.</p>
                 </div>
@@ -426,13 +426,13 @@
         document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            // Se authManager estiver disponível, usar ele (já tem integração com Supabase)
+            // Se authManager estiver disponível, usar ele (já tem integração com Supabase e fallback)
             if (window.authManager) {
                 await window.authManager.handleLogin(e);
                 return;
             }
             
-            // Fallback para localStorage (migração gradual)
+            // Fallback direto para localStorage se authManager não estiver disponível
             const email = document.getElementById('loginEmail').value;
             const senha = document.getElementById('loginPassword').value;
             

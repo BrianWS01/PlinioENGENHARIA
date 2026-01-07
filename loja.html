@@ -17,7 +17,7 @@
     <meta property="og:url" content="https://usetrafo.com.br/loja.html">
     <meta property="og:title" content="Loja USETRAFO - Transformadores Elétricos">
     <meta property="og:description" content="Compre transformadores elétricos de alta qualidade com garantia de 36 meses.">
-    <meta property="og:image" content="https://usetrafo.com.br/src/imgs/ChatGPT Image 10 de dez. de 2025, 13_41_48 9 (1).png">
+    <meta property="og:image" content="https://usetrafo.com.br/src/imgs/WhatsApp Image 2026-01-07 at 07.40.38 1.svg">
     
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
@@ -27,9 +27,17 @@
     <title>Loja USETRAFO - Transformadores Elétricos | Compre Online</title>
     
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/svg+xml" href="src/imgs/ChatGPT Image 10 de dez. de 2025, 13_41_48 9.svg">
-    <link rel="icon" type="image/svg+xml" href="src/imgs/ChatGPT Image 10 de dez. de 2025, 13_41_48 9.svg">
-    <link rel="apple-touch-icon" href="src/imgs/ChatGPT Image 10 de dez. de 2025, 13_41_48 9.svg">
+    <link rel="icon" type="image/svg+xml" sizes="any" href="src/imgs/WhatsApp Image 2026-01-07 at 07.40.38 1.svg">
+    <link rel="shortcut icon" type="image/svg+xml" href="src/imgs/WhatsApp Image 2026-01-07 at 07.40.38 1.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="src/imgs/WhatsApp Image 2026-01-07 at 07.40.38 1.svg">
+    <link rel="apple-touch-icon" sizes="152x152" href="src/imgs/WhatsApp Image 2026-01-07 at 07.40.38 1.svg">
+    <link rel="apple-touch-icon" sizes="144x144" href="src/imgs/WhatsApp Image 2026-01-07 at 07.40.38 1.svg">
+    <link rel="apple-touch-icon" sizes="120x120" href="src/imgs/WhatsApp Image 2026-01-07 at 07.40.38 1.svg">
+    <link rel="apple-touch-icon" sizes="114x114" href="src/imgs/WhatsApp Image 2026-01-07 at 07.40.38 1.svg">
+    <link rel="apple-touch-icon" sizes="76x76" href="src/imgs/WhatsApp Image 2026-01-07 at 07.40.38 1.svg">
+    <link rel="apple-touch-icon" sizes="72x72" href="src/imgs/WhatsApp Image 2026-01-07 at 07.40.38 1.svg">
+    <link rel="apple-touch-icon" sizes="60x60" href="src/imgs/WhatsApp Image 2026-01-07 at 07.40.38 1.svg">
+    <link rel="apple-touch-icon" sizes="57x57" href="src/imgs/WhatsApp Image 2026-01-07 at 07.40.38 1.svg">
     <link rel="manifest" href="site.webmanifest">
     
     <!-- Bootstrap CSS -->
@@ -37,6 +45,9 @@
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- jsPDF para geração de PDFs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
@@ -269,15 +280,19 @@
             transition: all 0.3s ease;
         }
 
+        /* Remover hover do card principal da calculadora */
+        .card.shadow-sm.border-0:has(#calculadoraContainer) {
+            transition: none;
+        }
+
+        .card.shadow-sm.border-0:has(#calculadoraContainer):hover {
+            transform: none;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+        }
+
         #calculadoraContainer .card {
             border: none;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-
-        #calculadoraContainer .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
         }
 
         #calculadoraContainer .form-control:focus,
@@ -288,21 +303,38 @@
 
         /* Estilos das Abas */
         #calculadoraTabs .nav-link {
-            color: #6c757d;
-            border: 1px solid #dee2e6;
+            color: #212529;
+            border: 2px solid #dee2e6;
             border-radius: 0.375rem 0.375rem 0 0;
+            background-color: #ffffff;
             transition: all 0.3s ease;
+            font-weight: 500;
         }
 
         #calculadoraTabs .nav-link:hover {
             color: var(--primary-color);
             background-color: #f8f9fa;
+            border-color: #dee2e6;
         }
 
         #calculadoraTabs .nav-link.active {
-            color: white;
-            background-color: var(--primary-color);
+            color: var(--primary-color);
+            background-color: #ffffff;
             border-color: var(--primary-color);
+            border-bottom-color: #ffffff;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        #calculadoraTabs .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #ffffff;
         }
 
         #calculadoraTabs .nav-link i {
@@ -365,7 +397,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="index.html">
-                        <img src="src/imgs/ChatGPT Image 10 de dez. de 2025, 13_41_48 9.svg" alt="USETRAFO - Logo" class="img-fluid" loading="eager">
+                        <img src="src/imgs/WhatsApp Image 2026-01-07 at 07.40.38 1.svg" alt="USETRAFO - Logo" class="img-fluid" loading="eager">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -385,7 +417,10 @@
                         <a class="nav-link" href="index.html#personalizados">Transformadores Personalizados</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="loja.html">Loja</a>
+                        <a class="nav-link active" href="loja.html">Loja</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="calculadora.html">Calculadora</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="index.html#contato">Contato</a>
@@ -539,327 +574,17 @@
                 <p class="lead text-muted">Compre nossos produtos diretamente pela nossa loja online</p>
             </div>
 
-            <!-- Calculadora de Transformadores -->
-            <div class="row mb-5">
-                <div class="col-12">
-                    <div class="card shadow-sm border-0" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+            <!-- Link para Calculadora -->
+            <div class="row mb-4">
+                <div class="col-12 text-center">
+                    <div class="card shadow-sm border-0" style="background: linear-gradient(135deg, var(--primary-color) 0%, #030d5a 100%);">
                         <div class="card-body p-4">
-                            <div class="d-flex align-items-center mb-4">
-                                <div class="me-3">
-                                    <i class="fas fa-calculator fa-2x text-primary"></i>
-                                </div>
-                                <div>
-                                    <h3 class="mb-1 fw-bold">Calculadora de Transformadores</h3>
-                                    <p class="text-muted mb-0">Calcule a potência e especificações ideais para seu projeto</p>
-                                </div>
-                                <button class="btn btn-sm btn-outline-primary ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#calculadoraContainer" aria-expanded="true" id="btnToggleCalculadora">
-                                    <i class="fas fa-chevron-up me-2"></i>Ocultar Calculadora
-                                </button>
-                            </div>
-                            
-                            <div class="collapse show" id="calculadoraContainer">
-                                <!-- Abas de Navegação -->
-                                <ul class="nav nav-pills nav-justified mb-4" id="calculadoraTabs" role="tablist">
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link active" id="tab-hp-kva" data-bs-toggle="tab" data-bs-target="#calc-hp-kva" type="button" role="tab">
-                                            <i class="fas fa-horse me-2"></i>HP → kVA
-                                        </button>
-                                    </li>
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="tab-kva-corrente" data-bs-toggle="tab" data-bs-target="#calc-kva-corrente" type="button" role="tab">
-                                            <i class=></i>kVA → Corrente
-                                        </button>
-                                    </li>
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="tab-corrente-kva" data-bs-toggle="tab" data-bs-target="#calc-corrente-kva" type="button" role="tab">
-                                            <i class="fas fa-exchange-alt me-2"></i>Corrente → kVA
-                                        </button>
-                                    </li>
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="tab-kw-kva" data-bs-toggle="tab" data-bs-target="#calc-kw-kva" type="button" role="tab">
-                                            <i class="fas fa-tachometer-alt me-2"></i>kW → kVA
-                                        </button>
-                                    </li>
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="tab-watts-kva" data-bs-toggle="tab" data-bs-target="#calc-watts-kva" type="button" role="tab">
-                                            <i class="fas fa-bolt me-2"></i>Watts → kVA
-                                        </button>
-                                    </li>
-                                </ul>
-
-                                <!-- Conteúdo das Abas -->
-                                <div class="tab-content" id="calculadoraTabContent">
-                                    <!-- Aba 1: HP para kVA -->
-                                    <div class="tab-pane fade show active" id="calc-hp-kva" role="tabpanel">
-                                        <div class="row g-4">
-                                            <div class="col-md-6">
-                                                <div class="card bg-white h-100">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title mb-4">
-                                                            <i class="fas fa-edit me-2 text-primary"></i>Dados de Entrada
-                                                        </h5>
-                                                        <div class="mb-3">
-                                                            <label for="calcHP" class="form-label fw-semibold">
-                                                                HP / CV <span class="text-danger">*</span>
-                                                            </label>
-                                                            <input type="number" class="form-control" id="calcHP" placeholder="Ex: 20" step="0.01" min="0">
-                                                            <small class="form-text text-muted">Potência em Horsepower ou Cavalo-Vapor</small>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="calcTensaoMotor" class="form-label fw-semibold">
-                                                                Tensão do Motor (V) <span class="text-danger">*</span>
-                                                            </label>
-                                                            <input type="number" class="form-control" id="calcTensaoMotor" placeholder="Ex: 220" step="0.01" min="0">
-                                                            <small class="form-text text-muted">Tensão de alimentação do motor</small>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="calcRendimento" class="form-label fw-semibold">
-                                                                Rendimento (η) <span class="text-danger">*</span>
-                                                            </label>
-                                                            <input type="number" class="form-control" id="calcRendimento" placeholder="Ex: 0.8" step="0.01" min="0" max="1">
-                                                            <small class="form-text text-muted">Rendimento do motor (0 a 1)</small>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="calcFatorPotencia" class="form-label fw-semibold">
-                                                                Fator de Potência (cos φ) <span class="text-danger">*</span>
-                                                            </label>
-                                                            <input type="number" class="form-control" id="calcFatorPotencia" placeholder="Ex: 0.8" step="0.01" min="0" max="1">
-                                                            <small class="form-text text-muted">Fator de potência do motor (0 a 1)</small>
-                                                        </div>
-                                                        <div class="alert alert-info">
-                                                            <i class="fas fa-info-circle me-2"></i>
-                                                            <small><strong>OBS.:</strong> Cálculo para motores trifásicos</small>
-                                                        </div>
-                                                        <button type="button" class="btn btn-primary w-100" onclick="calcularHPkVA()">
-                                                            <i class="fas fa-calculator me-2"></i>Calcular
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="card bg-white h-100">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title mb-4">
-                                                            <i class="fas fa-chart-line me-2 text-success"></i>Resultados
-                                                        </h5>
-                                                        <div id="resultadoHPkVA" class="text-center text-muted py-5">
-                                                            <i class="fas fa-info-circle fa-3x mb-3 opacity-50"></i>
-                                                            <p class="mb-0">Preencha os campos e clique em "Calcular"</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Aba 2: kVA e Tensão para Corrente -->
-                                    <div class="tab-pane fade" id="calc-kva-corrente" role="tabpanel">
-                                        <div class="row g-4">
-                                            <div class="col-md-6">
-                                                <div class="card bg-white h-100">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title mb-4">
-                                                            <i class="fas fa-edit me-2 text-primary"></i>Dados de Entrada
-                                                        </h5>
-                                                        <div class="mb-3">
-                                                            <label for="calcKVA" class="form-label fw-semibold">
-                                                                Potência (kVA) <span class="text-danger">*</span>
-                                                            </label>
-                                                            <input type="number" class="form-control" id="calcKVA" placeholder="Ex: 1.5" step="0.01" min="0">
-                                                            <small class="form-text text-muted">Potência aparente em kVA</small>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="calcTensao" class="form-label fw-semibold">
-                                                                Tensão (V) <span class="text-danger">*</span>
-                                                            </label>
-                                                            <input type="number" class="form-control" id="calcTensao" placeholder="Ex: 220" step="0.01" min="0">
-                                                            <small class="form-text text-muted">Tensão do sistema</small>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="calcFaseCorrente" class="form-label fw-semibold">
-                                                                Tipo de Sistema
-                                                            </label>
-                                                            <select class="form-select" id="calcFaseCorrente">
-                                                                <option value="monofasico">Monofásico</option>
-                                                                <option value="trifasico" selected>Trifásico</option>
-                                                            </select>
-                                                        </div>
-                                                        <button type="button" class="btn btn-primary w-100" onclick="calcularKVACorrente()">
-                                                            <i class="fas fa-calculator me-2"></i>Calcular
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="card bg-white h-100">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title mb-4">
-                                                            <i class="fas fa-chart-line me-2 text-success"></i>Resultados
-                                                        </h5>
-                                                        <div id="resultadoKVACorrente" class="text-center text-muted py-5">
-                                                            <i class="fas fa-info-circle fa-3x mb-3 opacity-50"></i>
-                                                            <p class="mb-0">Preencha os campos e clique em "Calcular"</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Aba 3: Corrente e Tensão para kVA -->
-                                    <div class="tab-pane fade" id="calc-corrente-kva" role="tabpanel">
-                                        <div class="row g-4">
-                                            <div class="col-md-6">
-                                                <div class="card bg-white h-100">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title mb-4">
-                                                            <i class="fas fa-edit me-2 text-primary"></i>Dados de Entrada
-                                                        </h5>
-                                                        <div class="mb-3">
-                                                            <label for="calcCorrente" class="form-label fw-semibold">
-                                                                Corrente (A) <span class="text-danger">*</span>
-                                                            </label>
-                                                            <input type="number" class="form-control" id="calcCorrente" placeholder="Ex: 50" step="0.01" min="0">
-                                                            <small class="form-text text-muted">Corrente em Amperes</small>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="calcTensaoCorrente" class="form-label fw-semibold">
-                                                                Tensão (V) <span class="text-danger">*</span>
-                                                            </label>
-                                                            <input type="number" class="form-control" id="calcTensaoCorrente" placeholder="Ex: 380" step="0.01" min="0">
-                                                            <small class="form-text text-muted">Tensão do sistema</small>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="calcFaseCorrenteKVA" class="form-label fw-semibold">
-                                                                Tipo de Sistema
-                                                            </label>
-                                                            <select class="form-select" id="calcFaseCorrenteKVA">
-                                                                <option value="monofasico">Monofásico</option>
-                                                                <option value="trifasico" selected>Trifásico</option>
-                                                            </select>
-                                                        </div>
-                                                        <button type="button" class="btn btn-primary w-100" onclick="calcularCorrenteKVA()">
-                                                            <i class="fas fa-calculator me-2"></i>Calcular
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="card bg-white h-100">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title mb-4">
-                                                            <i class="fas fa-chart-line me-2 text-success"></i>Resultados
-                                                        </h5>
-                                                        <div id="resultadoCorrenteKVA" class="text-center text-muted py-5">
-                                                            <i class="fas fa-info-circle fa-3x mb-3 opacity-50"></i>
-                                                            <p class="mb-0">Preencha os campos e clique em "Calcular"</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Aba 4: kW para kVA -->
-                                    <div class="tab-pane fade" id="calc-kw-kva" role="tabpanel">
-                                        <div class="row g-4">
-                                            <div class="col-md-6">
-                                                <div class="card bg-white h-100">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title mb-4">
-                                                            <i class="fas fa-edit me-2 text-primary"></i>Dados de Entrada
-                                                        </h5>
-                                                        <div class="mb-3">
-                                                            <label for="calcKW" class="form-label fw-semibold">
-                                                                Potência (kW) <span class="text-danger">*</span>
-                                                            </label>
-                                                            <input type="number" class="form-control" id="calcKW" placeholder="Ex: 3.6" step="0.01" min="0">
-                                                            <small class="form-text text-muted">Potência ativa em Kilowatts</small>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="calcFatorPotenciaKW" class="form-label fw-semibold">
-                                                                Fator de Potência (cos φ) <span class="text-danger">*</span>
-                                                            </label>
-                                                            <input type="number" class="form-control" id="calcFatorPotenciaKW" placeholder="Ex: 0.8" step="0.01" min="0" max="1">
-                                                            <small class="form-text text-muted">Fator de potência (0 a 1)</small>
-                                                        </div>
-                                                        <button type="button" class="btn btn-primary w-100" onclick="calcularKWKVA()">
-                                                            <i class="fas fa-calculator me-2"></i>Calcular
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="card bg-white h-100">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title mb-4">
-                                                            <i class="fas fa-chart-line me-2 text-success"></i>Resultados
-                                                        </h5>
-                                                        <div id="resultadoKWKVA" class="text-center text-muted py-5">
-                                                            <i class="fas fa-info-circle fa-3x mb-3 opacity-50"></i>
-                                                            <p class="mb-0">Preencha os campos e clique em "Calcular"</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Aba 5: Watts para kVA -->
-                                    <div class="tab-pane fade" id="calc-watts-kva" role="tabpanel">
-                                        <div class="row g-4">
-                                            <div class="col-md-6">
-                                                <div class="card bg-white h-100">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title mb-4">
-                                                            <i class="fas fa-edit me-2 text-primary"></i>Dados de Entrada
-                                                        </h5>
-                                                        <div class="mb-3">
-                                                            <label for="calcWatts" class="form-label fw-semibold">
-                                                                Potência (W) <span class="text-danger">*</span>
-                                                            </label>
-                                                            <input type="number" class="form-control" id="calcWatts" placeholder="Ex: 9500" step="0.01" min="0">
-                                                            <small class="form-text text-muted">Potência ativa em Watts</small>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="calcFatorPotenciaWatts" class="form-label fw-semibold">
-                                                                Fator de Potência (cos φ) <span class="text-danger">*</span>
-                                                            </label>
-                                                            <input type="number" class="form-control" id="calcFatorPotenciaWatts" placeholder="Ex: 0.8" step="0.01" min="0" max="1">
-                                                            <small class="form-text text-muted">Fator de potência (0 a 1)</small>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="calcTipoWatts" class="form-label fw-semibold">
-                                                                Tipo de Resultado
-                                                            </label>
-                                                            <select class="form-select" id="calcTipoWatts">
-                                                                <option value="kva">kVA</option>
-                                                                <option value="va">VA</option>
-                                                            </select>
-                                                        </div>
-                                                        <button type="button" class="btn btn-primary w-100" onclick="calcularWattsKVA()">
-                                                            <i class="fas fa-calculator me-2"></i>Calcular
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="card bg-white h-100">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title mb-4">
-                                                            <i class="fas fa-chart-line me-2 text-success"></i>Resultados
-                                                        </h5>
-                                                        <div id="resultadoWattsKVA" class="text-center text-muted py-5">
-                                                            <i class="fas fa-info-circle fa-3x mb-3 opacity-50"></i>
-                                                            <p class="mb-0">Preencha os campos e clique em "Calcular"</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <i class="fas fa-calculator fa-3x text-white mb-3"></i>
+                            <h3 class="text-white mb-2">Calculadora de Transformadores</h3>
+                            <p class="text-white-50 mb-3">Calcule a potência e especificações ideais para seu projeto</p>
+                            <a href="calculadora.html" class="btn btn-light btn-lg">
+                                <i class="fas fa-calculator me-2"></i>Acessar Calculadora
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -1365,7 +1090,7 @@
             <div class="row">
                 <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
                     <div class="footer-logo mb-3">
-                        <img src="src/imgs/ChatGPT Image 10 de dez. de 2025, 13_41_48 9.svg" alt="USETRAFO - Logo" class="img-fluid" style="max-height: 80px;" loading="lazy">
+                        <img src="src/imgs/WhatsApp Image 2026-01-07 at 07.40.38 1.svg" alt="USETRAFO - Logo" class="img-fluid" style="max-height: 80px;" loading="lazy">
                     </div>
                     <p class="footer-text">Transformadores elétricos de alta qualidade há mais de 30 anos.</p>
                 </div>
@@ -1386,6 +1111,11 @@
                             <li class="mb-2">
                                 <a href="loja.html" class="footer-link-item">
                                     <i class="fas fa-chevron-right me-2"></i> Loja
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="calculadora.html" class="footer-link-item">
+                                    <i class="fas fa-chevron-right me-2"></i> Calculadora
                                 </a>
                             </li>
                             <li class="mb-2">
@@ -2249,7 +1979,7 @@
             });
         });
         
-        // Finalizar compra
+        // Finalizar compra - Abrir modal de orçamento
         btnFinalizarCompra.addEventListener('click', () => {
             if (carrinho.length === 0) {
                 if (window.authManager) {
@@ -2260,439 +1990,796 @@
                 return;
             }
             
-            // Redirecionar para página de checkout ou formulário de contato
-            window.location.href = 'index.html#contato';
+            // Abrir modal de orçamento
+            const orcamentoModal = new bootstrap.Modal(document.getElementById('orcamentoModal'));
+            orcamentoModal.show();
         });
         
         // Inicializar carrinho
         atualizarCarrinho();
 
+        // As funções da calculadora foram movidas para calculadora.html
+        // Para usar a calculadora, acesse: calculadora.html
+    </script>
+
+    <!-- Modal de Orçamento -->
+    <div class="modal fade" id="orcamentoModal" tabindex="-1" aria-labelledby="orcamentoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="orcamentoModalLabel">
+                        <i class="fas fa-file-pdf me-2"></i>Solicitar Orçamento
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="orcamentoForm">
+                        <!-- Dados do Cliente -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-light">
+                                <h6 class="mb-0"><i class="fas fa-building me-2"></i>Dados do Cliente</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="orcamentoRazaoSocial" class="form-label">Razão Social <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="orcamentoRazaoSocial" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="orcamentoCNPJ" class="form-label">CNPJ <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="orcamentoCNPJ" placeholder="00.000.000/0000-00" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="orcamentoIE" class="form-label">Inscrição Estadual (IE)</label>
+                                        <input type="text" class="form-control" id="orcamentoIE">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="orcamentoTelefone" class="form-label">Telefone <span class="text-danger">*</span></label>
+                                        <input type="tel" class="form-control" id="orcamentoTelefone" placeholder="(00) 00000-0000" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="orcamentoEmail" class="form-label">E-mail <span class="text-danger">*</span></label>
+                                        <input type="email" class="form-control" id="orcamentoEmail" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="orcamentoContato" class="form-label">Nome do Contato</label>
+                                        <input type="text" class="form-control" id="orcamentoContato">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <label for="orcamentoEndereco" class="form-label">Endereço <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="orcamentoEndereco" required>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="orcamentoNumero" class="form-label">Número</label>
+                                        <input type="text" class="form-control" id="orcamentoNumero">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="orcamentoBairro" class="form-label">Bairro</label>
+                                        <input type="text" class="form-control" id="orcamentoBairro">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="orcamentoCidade" class="form-label">Cidade <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="orcamentoCidade" required>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="orcamentoUF" class="form-label">UF <span class="text-danger">*</span></label>
+                                        <select class="form-select" id="orcamentoUF" required>
+                                            <option value="">UF</option>
+                                            <option value="AC">AC</option>
+                                            <option value="AL">AL</option>
+                                            <option value="AP">AP</option>
+                                            <option value="AM">AM</option>
+                                            <option value="BA">BA</option>
+                                            <option value="CE">CE</option>
+                                            <option value="DF">DF</option>
+                                            <option value="ES">ES</option>
+                                            <option value="GO">GO</option>
+                                            <option value="MA">MA</option>
+                                            <option value="MT">MT</option>
+                                            <option value="MS">MS</option>
+                                            <option value="MG">MG</option>
+                                            <option value="PA">PA</option>
+                                            <option value="PB">PB</option>
+                                            <option value="PR">PR</option>
+                                            <option value="PE">PE</option>
+                                            <option value="PI">PI</option>
+                                            <option value="RJ">RJ</option>
+                                            <option value="RN">RN</option>
+                                            <option value="RS">RS</option>
+                                            <option value="RO">RO</option>
+                                            <option value="RR">RR</option>
+                                            <option value="SC">SC</option>
+                                            <option value="SP" selected>SP</option>
+                                            <option value="SE">SE</option>
+                                            <option value="TO">TO</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="orcamentoCEP" class="form-label">CEP <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="orcamentoCEP" placeholder="00000-000" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Condições Comerciais -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-light">
+                                <h6 class="mb-0"><i class="fas fa-handshake me-2"></i>Condições Comerciais</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="orcamentoPagamento" class="form-label">Forma de Pagamento <span class="text-danger">*</span></label>
+                                        <select class="form-select" id="orcamentoPagamento" required>
+                                            <option value="">Selecione...</option>
+                                            <option value="A Vista">À Vista</option>
+                                            <option value="2 Parcelas (30/60 Dias)">2 Parcelas (30/60 Dias)</option>
+                                            <option value="3 Parcelas (30/60/90 Dias)">3 Parcelas (30/60/90 Dias)</option>
+                                            <option value="Boleto">Boleto</option>
+                                            <option value="Cartão de Crédito">Cartão de Crédito</option>
+                                            <option value="BNDES">BNDES</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="orcamentoFrete" class="form-label">Frete <span class="text-danger">*</span></label>
+                                        <select class="form-select" id="orcamentoFrete" required>
+                                            <option value="">Selecione...</option>
+                                            <option value="Por conta do emitente CIF (Sem Descarga)">Por conta do emitente CIF (Sem Descarga)</option>
+                                            <option value="Por conta do destinatário FOB">Por conta do destinatário FOB</option>
+                                            <option value="A combinar">A combinar</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="orcamentoValidade" class="form-label">Validade da Proposta (dias) <span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" id="orcamentoValidade" value="30" min="1" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="orcamentoPrazoFabricacao" class="form-label">Prazo de Fabricação (dias úteis) <span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" id="orcamentoPrazoFabricacao" value="3" min="1" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Resumo do Carrinho -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-light">
+                                <h6 class="mb-0"><i class="fas fa-shopping-cart me-2"></i>Itens do Orçamento</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="orcamentoItensTable">
+                                        <thead class="table-primary">
+                                            <tr>
+                                                <th>Item</th>
+                                                <th>Descrição</th>
+                                                <th>Quantidade</th>
+                                                <th>Preço Unit.</th>
+                                                <th>Preço Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="orcamentoItensBody">
+                                            <!-- Itens serão inseridos aqui via JavaScript -->
+                                        </tbody>
+                                        <tfoot>
+                                            <tr class="table-secondary">
+                                                <th colspan="4" class="text-end">Total:</th>
+                                                <th id="orcamentoTotal">R$ 0,00</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Observações -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-light">
+                                <h6 class="mb-0"><i class="fas fa-sticky-note me-2"></i>Observações</h6>
+                            </div>
+                            <div class="card-body">
+                                <textarea class="form-control" id="orcamentoObservacoes" rows="3" placeholder="Informações adicionais, especificações técnicas, etc."></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i>Cancelar
+                    </button>
+                    <button type="button" class="btn btn-primary" id="btnGerarPDF">
+                        <i class="fas fa-file-pdf me-2"></i>Gerar PDF do Orçamento
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
         // ============================================
-        // CALCULADORAS DE GRANDEZAS ELÉTRICAS
+        // SISTEMA DE ORÇAMENTO E GERAÇÃO DE PDF
         // ============================================
         
-        const btnToggleCalculadora = document.getElementById('btnToggleCalculadora');
+        const orcamentoModal = document.getElementById('orcamentoModal');
+        const orcamentoForm = document.getElementById('orcamentoForm');
+        const btnGerarPDF = document.getElementById('btnGerarPDF');
+        const orcamentoItensBody = document.getElementById('orcamentoItensBody');
+        const orcamentoTotal = document.getElementById('orcamentoTotal');
 
-        // Toggle do botão de mostrar/ocultar calculadora
-        if (btnToggleCalculadora) {
-            const calculadoraContainer = document.getElementById('calculadoraContainer');
-            calculadoraContainer.addEventListener('show.bs.collapse', () => {
-                btnToggleCalculadora.innerHTML = '<i class="fas fa-chevron-up me-2"></i>Ocultar Calculadora';
-            });
-            calculadoraContainer.addEventListener('hide.bs.collapse', () => {
-                btnToggleCalculadora.innerHTML = '<i class="fas fa-chevron-down me-2"></i>Mostrar Calculadora';
+        // Quando o modal de orçamento abrir, preencher com dados do carrinho
+        if (orcamentoModal) {
+            orcamentoModal.addEventListener('show.bs.modal', () => {
+                atualizarItensOrcamento();
+                preencherDadosDaCalculadora();
             });
         }
-
-        // Função auxiliar para formatar números
-        function formatarNumero(num, decimais = 2) {
-            return num.toFixed(decimais).replace('.', ',');
-        }
-
-        // 1. CALCULADORA HP → kVA e Corrente do Motor
-        function calcularHPkVA() {
-            const hp = parseFloat(document.getElementById('calcHP').value);
-            const tensaoMotor = parseFloat(document.getElementById('calcTensaoMotor').value);
-            const rendimento = parseFloat(document.getElementById('calcRendimento').value);
-            const fatorPotencia = parseFloat(document.getElementById('calcFatorPotencia').value);
-
-            // Validação
-            if (!hp || !tensaoMotor || !rendimento || !fatorPotencia) {
-                alert('Por favor, preencha todos os campos obrigatórios');
-                return;
-            }
-
-            if (hp <= 0 || tensaoMotor <= 0 || rendimento <= 0 || rendimento > 1 || fatorPotencia <= 0 || fatorPotencia > 1) {
-                alert('Verifique os valores informados');
-                return;
-            }
-
-            // Cálculos
-            const kW = hp * 0.7457; // Conversão HP para kW
-            const kVA = kW / (rendimento * fatorPotencia);
-            const correnteMotor = (kVA * 1000) / (Math.sqrt(3) * tensaoMotor);
-
-            // Exibir resultados
-            document.getElementById('resultadoHPkVA').innerHTML = `
-                <div class="alert alert-success">
-                    <i class="fas fa-check-circle me-2"></i>
-                    <strong>Resultados Calculados</strong>
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead class="table-primary">
-                            <tr>
-                                <th>Grandeza</th>
-                                <th class="text-end">Valor</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><i class="fas fa-horse me-2 text-warning"></i>Potência (HP/CV)</td>
-                                <td class="text-end"><strong>${formatarNumero(hp)}</strong></td>
-                            </tr>
-                            <tr>
-                                <td><i class="fas fa-tachometer-alt me-2 text-info"></i>Potência (kW)</td>
-                                <td class="text-end"><strong>${formatarNumero(kW)} kW</strong></td>
-                            </tr>
-                            <tr class="table-success">
-                                <td><i class="fas fa-bolt me-2 text-primary"></i>Potência Aparente (kVA)</td>
-                                <td class="text-end"><strong>${formatarNumero(kVA)} kVA</strong></td>
-                            </tr>
-                            <tr>
-                                <td><i class="fas fa-bolt me-2 text-warning"></i>Tensão do Motor</td>
-                                <td class="text-end"><strong>${formatarNumero(tensaoMotor)} V</strong></td>
-                            </tr>
-                            <tr>
-                                <td><i class="fas fa-percentage me-2 text-info"></i>Rendimento (η)</td>
-                                <td class="text-end"><strong>${formatarNumero(rendimento * 100)}%</strong></td>
-                            </tr>
-                            <tr>
-                                <td><i class="fas fa-percentage me-2 text-info"></i>Fator de Potência (cos φ)</td>
-                                <td class="text-end"><strong>${formatarNumero(fatorPotencia * 100)}%</strong></td>
-                            </tr>
-                            <tr class="table-success">
-                                <td><i class="fas fa-current me-2"></i>Corrente do Motor (A)</td>
-                                <td class="text-end"><strong>${formatarNumero(correnteMotor)} A</strong></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="alert alert-info mt-3">
-                    <i class="fas fa-info-circle me-2"></i>
-                    <small><strong>OBS.:</strong> Cálculo para motores trifásicos</small>
-                </div>
-            `;
-        }
-
-        // 2. CALCULADORA kVA e Tensão → Corrente
-        function calcularKVACorrente() {
-            const kva = parseFloat(document.getElementById('calcKVA').value);
-            const tensao = parseFloat(document.getElementById('calcTensao').value);
-            const fase = document.getElementById('calcFaseCorrente').value;
-
-            // Validação
-            if (!kva || !tensao) {
-                alert('Por favor, preencha todos os campos obrigatórios');
-                return;
-            }
-
-            if (kva <= 0 || tensao <= 0) {
-                alert('Os valores devem ser maiores que zero');
-                return;
-            }
-
-            // Cálculo
-            let corrente;
-            if (fase === 'trifasico') {
-                corrente = (kva * 1000) / (Math.sqrt(3) * tensao);
-            } else {
-                corrente = (kva * 1000) / tensao;
-            }
-
-            // Exibir resultados
-            document.getElementById('resultadoKVACorrente').innerHTML = `
-                <div class="alert alert-success">
-                    <i class="fas fa-check-circle me-2"></i>
-                    <strong>Resultado Calculado</strong>
-                </div>
-                <div class="text-center py-4">
-                    <div class="p-4 bg-light rounded mb-3">
-                        <small class="text-muted d-block mb-2">Corrente</small>
-                        <h2 class="mb-0 text-primary">${formatarNumero(corrente)} A</h2>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <tbody>
-                                <tr>
-                                    <td><i class="fas fa-tachometer-alt me-2"></i>Potência (kVA)</td>
-                                    <td class="text-end"><strong>${formatarNumero(kva)} kVA</strong></td>
-                                </tr>
-                                <tr>
-                                    <td><i class="fas fa-bolt me-2"></i>Tensão (V)</td>
-                                    <td class="text-end"><strong>${formatarNumero(tensao)} V</strong></td>
-                                </tr>
-                                <tr>
-                                    <td><i class="fas fa-cog me-2"></i>Tipo</td>
-                                    <td class="text-end"><strong>${fase === 'trifasico' ? 'Trifásico' : 'Monofásico'}</strong></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            `;
-        }
-
-        // 3. CALCULADORA Corrente e Tensão → kVA
-        function calcularCorrenteKVA() {
-            const corrente = parseFloat(document.getElementById('calcCorrente').value);
-            const tensao = parseFloat(document.getElementById('calcTensaoCorrente').value);
-            const fase = document.getElementById('calcFaseCorrenteKVA').value;
-
-            // Validação
-            if (!corrente || !tensao) {
-                alert('Por favor, preencha todos os campos obrigatórios');
-                return;
-            }
-
-            if (corrente <= 0 || tensao <= 0) {
-                alert('Os valores devem ser maiores que zero');
-                return;
-            }
-
-            // Cálculo
-            let kva;
-            if (fase === 'trifasico') {
-                kva = (corrente * tensao * Math.sqrt(3)) / 1000;
-            } else {
-                kva = (corrente * tensao) / 1000;
-            }
-
-            // Exibir resultados
-            document.getElementById('resultadoCorrenteKVA').innerHTML = `
-                <div class="alert alert-success">
-                    <i class="fas fa-check-circle me-2"></i>
-                    <strong>Resultado Calculado</strong>
-                </div>
-                <div class="text-center py-4">
-                    <div class="p-4 bg-light rounded mb-3">
-                        <small class="text-muted d-block mb-2">Potência Aparente</small>
-                        <h2 class="mb-0 text-primary">${formatarNumero(kva)} kVA</h2>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <tbody>
-                                <tr>
-                                    <td><i class="fas fa-current me-2"></i>Corrente (A)</td>
-                                    <td class="text-end"><strong>${formatarNumero(corrente)} A</strong></td>
-                                </tr>
-                                <tr>
-                                    <td><i class="fas fa-bolt me-2"></i>Tensão (V)</td>
-                                    <td class="text-end"><strong>${formatarNumero(tensao)} V</strong></td>
-                                </tr>
-                                <tr>
-                                    <td><i class="fas fa-cog me-2"></i>Tipo</td>
-                                    <td class="text-end"><strong>${fase === 'trifasico' ? 'Trifásico' : 'Monofásico'}</strong></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            `;
-        }
-
-        // 4. CALCULADORA kW → kVA
-        function calcularKWKVA() {
-            const kw = parseFloat(document.getElementById('calcKW').value);
-            const fatorPotencia = parseFloat(document.getElementById('calcFatorPotenciaKW').value);
-
-            // Validação
-            if (!kw || !fatorPotencia) {
-                alert('Por favor, preencha todos os campos obrigatórios');
-                return;
-            }
-
-            if (kw <= 0 || fatorPotencia <= 0 || fatorPotencia > 1) {
-                alert('Verifique os valores informados');
-                return;
-            }
-
-            // Cálculo
-            const kva = kw / fatorPotencia;
-
-            // Exibir resultados
-            document.getElementById('resultadoKWKVA').innerHTML = `
-                <div class="alert alert-success">
-                    <i class="fas fa-check-circle me-2"></i>
-                    <strong>Resultado Calculado</strong>
-                </div>
-                <div class="text-center py-4">
-                    <div class="p-4 bg-light rounded mb-3">
-                        <small class="text-muted d-block mb-2">Potência Aparente</small>
-                        <h2 class="mb-0 text-primary">${formatarNumero(kva)} kVA</h2>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <tbody>
-                                <tr>
-                                    <td><i class="fas fa-tachometer-alt me-2"></i>Potência Ativa (kW)</td>
-                                    <td class="text-end"><strong>${formatarNumero(kw)} kW</strong></td>
-                                </tr>
-                                <tr>
-                                    <td><i class="fas fa-percentage me-2"></i>Fator de Potência (cos φ)</td>
-                                    <td class="text-end"><strong>${formatarNumero(fatorPotencia * 100)}%</strong></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            `;
-        }
-
-        // 5. CALCULADORA Watts → kVA ou VA
-        function calcularWattsKVA() {
-            const watts = parseFloat(document.getElementById('calcWatts').value);
-            const fatorPotencia = parseFloat(document.getElementById('calcFatorPotenciaWatts').value);
-            const tipo = document.getElementById('calcTipoWatts').value;
-
-            // Validação
-            if (!watts || !fatorPotencia) {
-                alert('Por favor, preencha todos os campos obrigatórios');
-                return;
-            }
-
-            if (watts <= 0 || fatorPotencia <= 0 || fatorPotencia > 1) {
-                alert('Verifique os valores informados');
-                return;
-            }
-
-            // Cálculo
-            let resultado, unidade, valorFormatado;
-            if (tipo === 'kva') {
-                resultado = (watts / fatorPotencia) / 1000;
-                unidade = 'kVA';
-                valorFormatado = formatarNumero(resultado);
-            } else {
-                resultado = watts / fatorPotencia;
-                unidade = 'VA';
-                valorFormatado = formatarNumero(resultado);
-            }
-
-            // Exibir resultados
-            document.getElementById('resultadoWattsKVA').innerHTML = `
-                <div class="alert alert-success">
-                    <i class="fas fa-check-circle me-2"></i>
-                    <strong>Resultado Calculado</strong>
-                </div>
-                <div class="text-center py-4">
-                    <div class="p-4 bg-light rounded mb-3">
-                        <small class="text-muted d-block mb-2">Potência Aparente</small>
-                        <h2 class="mb-0 text-primary">${valorFormatado} ${unidade}</h2>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <tbody>
-                                <tr>
-                                    <td><i class="fas fa-bolt me-2"></i>Potência Ativa (W)</td>
-                                    <td class="text-end"><strong>${formatarNumero(watts)} W</strong></td>
-                                </tr>
-                                <tr>
-                                    <td><i class="fas fa-percentage me-2"></i>Fator de Potência (cos φ)</td>
-                                    <td class="text-end"><strong>${formatarNumero(fatorPotencia * 100)}%</strong></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            `;
-        }
-
-        // Adicionar suporte para Enter em todos os campos de entrada
-        document.addEventListener('DOMContentLoaded', () => {
-            // HP → kVA
-            ['calcHP', 'calcTensaoMotor', 'calcRendimento', 'calcFatorPotencia'].forEach(id => {
-                const campo = document.getElementById(id);
-                if (campo) {
-                    campo.addEventListener('keypress', (e) => {
-                        if (e.key === 'Enter') calcularHPkVA();
-                    });
-                }
-            });
-
-            // kVA → Corrente
-            ['calcKVA', 'calcTensao'].forEach(id => {
-                const campo = document.getElementById(id);
-                if (campo) {
-                    campo.addEventListener('keypress', (e) => {
-                        if (e.key === 'Enter') calcularKVACorrente();
-                    });
-                }
-            });
-
-            // Corrente → kVA
-            ['calcCorrente', 'calcTensaoCorrente'].forEach(id => {
-                const campo = document.getElementById(id);
-                if (campo) {
-                    campo.addEventListener('keypress', (e) => {
-                        if (e.key === 'Enter') calcularCorrenteKVA();
-                    });
-                }
-            });
-
-            // kW → kVA
-            ['calcKW', 'calcFatorPotenciaKW'].forEach(id => {
-                const campo = document.getElementById(id);
-                if (campo) {
-                    campo.addEventListener('keypress', (e) => {
-                        if (e.key === 'Enter') calcularKWKVA();
-                    });
-                }
-            });
-
-            // Watts → kVA/VA
-            ['calcWatts', 'calcFatorPotenciaWatts'].forEach(id => {
-                const campo = document.getElementById(id);
-                if (campo) {
-                    campo.addEventListener('keypress', (e) => {
-                        if (e.key === 'Enter') calcularWattsKVA();
-                    });
-                }
-            });
-        });
-
-        // Event delegation para botões gerados dinamicamente
-        document.addEventListener('click', (e) => {
-            // Botão Adicionar ao Carrinho da calculadora
-            if (e.target.id === 'btnAdicionarAoCarrinho' || e.target.closest('#btnAdicionarAoCarrinho')) {
-                e.preventDefault();
-                const tensaoPrimaria = document.getElementById('calcTensaoPrimaria').value;
-                const tensaoSecundaria = document.getElementById('calcTensaoSecundaria').value;
-                const potencia = document.getElementById('calcPotencia').value;
-                const fase = document.getElementById('calcFase').value;
-                
-                const nomeProduto = `Transformador ${fase === 'trifasico' ? 'Trifásico' : 'Monofásico'} ${potencia}kVA ${tensaoPrimaria}V/${tensaoSecundaria}V`;
-                
-                // Adicionar ao carrinho (se o carrinhoManager existir)
-                if (typeof carrinhoManager !== 'undefined') {
-                    carrinhoManager.adicionarItem(
-                        `calc-${Date.now()}`,
-                        nomeProduto,
-                        0, // Preço será consultado
-                        ''
-                    );
+        
+        // Verificar se veio da calculadora e abrir modal automaticamente
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const hash = window.location.hash;
+            
+            if (hash === '#orcamento' || urlParams.has('origem')) {
+                // Preencher dados da calculadora se vierem
+                if (urlParams.has('origem') && urlParams.get('origem').includes('calculadora')) {
+                    preencherDadosDaCalculadora();
                     
-                    if (window.authManager) {
-                        window.authManager.showAlert('Produto adicionado ao carrinho! Consulte o preço na página de detalhes.', 'success');
-                    } else {
-                        alert('Produto adicionado ao carrinho! Consulte o preço na página de detalhes.');
+                    // Adicionar item ao carrinho se necessário
+                    const potencia = urlParams.get('potencia');
+                    const tensaoPrimaria = urlParams.get('tensao_primaria');
+                    const tensaoSecundaria = urlParams.get('tensao_secundaria');
+                    const fase = urlParams.get('fase') || 'trifasico';
+                    
+                    if (potencia && tensaoPrimaria && tensaoSecundaria) {
+                        const nomeProduto = `Transformador ${fase === 'trifasico' ? 'Trifásico' : 'Monofásico'} ${potencia}kVA ${tensaoPrimaria}V/${tensaoSecundaria}V`;
+                        
+                        // Verificar se já existe no carrinho
+                        const carrinhoAtual = JSON.parse(localStorage.getItem('carrinho')) || [];
+                        const existe = carrinhoAtual.find(item => item.name === nomeProduto);
+                        
+                        if (!existe && typeof carrinhoManager !== 'undefined') {
+                            carrinhoManager.adicionarItem(
+                                `calc-${Date.now()}`,
+                                nomeProduto,
+                                0,
+                                ''
+                            );
+                        }
                     }
-                } else {
-                    alert('Produto calculado! Entre em contato para solicitar orçamento.');
                 }
-            }
-
-            // Botão Solicitar Orçamento da calculadora
-            if (e.target.id === 'btnSolicitarOrcamento' || e.target.closest('#btnSolicitarOrcamento')) {
-                e.preventDefault();
-                const tensaoPrimaria = document.getElementById('calcTensaoPrimaria').value;
-                const tensaoSecundaria = document.getElementById('calcTensaoSecundaria').value;
-                const potencia = document.getElementById('calcPotencia').value;
-                const frequencia = document.getElementById('calcFrequencia').value;
-                const fase = document.getElementById('calcFase').value;
                 
-                // Redirecionar para página de contato com os dados pré-preenchidos
-                const params = new URLSearchParams({
-                    origem: 'calculadora',
-                    potencia: potencia,
-                    tensao_primaria: tensaoPrimaria,
-                    tensao_secundaria: tensaoSecundaria,
-                    frequencia: frequencia,
-                    fase: fase
-                });
-                
-                window.location.href = `index.html#contato?${params.toString()}`;
+                // Abrir modal após um pequeno delay para garantir que tudo está carregado
+                setTimeout(() => {
+                    const modal = new bootstrap.Modal(orcamentoModal);
+                    modal.show();
+                }, 500);
             }
         });
+        
+        // Função para preencher dados da calculadora no formulário de orçamento
+        function preencherDadosDaCalculadora() {
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            if (!urlParams.has('origem') || !urlParams.get('origem').includes('calculadora')) {
+                return;
+            }
+            
+            const potencia = urlParams.get('potencia');
+            const tensaoPrimaria = urlParams.get('tensao_primaria');
+            const tensaoSecundaria = urlParams.get('tensao_secundaria');
+            const frequencia = urlParams.get('frequencia') || '60';
+            const fase = urlParams.get('fase') || 'trifasico';
+            
+            // Preencher campos se existirem
+            if (potencia && document.getElementById('orcamentoObservacoes')) {
+                const observacoes = document.getElementById('orcamentoObservacoes');
+                let textoAtual = observacoes.value || '';
+                
+                const dadosCalculadora = `
+DADOS DA CALCULADORA:
+- Potência: ${potencia} kVA
+- Tensão Primária: ${tensaoPrimaria} V
+- Tensão Secundária: ${tensaoSecundaria} V
+- Frequência: ${frequencia} Hz
+- Tipo: ${fase === 'trifasico' ? 'Trifásico' : 'Monofásico'}
+`;
+                
+                if (textoAtual && !textoAtual.includes('DADOS DA CALCULADORA')) {
+                    observacoes.value = dadosCalculadora + '\n\n' + textoAtual;
+                } else if (!textoAtual.includes('DADOS DA CALCULADORA')) {
+                    observacoes.value = dadosCalculadora;
+                }
+            }
+        }
+
+        // Função para atualizar itens do orçamento
+        function atualizarItensOrcamento() {
+            const carrinhoAtual = JSON.parse(localStorage.getItem('carrinho')) || [];
+            orcamentoItensBody.innerHTML = '';
+            
+            let total = 0;
+            
+            carrinhoAtual.forEach((item, index) => {
+                const itemNumero = String(index + 1).padStart(5, '0');
+                const precoUnit = item.price || 0;
+                const quantidade = item.quantity || 1;
+                const precoTotal = precoUnit * quantidade;
+                total += precoTotal;
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${itemNumero}</td>
+                    <td>${item.name || 'Produto'}</td>
+                    <td>
+                        <input type="number" class="form-control form-control-sm" value="${quantidade}" min="1" 
+                               onchange="atualizarPrecoOrcamento(${index}, this.value)" style="width: 80px;">
+                    </td>
+                    <td>
+                        <input type="number" class="form-control form-control-sm preco-unitario" 
+                               value="${precoUnit.toFixed(2)}" min="0" step="0.01"
+                               onchange="atualizarPrecoOrcamento(${index}, null, this.value)" style="width: 120px;">
+                    </td>
+                    <td class="preco-total-item">R$ ${precoTotal.toFixed(2).replace('.', ',')}</td>
+                `;
+                orcamentoItensBody.appendChild(row);
+            });
+            
+            orcamentoTotal.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+        }
+
+        // Função para atualizar preço quando quantidade ou preço unitário mudar
+        window.atualizarPrecoOrcamento = function(index, quantidade, precoUnit) {
+            const carrinhoAtual = JSON.parse(localStorage.getItem('carrinho')) || [];
+            const item = carrinhoAtual[index];
+            
+            if (quantidade !== null) {
+                item.quantity = parseInt(quantidade);
+            }
+            if (precoUnit !== null) {
+                item.price = parseFloat(precoUnit);
+            }
+            
+            const precoTotal = item.price * item.quantity;
+            const row = event.target.closest('tr');
+            row.querySelector('.preco-total-item').textContent = `R$ ${precoTotal.toFixed(2).replace('.', ',')}`;
+            
+            // Atualizar total
+            let total = 0;
+            carrinhoAtual.forEach(item => {
+                total += (item.price || 0) * (item.quantity || 1);
+            });
+            orcamentoTotal.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+        };
+
+        // Máscaras para campos
+        if (document.getElementById('orcamentoCNPJ')) {
+            document.getElementById('orcamentoCNPJ').addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length <= 14) {
+                    value = value.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2}).*/, '$1.$2.$3/$4-$5');
+                    e.target.value = value;
+                }
+            });
+        }
+
+        if (document.getElementById('orcamentoCEP')) {
+            document.getElementById('orcamentoCEP').addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length <= 8) {
+                    value = value.replace(/^(\d{5})(\d{3}).*/, '$1-$2');
+                    e.target.value = value;
+                }
+            });
+        }
+
+        if (document.getElementById('orcamentoTelefone')) {
+            document.getElementById('orcamentoTelefone').addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length <= 11) {
+                    value = value.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1) $2-$3');
+                    if (value.length < 14) {
+                        value = value.replace(/^(\d{2})(\d{4})(\d{4}).*/, '($1) $2-$3');
+                    }
+                    e.target.value = value;
+                }
+            });
+        }
+
+        // Gerar PDF do Orçamento
+        if (btnGerarPDF) {
+            btnGerarPDF.addEventListener('click', () => {
+                if (!orcamentoForm.checkValidity()) {
+                    orcamentoForm.reportValidity();
+                    return;
+                }
+                
+                gerarPDFOrcamento();
+            });
+        }
+
+        // Função para gerar PDF
+        async function gerarPDFOrcamento() {
+            try {
+                // Verificar se jsPDF está disponível
+                if (!window.jspdf) {
+                    alert('Erro: Biblioteca jsPDF não carregada. Recarregue a página.');
+                    console.error('jsPDF não está disponível');
+                    return;
+                }
+                
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+            
+            // Dados da empresa
+            const empresaNome = 'UNITRAFO';
+            const empresaEndereco = 'RUA DORIVAL SPONCHIADO - LOTEAMENTO OLARIA PARQUE EMPRESARIAL';
+            const empresaCidade = 'Várzea Paulista - SP';
+            const empresaCEP = 'CEP: 13225-340';
+            const empresaTelefone = 'Telefone(s): (11) 4038-4800';
+            const empresaEmail = 'E-mail: unitrafo@unitrafo.com.br';
+            
+            // Gerar número da proposta (CP + data + sequencial)
+            const dataAtual = new Date();
+            const dia = String(dataAtual.getDate()).padStart(2, '0');
+            const mes = String(dataAtual.getMonth() + 1).padStart(2, '0');
+            const ano = dataAtual.getFullYear();
+            const dataFormatada = `${dia}/${mes}/${ano}`;
+            const numeroProposta = `CP ${String(Math.floor(Math.random() * 100000)).padStart(5, '0')}`;
+            
+            // Dados do formulário
+            const dadosCliente = {
+                razaoSocial: document.getElementById('orcamentoRazaoSocial').value,
+                cnpj: document.getElementById('orcamentoCNPJ').value,
+                ie: document.getElementById('orcamentoIE').value || 'N/A',
+                endereco: document.getElementById('orcamentoEndereco').value,
+                numero: document.getElementById('orcamentoNumero').value || '',
+                bairro: document.getElementById('orcamentoBairro').value || '',
+                cidade: document.getElementById('orcamentoCidade').value,
+                uf: document.getElementById('orcamentoUF').value,
+                cep: document.getElementById('orcamentoCEP').value,
+                telefone: document.getElementById('orcamentoTelefone').value,
+                email: document.getElementById('orcamentoEmail').value,
+                contato: document.getElementById('orcamentoContato').value || ''
+            };
+            
+            const condicoes = {
+                pagamento: document.getElementById('orcamentoPagamento').value,
+                frete: document.getElementById('orcamentoFrete').value,
+                validade: document.getElementById('orcamentoValidade').value,
+                prazoFabricacao: document.getElementById('orcamentoPrazoFabricacao').value
+            };
+            
+                const carrinhoAtual = JSON.parse(localStorage.getItem('carrinho')) || [];
+                let totalGeral = 0;
+                
+                // Carregar e adicionar logo (opcional - não bloqueia se falhar)
+                let logoCarregada = false;
+                try {
+                    const logoImg = new Image();
+                    logoImg.crossOrigin = 'anonymous';
+                    logoImg.src = 'src/imgs/WhatsApp Image 2026-01-07 at 07.40.38 1.svg';
+                    
+                    await new Promise((resolve) => {
+                        const timeout = setTimeout(() => {
+                            console.log('Timeout ao carregar logo, continuando sem ela');
+                            resolve();
+                        }, 1000); // Timeout de 1 segundo
+                        
+                        logoImg.onload = () => {
+                            clearTimeout(timeout);
+                            try {
+                                // Converter SVG para base64 ou usar canvas
+                                const canvas = document.createElement('canvas');
+                                const ctx = canvas.getContext('2d');
+                                canvas.width = 40;
+                                canvas.height = 40;
+                                ctx.drawImage(logoImg, 0, 0, 40, 40);
+                                const logoData = canvas.toDataURL('image/png');
+                                doc.addImage(logoData, 'PNG', 10, 10, 25, 25);
+                                logoCarregada = true;
+                                resolve();
+                            } catch (e) {
+                                console.log('Erro ao processar logo, continuando sem ela:', e);
+                                resolve();
+                            }
+                        };
+                        logoImg.onerror = () => {
+                            clearTimeout(timeout);
+                            console.log('Logo não encontrada, continuando sem ela');
+                            resolve();
+                        };
+                    });
+                } catch (e) {
+                    console.log('Erro ao carregar logo, continuando sem ela:', e);
+                }
+                
+                // Cabeçalho com logo e nome
+                let xNome = 10;
+                let yNome = 15;
+                
+                // Se logo foi carregada, ajustar posição do nome
+                if (logoCarregada) {
+                    xNome = 40;
+                }
+            
+            doc.setFontSize(18);
+            doc.setFont(undefined, 'bold');
+            doc.text(empresaNome, xNome, yNome);
+            
+            // Informações da empresa (centralizadas)
+            doc.setFontSize(9);
+            doc.setFont(undefined, 'normal');
+            doc.text(empresaEndereco, 105, 25, { align: 'center' });
+            doc.text(empresaCidade + ' - ' + empresaCEP, 105, 30, { align: 'center' });
+            doc.text(empresaTelefone, 105, 35, { align: 'center' });
+            doc.text(empresaEmail, 105, 40, { align: 'center' });
+            
+            // Linha separadora horizontal
+            doc.setLineWidth(0.5);
+            doc.line(10, 45, 200, 45);
+            
+            // Proposta e Data
+            doc.setFontSize(12);
+            doc.setFont(undefined, 'bold');
+            doc.text('PROPOSTA: ' + numeroProposta, 10, 58);
+            doc.text(dataFormatada, 180, 58, { align: 'right' });
+            
+            // Vendedor (dados padrão - pode ser ajustado)
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'normal');
+            doc.text('Vendedor: Felipe Weissmann - felipe.vendas@unitrafo.com.br +55 11 96930-7781', 10, 65);
+            doc.text('Representante: Felipe Weissmann - felipe.vendas@unitrafo.com.br +55 11 96930-7781', 10, 70);
+            
+            let yPos = 80;
+            
+            // Dados do Cliente - Título
+            doc.setFontSize(11);
+            doc.setFont(undefined, 'bold');
+            doc.text('Dados do cliente', 10, yPos);
+            yPos += 7;
+            
+            // Dados do Cliente - Conteúdo em formato de tabela
+            doc.setFontSize(9);
+            doc.setFont(undefined, 'normal');
+            const enderecoCompleto = `${dadosCliente.endereco}${dadosCliente.numero ? ', ' + dadosCliente.numero : ''}`;
+            const complemento = dadosCliente.bairro ? `, ${dadosCliente.bairro}` : '';
+            
+            // Primeira linha: Razão Social
+            doc.text(`${dadosCliente.razaoSocial}`, 10, yPos);
+            yPos += 5;
+            
+            // Segunda linha: CNPJ e IE
+            doc.text(`CNPJ: ${dadosCliente.cnpj} - I.E.: ${dadosCliente.ie}`, 10, yPos);
+            yPos += 5;
+            
+            // Terceira linha: Endereço completo
+            doc.text(`Endereço: ${enderecoCompleto}${complemento}`, 10, yPos);
+            yPos += 5;
+            
+            // Quarta linha: Município, UF e CEP
+            doc.text(`Município: ${dadosCliente.cidade} - UF: ${dadosCliente.uf} - CEP: ${dadosCliente.cep}`, 10, yPos);
+            if (dadosCliente.bairro) {
+                yPos += 5;
+                doc.text(`Bairro: ${dadosCliente.bairro}`, 10, yPos);
+            }
+            yPos += 5;
+            
+            // Quinta linha: Telefone
+            doc.text(`Telefone: ${dadosCliente.telefone}`, 10, yPos);
+            yPos += 5;
+            
+            // Sexta linha: Contato e Email
+            if (dadosCliente.contato) {
+                doc.text(`${dadosCliente.contato} ${dadosCliente.email}`, 10, yPos);
+            } else {
+                doc.text(dadosCliente.email, 10, yPos);
+            }
+            
+            yPos += 8;
+            
+            // Linha separadora após dados do cliente
+            doc.setLineWidth(0.3);
+            doc.line(10, yPos, 200, yPos);
+            yPos += 5;
+            
+            // Totais - Layout em duas colunas
+            carrinhoAtual.forEach(item => {
+                totalGeral += (item.price || 0) * (item.quantity || 1);
+            });
+            
+            const yTotais = yPos;
+            
+            // Coluna esquerda: Total das mercadorias
+            doc.setFontSize(9);
+            doc.setFont(undefined, 'bold');
+            doc.text('Total das mercadorias e serviços', 10, yTotais);
+            doc.setFont(undefined, 'normal');
+            doc.text('Produto:', 10, yTotais + 5);
+            doc.text('R$ ' + totalGeral.toFixed(2).replace('.', ','), 50, yTotais + 5);
+            doc.text('Desconto:', 10, yTotais + 10);
+            doc.text('R$ 0,00', 50, yTotais + 10);
+            doc.text('Frete:', 10, yTotais + 15);
+            doc.text('R$ 0,00', 50, yTotais + 15);
+            doc.text('Seguro:', 10, yTotais + 20);
+            doc.text('R$ 0,00', 50, yTotais + 20);
+            doc.text('Outros:', 10, yTotais + 25);
+            doc.text('R$ 0,00', 50, yTotais + 25);
+            doc.setFont(undefined, 'bold');
+            doc.text('Total:', 10, yTotais + 30);
+            doc.text('R$ ' + totalGeral.toFixed(2).replace('.', ','), 50, yTotais + 30);
+            
+            // Coluna direita: Total dos tributos
+            doc.setFont(undefined, 'bold');
+            doc.text('Total dos tributos', 120, yTotais);
+            doc.setFont(undefined, 'normal');
+            doc.text('ICMS: 12,00%', 120, yTotais + 5);
+            doc.text('ICMS ST: 0,00%', 120, yTotais + 10);
+            doc.text('PIS: 0,65%', 120, yTotais + 15);
+            doc.text('IPI: 0,00%', 120, yTotais + 20);
+            doc.text('COFINS: 3,00%', 120, yTotais + 25);
+            doc.text('IBPT: 0,00%', 120, yTotais + 30);
+            
+            yPos = yTotais + 35;
+            
+            // Linha separadora após totais
+            doc.setLineWidth(0.3);
+            doc.line(10, yPos, 200, yPos);
+            yPos += 5;
+            
+            // Condições Comerciais
+            doc.setFontSize(11);
+            doc.setFont(undefined, 'bold');
+            doc.text('Condições comerciais', 10, yPos);
+            yPos += 7;
+            
+            doc.setFontSize(9);
+            doc.setFont(undefined, 'normal');
+            doc.text(`- Pagamento: ${condicoes.pagamento}`, 10, yPos);
+            doc.text(`- Frete: ${condicoes.frete}`, 10, yPos + 5);
+            
+            yPos += 12;
+            
+            // Linha separadora antes dos itens
+            doc.setLineWidth(0.3);
+            doc.line(10, yPos, 200, yPos);
+            yPos += 5;
+            
+            // Itens da Proposta
+            doc.setFontSize(11);
+            doc.setFont(undefined, 'bold');
+            doc.text('Itens da proposta', 10, yPos);
+            yPos += 8;
+            
+            carrinhoAtual.forEach((item, index) => {
+                // Verificar se precisa de nova página
+                if (yPos > 250) {
+                    doc.addPage();
+                    yPos = 20;
+                }
+                
+                const itemNumero = String(index + 1).padStart(5, '0');
+                const precoUnit = item.price || 0;
+                const quantidade = item.quantity || 1;
+                const precoTotal = precoUnit * quantidade;
+                
+                doc.setFontSize(9);
+                doc.setFont(undefined, 'normal');
+                doc.text(`Item: ${itemNumero}`, 10, yPos);
+                doc.text(`Código do Produto: ${item.product || 'N/A'}`, 100, yPos);
+                
+                yPos += 6;
+                doc.text(`Descrição: ${item.name || 'Produto'}`, 10, yPos);
+                yPos += 5;
+                doc.text(`Potência: ${item.potencia || 'N/A'}`, 10, yPos);
+                yPos += 5;
+                doc.text(`Tensões: ${item.tensao || 'N/A'}`, 10, yPos);
+                yPos += 5;
+                doc.text(`Unidade: UNID`, 10, yPos);
+                doc.text(`Qtde: ${quantidade.toFixed(3)}`, 100, yPos);
+                yPos += 5;
+                doc.text(`Preço un. (R$): R$ ${precoUnit.toFixed(2).replace('.', ',')}`, 10, yPos);
+                doc.text(`Preço Total (R$): R$ ${precoTotal.toFixed(2).replace('.', ',')}`, 100, yPos);
+                yPos += 5;
+                doc.text(`Prazo de Fabricação: ${condicoes.prazoFabricacao} - Dias úteis, contados a partir da Data da Confirmação da Compra.`, 10, yPos);
+                yPos += 5;
+                
+                const dataValidade = new Date();
+                dataValidade.setDate(dataValidade.getDate() + parseInt(condicoes.validade));
+                const diaVal = String(dataValidade.getDate()).padStart(2, '0');
+                const mesVal = String(dataValidade.getMonth() + 1).padStart(2, '0');
+                const anoVal = dataValidade.getFullYear();
+                doc.text(`Validade da Proposta: ${diaVal}/${mesVal}/${anoVal}`, 10, yPos);
+                
+                yPos += 10;
+            });
+            
+            // Condições Gerais (em nova página se necessário)
+            if (yPos > 200) {
+                doc.addPage();
+                yPos = 20;
+            }
+            
+            doc.setFontSize(12);
+            doc.setFont(undefined, 'bold');
+            doc.text('CONDIÇÕES GERAIS DE FORNECIMENTO', 105, yPos, { align: 'center' });
+            yPos += 10;
+            
+            const condicoesGerais = [
+                '1. Pagamento:',
+                '1.1 - O pedido estará condicionado à aprovação do cadastro financeiro do cliente por parte de nosso departamento de cadastro.',
+                '1.2 - No caso de pagamentos após o vencimento, será acrescido multa de 5% e juros de 0,33% ao dia.',
+                '2. Garantia:',
+                '2.1 - A garantia cobre somente contra qualquer defeito de fabricação a contar da data da emissão da nota fiscal.',
+                '2.2 - Garantia de 36 meses.',
+                '3. Transporte:',
+                '3.1 - O transporte quando por responsabilidade da UNITRAFO está livre de descarga.',
+                '4. Cancelamento:',
+                '4.1 - Cancelamentos serão cobrados conforme fase do pedido (15% a 100% do valor).'
+            ];
+            
+            doc.setFontSize(9);
+            doc.setFont(undefined, 'normal');
+            condicoesGerais.forEach(condicao => {
+                if (yPos > 270) {
+                    doc.addPage();
+                    yPos = 20;
+                }
+                doc.text(condicao, 10, yPos);
+                yPos += 6;
+            });
+            
+            // Rodapé
+            const pageCount = doc.internal.getNumberOfPages();
+            for (let i = 1; i <= pageCount; i++) {
+                doc.setPage(i);
+                doc.setFontSize(8);
+                doc.text(`Felipe - felipe.vendas@unitrafo.com.br`, 10, 285);
+                doc.text(dataFormatada, 190, 285, { align: 'right' });
+                doc.text(`Página ${i} de ${pageCount}`, 105, 285, { align: 'center' });
+            }
+            
+                // Salvar PDF
+                doc.save(`Orcamento_${numeroProposta}_${dataFormatada.replace(/\//g, '-')}.pdf`);
+                
+                // Fechar modal e mostrar mensagem
+                const modal = bootstrap.Modal.getInstance(orcamentoModal);
+                if (modal) modal.hide();
+                
+                if (window.authManager) {
+                    window.authManager.showAlert('PDF do orçamento gerado com sucesso!', 'success');
+                } else {
+                    alert('PDF do orçamento gerado com sucesso!');
+                }
+            } catch (error) {
+                console.error('Erro ao gerar PDF:', error);
+                alert('Erro ao gerar PDF: ' + error.message + '\n\nVerifique o console (F12) para mais detalhes.');
+            }
+        }
+    </script>
+
+    <!-- Script para criar usuário de teste (apenas em desenvolvimento) -->
+    <script>
+        // Criar usuário de teste automaticamente se não existir
+        (function() {
+            const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+            const usuarioTeste = usuarios.find(u => u.email === 'teste@usetrafo.com.br');
+            
+            if (!usuarioTeste) {
+                const novoUsuario = {
+                    nome: 'Usuário Teste',
+                    email: 'teste@usetrafo.com.br',
+                    senha: '123456',
+                    telefone: '(11) 99999-9999',
+                    dataCadastro: new Date().toISOString()
+                };
+                
+                usuarios.push(novoUsuario);
+                localStorage.setItem('usuarios', JSON.stringify(usuarios));
+                console.log('✅ Usuário de teste criado automaticamente!');
+                console.log('📋 E-mail: teste@usetrafo.com.br | Senha: 123456');
+            }
+        })();
     </script>
 </body>
 </html>

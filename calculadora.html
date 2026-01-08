@@ -117,6 +117,15 @@
         .tab-content {
             padding-top: 1.5rem;
         }
+        
+        /* Garantir que apenas uma aba seja visível por vez */
+        .tab-pane:not(.active) {
+            display: none !important;
+        }
+        
+        .tab-pane.active {
+            display: block !important;
+        }
 
         .tab-pane .table {
             margin-bottom: 0;
@@ -178,21 +187,21 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="index.html">
-                <img src="src/imgs/WhatsApp Image 2026-01-07 at 07.40.38 1.svg" alt="USETRAFO - Logo" class="img-fluid" loading="eager">
+                <img src="src/imgs/WhatsApp Image 2026-01-07 at 07.40.38 1.svg" alt="USETRAFO - Transformadores Elétricos" class="img-fluid" loading="eager">
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation menu">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="index.html#sobre">Sobre</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="index.html#produtos">Produtos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#personalizados">Transformadores Personalizados</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="loja.html">Loja</a>
@@ -202,6 +211,43 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="index.html#contato">Contato</a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="dropdown me-2">
+                            <button class="btn btn-outline-primary dropdown-toggle" type="button" id="userMenuDropdown" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Menu do usuário">
+                                <i class="fas fa-user" aria-hidden="true"></i>
+                                <span class="d-none d-md-inline ms-2" id="userNameDisplay">Conta</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenuDropdown" id="userMenu">
+                                <li id="menuItemLogin" style="display: none;">
+                                    <a class="dropdown-item" href="login.html">
+                                        <i class="fas fa-sign-in-alt me-2"></i>Entrar
+                                    </a>
+                                </li>
+                                <li id="menuItemRegister" style="display: none;">
+                                    <a class="dropdown-item" href="registro.html">
+                                        <i class="fas fa-user-plus me-2"></i>Criar Conta
+                                    </a>
+                                </li>
+                                <li id="menuItemConfig" style="display: none;">
+                                    <a class="dropdown-item" href="configuracoes.html">
+                                        <i class="fas fa-cog me-2"></i>Configurações
+                                    </a>
+                                </li>
+                                <li id="menuItemLogout" style="display: none;">
+                                    <hr class="dropdown-divider">
+                                    <a class="dropdown-item text-danger" href="#" id="btnLogout">
+                                        <i class="fas fa-sign-out-alt me-2"></i>Sair
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-primary position-relative" id="btnCarrinho" type="button" aria-label="Abrir carrinho de compras" aria-describedby="carrinhoBadge">
+                            <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                            <span class="carrinho-badge" id="carrinhoBadge" role="status" aria-live="polite">0</span>
+                        </button>
                     </li>
                 </ul>
             </div>
@@ -229,7 +275,12 @@
                             <!-- Abas de Navegação -->
                             <ul class="nav nav-pills nav-justified mb-4" id="calculadoraTabs" role="tablist">
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="tab-hp-kva" data-bs-toggle="tab" data-bs-target="#calc-hp-kva" type="button" role="tab">
+                                    <button class="nav-link active" id="tab-kw-kva" data-bs-toggle="tab" data-bs-target="#calc-kw-kva" type="button" role="tab">
+                                        <i class="fas fa-tachometer-alt me-2"></i>kW → kVA
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="tab-hp-kva" data-bs-toggle="tab" data-bs-target="#calc-hp-kva" type="button" role="tab">
                                         <i class="fas fa-horse me-2"></i>HP → kVA
                                     </button>
                                 </li>
@@ -244,11 +295,6 @@
                                     </button>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="tab-kw-kva" data-bs-toggle="tab" data-bs-target="#calc-kw-kva" type="button" role="tab">
-                                        <i class="fas fa-tachometer-alt me-2"></i>kW → kVA
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="tab-watts-kva" data-bs-toggle="tab" data-bs-target="#calc-watts-kva" type="button" role="tab">
                                         <i class="fas fa-bolt me-2"></i>Watts → kVA
                                     </button>
@@ -257,8 +303,53 @@
 
                             <!-- Conteúdo das Abas -->
                             <div class="tab-content" id="calculadoraTabContent">
-                                <!-- Aba 1: HP para kVA -->
-                                <div class="tab-pane fade show active" id="calc-hp-kva" role="tabpanel">
+                                <!-- Aba 1: kW para kVA -->
+                                <div class="tab-pane fade show active" id="calc-kw-kva" role="tabpanel">
+                                    <div class="row g-4">
+                                        <div class="col-md-6">
+                                            <div class="card bg-white h-100">
+                                                <div class="card-body">
+                                                    <h5 class="card-title mb-4">
+                                                        <i class="fas fa-edit me-2 text-primary"></i>Dados de Entrada
+                                                    </h5>
+                                                    <div class="mb-3">
+                                                        <label for="calcKW" class="form-label fw-semibold">
+                                                            Potência (kW) <span class="text-danger">*</span>
+                                                        </label>
+                                                        <input type="number" class="form-control" id="calcKW" placeholder="Ex: 3.6" step="0.01" min="0">
+                                                        <small class="form-text text-muted">Potência ativa em Kilowatts</small>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="calcFatorPotenciaKW" class="form-label fw-semibold">
+                                                            Fator de Potência (cos φ) <span class="text-danger">*</span>
+                                                        </label>
+                                                        <input type="number" class="form-control" id="calcFatorPotenciaKW" placeholder="Ex: 0.8" step="0.01" min="0" max="1">
+                                                        <small class="form-text text-muted">Fator de potência (0 a 1)</small>
+                                                    </div>
+                                                    <button type="button" class="btn btn-primary w-100" onclick="calcularKWKVA()">
+                                                        <i class="fas fa-calculator me-2"></i>Calcular
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="card bg-white h-100">
+                                                <div class="card-body">
+                                                    <h5 class="card-title mb-4">
+                                                        <i class="fas fa-chart-line me-2 text-success"></i>Resultados
+                                                    </h5>
+                                                    <div id="resultadoKWKVA" class="text-center text-muted py-5">
+                                                        <i class="fas fa-info-circle fa-3x mb-3 opacity-50"></i>
+                                                        <p class="mb-0">Preencha os campos e clique em "Calcular"</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Aba 2: HP para kVA -->
+                                <div class="tab-pane fade" id="calc-hp-kva" role="tabpanel">
                                     <div class="row g-4">
                                         <div class="col-md-6">
                                             <div class="card bg-white h-100">
@@ -419,51 +510,6 @@
                                                         <i class="fas fa-chart-line me-2 text-success"></i>Resultados
                                                     </h5>
                                                     <div id="resultadoCorrenteKVA" class="text-center text-muted py-5">
-                                                        <i class="fas fa-info-circle fa-3x mb-3 opacity-50"></i>
-                                                        <p class="mb-0">Preencha os campos e clique em "Calcular"</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Aba 4: kW para kVA -->
-                                <div class="tab-pane fade" id="calc-kw-kva" role="tabpanel">
-                                    <div class="row g-4">
-                                        <div class="col-md-6">
-                                            <div class="card bg-white h-100">
-                                                <div class="card-body">
-                                                    <h5 class="card-title mb-4">
-                                                        <i class="fas fa-edit me-2 text-primary"></i>Dados de Entrada
-                                                    </h5>
-                                                    <div class="mb-3">
-                                                        <label for="calcKW" class="form-label fw-semibold">
-                                                            Potência (kW) <span class="text-danger">*</span>
-                                                        </label>
-                                                        <input type="number" class="form-control" id="calcKW" placeholder="Ex: 3.6" step="0.01" min="0">
-                                                        <small class="form-text text-muted">Potência ativa em Kilowatts</small>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="calcFatorPotenciaKW" class="form-label fw-semibold">
-                                                            Fator de Potência (cos φ) <span class="text-danger">*</span>
-                                                        </label>
-                                                        <input type="number" class="form-control" id="calcFatorPotenciaKW" placeholder="Ex: 0.8" step="0.01" min="0" max="1">
-                                                        <small class="form-text text-muted">Fator de potência (0 a 1)</small>
-                                                    </div>
-                                                    <button type="button" class="btn btn-primary w-100" onclick="calcularKWKVA()">
-                                                        <i class="fas fa-calculator me-2"></i>Calcular
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="card bg-white h-100">
-                                                <div class="card-body">
-                                                    <h5 class="card-title mb-4">
-                                                        <i class="fas fa-chart-line me-2 text-success"></i>Resultados
-                                                    </h5>
-                                                    <div id="resultadoKWKVA" class="text-center text-muted py-5">
                                                         <i class="fas fa-info-circle fa-3x mb-3 opacity-50"></i>
                                                         <p class="mb-0">Preencha os campos e clique em "Calcular"</p>
                                                     </div>
@@ -644,6 +690,39 @@
     <!-- Custom JS -->
     <script src="script.js"></script>
     
+    <!-- Script simples para garantir apenas uma aba visível -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabButtons = document.querySelectorAll('#calculadoraTabs button[data-bs-toggle="tab"]');
+            const tabPanes = document.querySelectorAll('#calculadoraTabContent .tab-pane');
+            
+            tabButtons.forEach(function(button) {
+                button.addEventListener('shown.bs.tab', function(e) {
+                    // Ocultar todas as abas
+                    tabPanes.forEach(function(pane) {
+                        pane.classList.remove('show', 'active');
+                        pane.style.display = 'none';
+                    });
+                    
+                    // Mostrar apenas a aba ativa
+                    const targetId = e.target.getAttribute('data-bs-target');
+                    const targetPane = document.querySelector(targetId);
+                    if (targetPane) {
+                        targetPane.classList.add('show', 'active');
+                        targetPane.style.display = 'block';
+                    }
+                });
+            });
+            
+            // Garantir estado inicial correto
+            tabPanes.forEach(function(pane) {
+                if (!pane.classList.contains('active')) {
+                    pane.style.display = 'none';
+                }
+            });
+        });
+    </script>
+    
     <script>
         // Função auxiliar para formatar números
         function formatarNumero(num) {
@@ -733,7 +812,7 @@
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label class="form-label">Potência (kVA) <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" id="orcPotenciaHP" value="${formatarNumero(kVA)}" step="0.01" required readonly>
+                                    <input type="number" class="form-control" id="orcPotenciaHP" value="${kVA.toFixed(2)}" step="0.01" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Tensão Primária (V) <span class="text-danger">*</span></label>
@@ -741,7 +820,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Tensão Secundária (V) <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" id="orcTensaoSecundariaHP" value="${formatarNumero(tensaoMotor)}" step="0.01" required>
+                                    <input type="number" class="form-control" id="orcTensaoSecundariaHP" value="${tensaoMotor.toFixed(2)}" step="0.01" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Frequência (Hz)</label>
@@ -858,7 +937,7 @@
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label class="form-label">Potência (kVA) <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" id="orcPotenciaKVA" value="${formatarNumero(kva)}" step="0.01" required readonly>
+                                    <input type="number" class="form-control" id="orcPotenciaKVA" value="${kva.toFixed(2)}" step="0.01" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Tensão Primária (V) <span class="text-danger">*</span></label>
@@ -866,7 +945,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Tensão Secundária (V) <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" id="orcTensaoSecundariaKVA" value="${formatarNumero(tensao)}" step="0.01" required>
+                                    <input type="number" class="form-control" id="orcTensaoSecundariaKVA" value="${tensao.toFixed(2)}" step="0.01" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Frequência (Hz)</label>
@@ -983,7 +1062,7 @@
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label class="form-label">Potência (kVA) <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" id="orcPotenciaCorrente" value="${formatarNumero(kva)}" step="0.01" required readonly>
+                                    <input type="number" class="form-control" id="orcPotenciaCorrente" value="${kva.toFixed(2)}" step="0.01" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Tensão Primária (V) <span class="text-danger">*</span></label>
@@ -991,7 +1070,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Tensão Secundária (V) <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" id="orcTensaoSecundariaCorrente" value="${formatarNumero(tensao)}" step="0.01" required>
+                                    <input type="number" class="form-control" id="orcTensaoSecundariaCorrente" value="${tensao.toFixed(2)}" step="0.01" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Frequência (Hz)</label>
@@ -1098,7 +1177,7 @@
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label class="form-label">Potência (kVA) <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" id="orcPotenciaKW" value="${formatarNumero(kva)}" step="0.01" required readonly>
+                                    <input type="number" class="form-control" id="orcPotenciaKW" value="${kva.toFixed(2)}" step="0.01" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Tensão Primária (V) <span class="text-danger">*</span></label>
@@ -1222,9 +1301,8 @@
                         <form id="orcamentoWattsKVA" onsubmit="solicitarOrcamentoWattsKVA(event)">
                             <div class="row g-3">
                                 <div class="col-md-6">
-                                    <label class="form-label">Potência Aparente <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" id="orcPotenciaWatts" value="${valorFormatado}" step="0.01" required readonly>
-                                    <small class="text-muted">${unidade}</small>
+                                    <label class="form-label">Potência Aparente (${unidade}) <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" id="orcPotenciaWatts" value="${resultado.toFixed(2)}" step="0.01" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Tensão Primária (V) <span class="text-danger">*</span></label>
@@ -1284,8 +1362,6 @@
             window.location.href = `loja.html?${params.toString()}#orcamento`;
         }
 
-        // Adicionar suporte para Enter em todos os campos de entrada
-        document.addEventListener('DOMContentLoaded', () => {
             // HP → kVA
             ['calcHP', 'calcTensaoMotor', 'calcRendimento', 'calcFatorPotencia'].forEach(id => {
                 const campo = document.getElementById(id);
@@ -1335,7 +1411,7 @@
                     });
                 }
             });
-        });
+            
     </script>
 </body>
 </html>

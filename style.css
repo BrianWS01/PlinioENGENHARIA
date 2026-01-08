@@ -206,6 +206,21 @@ link[rel="apple-touch-icon"] {
     }
 }
 
+#btnCarrinho {
+    padding: 0.5rem 0.75rem !important;
+    min-width: 45px;
+    min-height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible !important;
+}
+
+#btnCarrinho i {
+    font-size: 1.1rem;
+    display: block;
+}
+
 .carrinho-badge {
     position: absolute;
     top: -8px;
@@ -221,6 +236,7 @@ link[rel="apple-touch-icon"] {
     font-size: 0.75rem;
     font-weight: bold;
     border: 2px solid white;
+    z-index: 10;
 }
 
 .navbar.scrolled {
@@ -5136,7 +5152,7 @@ hr {
     }
 }
 
-/* Sistema de Notificações Customizado */
+/* Sistema de Notificações Customizado - Melhorado */
 .notification-container {
     position: fixed;
     top: 20px;
@@ -5145,117 +5161,199 @@ hr {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    max-width: 400px;
+    max-width: 420px;
     width: 100%;
 }
 
 .notification {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-    padding: 1.25rem 1.5rem;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    animation: slideInRight 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.notification:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.notification-header {
     display: flex;
     align-items: center;
     gap: 1rem;
-    animation: slideInRight 0.3s ease-out;
-    border-left: 4px solid;
-    position: relative;
-    overflow: hidden;
+    padding: 1.25rem 1.5rem;
+    border-radius: 16px 16px 0 0;
 }
 
-.notification::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 100%;
-    background: currentColor;
+.notification-body {
+    padding: 1.25rem 1.5rem;
+    background: #ffffff;
+    border-radius: 0 0 16px 16px;
+    text-align: center;
 }
 
 .notification.success {
-    border-left-color: #28a745;
-    color: #155724;
+    color: #065f46;
+}
+
+.notification.success .notification-header {
+    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
 }
 
 .notification.success .notification-icon {
-    color: #28a745;
-    background: rgba(40, 167, 69, 0.1);
+    color: #ffffff;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.notification.success .notification-title {
+    color: #065f46;
+}
+
+.notification.success .notification-message {
+    color: #6b7280;
 }
 
 .notification.error,
 .notification.danger {
-    border-left-color: #dc3545;
-    color: #721c24;
+    color: #991b1b;
+}
+
+.notification.error .notification-header,
+.notification.danger .notification-header {
+    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
 }
 
 .notification.error .notification-icon,
 .notification.danger .notification-icon {
-    color: #dc3545;
-    background: rgba(220, 53, 69, 0.1);
+    color: #ffffff;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.notification.error .notification-title,
+.notification.danger .notification-title {
+    color: #991b1b;
+}
+
+.notification.error .notification-message,
+.notification.danger .notification-message {
+    color: #6b7280;
 }
 
 .notification.warning {
-    border-left-color: #ffc107;
-    color: #856404;
+    color: #92400e;
+}
+
+.notification.warning .notification-header {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
 }
 
 .notification.warning .notification-icon {
-    color: #ffc107;
-    background: rgba(255, 193, 7, 0.1);
+    color: #ffffff;
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+.notification.warning .notification-title {
+    color: #92400e;
+}
+
+.notification.warning .notification-message {
+    color: #6b7280;
 }
 
 .notification.info {
-    border-left-color: var(--primary-color);
-    color: var(--primary-color);
+    color: #1e3a8a;
+}
+
+.notification.info .notification-header {
+    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
 }
 
 .notification.info .notification-icon {
-    color: var(--primary-color);
-    background: rgba(2, 9, 63, 0.1);
+    color: #ffffff;
+    background: linear-gradient(135deg, var(--primary-color) 0%, #1e40af 100%);
+    box-shadow: 0 4px 12px rgba(2, 9, 63, 0.3);
+}
+
+.notification.info .notification-title {
+    color: #1e3a8a;
+}
+
+.notification.info .notification-message {
+    color: #6b7280;
 }
 
 .notification-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    font-size: 1.25rem;
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+.notification:hover .notification-icon {
+    transform: scale(1.1) rotate(5deg);
 }
 
 .notification-content {
     flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
 .notification-title {
-    font-weight: 600;
-    font-size: 0.95rem;
-    margin-bottom: 0.25rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin: 0;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
 }
 
 .notification-message {
-    font-size: 0.875rem;
-    opacity: 0.9;
+    font-size: 0.95rem;
     margin: 0;
+    line-height: 1.5;
+    font-weight: 400;
 }
 
 .notification-close {
-    background: none;
+    background: rgba(0, 0, 0, 0.08);
     border: none;
     color: currentColor;
-    opacity: 0.6;
+    opacity: 0.8;
     cursor: pointer;
-    padding: 0.25rem;
+    padding: 0.4rem;
     line-height: 1;
-    transition: opacity 0.2s;
+    transition: all 0.2s ease;
     flex-shrink: 0;
+    border-radius: 6px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    margin-left: auto;
 }
 
 .notification-close:hover {
     opacity: 1;
+    background: rgba(0, 0, 0, 0.15);
+    transform: rotate(90deg);
 }
 
 .notification.progress {
@@ -5266,30 +5364,31 @@ hr {
     position: absolute;
     bottom: 0;
     left: 0;
-    height: 3px;
-    background: currentColor;
-    opacity: 0.3;
+    height: 4px;
+    background: linear-gradient(90deg, currentColor 0%, rgba(255, 255, 255, 0.5) 100%);
+    opacity: 0.6;
     animation: progressBar linear forwards;
+    border-radius: 0 0 16px 16px;
 }
 
 @keyframes slideInRight {
     from {
-        transform: translateX(100%);
+        transform: translateX(120%) scale(0.9);
         opacity: 0;
     }
     to {
-        transform: translateX(0);
+        transform: translateX(0) scale(1);
         opacity: 1;
     }
 }
 
 @keyframes slideOutRight {
     from {
-        transform: translateX(0);
+        transform: translateX(0) scale(1);
         opacity: 1;
     }
     to {
-        transform: translateX(100%);
+        transform: translateX(120%) scale(0.9);
         opacity: 0;
     }
 }
@@ -5303,8 +5402,25 @@ hr {
     }
 }
 
+@keyframes iconPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.15);
+    }
+}
+
+.notification .notification-icon {
+    animation: iconPulse 0.6s ease-out;
+}
+
 .notification.hiding {
     animation: slideOutRight 0.3s ease-out forwards;
+}
+
+.notification.hiding .notification-icon {
+    animation: none;
 }
 
 @media (max-width: 576px) {
@@ -5316,13 +5432,22 @@ hr {
     }
     
     .notification {
-        padding: 1rem;
+        padding: 1.25rem;
+        gap: 1rem;
     }
     
     .notification-icon {
-        width: 35px;
-        height: 35px;
+        width: 42px;
+        height: 42px;
+        font-size: 1.25rem;
+    }
+    
+    .notification-title {
         font-size: 1rem;
+    }
+    
+    .notification-message {
+        font-size: 0.85rem;
     }
 }
 

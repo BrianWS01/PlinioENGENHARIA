@@ -1363,16 +1363,20 @@ class AuthManager {
         const notification = document.createElement('div');
         notification.className = `notification ${type} progress`;
         notification.innerHTML = `
-            <div class="notification-icon">
-                <i class="fas ${icon}"></i>
+            <div class="notification-header">
+                <div class="notification-icon">
+                    <i class="fas ${icon}"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">${title}</div>
+                </div>
+                <button class="notification-close" aria-label="Fechar">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
-            <div class="notification-content">
-                <div class="notification-title">${title}</div>
+            <div class="notification-body">
                 <p class="notification-message">${message}</p>
             </div>
-            <button class="notification-close" aria-label="Fechar">
-                <i class="fas fa-times"></i>
-            </button>
             <div class="notification-progress-bar" style="animation-duration: ${duration}ms;"></div>
         `;
         

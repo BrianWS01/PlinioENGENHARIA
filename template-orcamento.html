@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template de Orçamento - UNITRAFO</title>
+    <style>
+        /* Reset e configurações base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            font-size: 9pt;
+            line-height: 1.4;
+            color: #000;
+            background: #fff;
+        }
+
+        /* Container principal - Formato A4 */
+        .orcamento-container {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto;
+            padding: 10mm;
+            background: #fff;
+            position: relative;
+        }
+
+        /* Cabeçalho */
+        .orcamento-header {
+            margin-bottom: 8mm;
+            border-bottom: 1px solid #000;
+            padding-bottom: 5mm;
+        }
+
+        .header-logo {
+            display: inline-block;
+            vertical-align: top;
+            margin-right: 5mm;
+        }
+
+        .header-logo img {
+            width: 30mm;
+            height: auto;
+        }
+
+        .header-empresa {
+            display: inline-block;
+            vertical-align: top;
+            width: calc(100% - 40mm);
+        }
+
+        .empresa-nome {
+            font-size: 18pt;
+            font-weight: bold;
+            margin-bottom: 2mm;
+        }
+
+        .empresa-info {
+            font-size: 9pt;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .empresa-info p {
+            margin: 1mm 0;
+        }
+
+        /* Seção de proposta */
+        .proposta-section {
+            margin: 5mm 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .proposta-numero {
+            font-size: 12pt;
+            font-weight: bold;
+        }
+
+        .proposta-data {
+            font-size: 12pt;
+            font-weight: bold;
+        }
+
+        .vendedor-info {
+            font-size: 10pt;
+            margin: 2mm 0;
+        }
+
+        /* Dados do cliente */
+        .dados-cliente {
+            margin: 5mm 0;
+            border: 1px solid #000;
+            padding: 3mm;
+        }
+
+        .dados-cliente h3 {
+            font-size: 11pt;
+            font-weight: bold;
+            margin-bottom: 3mm;
+        }
+
+        .cliente-tabela {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 9pt;
+        }
+
+        .cliente-tabela td {
+            padding: 1mm;
+            vertical-align: top;
+        }
+
+        .cliente-tabela td:first-child {
+            width: 60%;
+        }
+
+        /* Totais e impostos */
+        .totais-section {
+            margin: 5mm 0;
+            display: flex;
+            justify-content: space-between;
+            border: 1px solid #000;
+            padding: 3mm;
+        }
+
+        .totais-coluna {
+            width: 48%;
+        }
+
+        .totais-coluna h3 {
+            font-size: 11pt;
+            font-weight: bold;
+            margin-bottom: 3mm;
+        }
+
+        .total-linha {
+            display: flex;
+            justify-content: space-between;
+            margin: 2mm 0;
+            font-size: 9pt;
+        }
+
+        .total-linha strong {
+            font-weight: bold;
+        }
+
+        .impostos-lista {
+            font-size: 9pt;
+            line-height: 1.8;
+        }
+
+        .impostos-lista p {
+            margin: 1mm 0;
+        }
+
+        /* Condições comerciais */
+        .condicoes-comerciais {
+            margin: 5mm 0;
+        }
+
+        .condicoes-comerciais h3 {
+            font-size: 11pt;
+            font-weight: bold;
+            margin-bottom: 3mm;
+        }
+
+        .condicoes-lista {
+            font-size: 9pt;
+            line-height: 1.8;
+        }
+
+        .condicoes-lista li {
+            margin: 1mm 0;
+        }
+
+        /* Itens da proposta */
+        .itens-proposta {
+            margin: 5mm 0;
+        }
+
+        .itens-proposta h3 {
+            font-size: 11pt;
+            font-weight: bold;
+            margin-bottom: 3mm;
+        }
+
+        .item-proposta {
+            margin: 5mm 0;
+            padding: 3mm;
+            border: 1px solid #ccc;
+            page-break-inside: avoid;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2mm;
+            font-size: 9pt;
+        }
+
+        .item-detalhes {
+            font-size: 9pt;
+            line-height: 1.8;
+        }
+
+        .item-detalhes p {
+            margin: 1mm 0;
+        }
+
+        .item-detalhes strong {
+            font-weight: bold;
+        }
+
+        /* Condições gerais */
+        .condicoes-gerais {
+            margin-top: 10mm;
+            page-break-before: always;
+        }
+
+        .condicoes-gerais h2 {
+            font-size: 12pt;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 5mm;
+        }
+
+        .condicoes-gerais h3 {
+            font-size: 11pt;
+            font-weight: bold;
+            margin-top: 4mm;
+            margin-bottom: 2mm;
+        }
+
+        .condicoes-gerais p {
+            font-size: 9pt;
+            line-height: 1.6;
+            margin: 2mm 0;
+            text-align: justify;
+        }
+
+        .condicoes-gerais ul {
+            margin-left: 5mm;
+            margin-top: 2mm;
+        }
+
+        .condicoes-gerais li {
+            font-size: 9pt;
+            line-height: 1.6;
+            margin: 1mm 0;
+        }
+
+        /* Rodapé */
+        .orcamento-footer {
+            position: absolute;
+            bottom: 10mm;
+            left: 10mm;
+            right: 10mm;
+            border-top: 1px solid #000;
+            padding-top: 2mm;
+            font-size: 8pt;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-vendedor {
+            flex: 1;
+        }
+
+        .footer-pagina {
+            flex: 1;
+            text-align: center;
+        }
+
+        .footer-data {
+            flex: 1;
+            text-align: right;
+        }
+
+        /* Utilitários */
+        .separador {
+            border-top: 1px solid #000;
+            margin: 3mm 0;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-bold {
+            font-weight: bold;
+        }
+
+        /* Impressão/PDF */
+        @media print {
+            .orcamento-container {
+                margin: 0;
+                padding: 10mm;
+                box-shadow: none;
+            }
+
+            .item-proposta {
+                page-break-inside: avoid;
+            }
+
+            .condicoes-gerais {
+                page-break-before: always;
+            }
+        }
+
+        /* Classes dinâmicas para valores calculados */
+        .valor-monetario {
+            font-weight: bold;
+        }
+
+        .valor-total {
+            font-size: 10pt;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="orcamento-container" id="orcamentoContainer">
+        <!-- Cabeçalho -->
+        <div class="orcamento-header">
+            <div class="header-logo">
+                <img src="src/imgs/WhatsApp Image 2026-01-07 at 07.40.38 1.svg" alt="UNITRAFO Logo" id="logoEmpresa">
+            </div>
+            <div class="header-empresa">
+                <div class="empresa-nome" id="empresaNome">UNITRAFO</div>
+                <div class="empresa-info" id="empresaInfo">
+                    <p id="empresaEndereco">RUA DORIVAL SPONCHIADO - LOTEAMENTO OLARIA PARQUE EMPRESARIAL</p>
+                    <p id="empresaCidade">Várzea Paulista - SP - CEP: 13225-340</p>
+                    <p id="empresaTelefone">Telefone(s): (11) 4038-4800</p>
+                    <p id="empresaEmail">E-mail: unitrafo@unitrafo.com.br</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Proposta e Data -->
+        <div class="proposta-section">
+            <div class="proposta-numero" id="propostaNumero">PROPOSTA: CP 02011</div>
+            <div class="proposta-data" id="propostaData">17/12/2025</div>
+        </div>
+
+        <!-- Vendedor -->
+        <div class="vendedor-info" id="vendedorInfo">
+            <p>Vendedor: <span id="vendedorNome">Felipe Weissmann</span> - <span id="vendedorEmail">felipe.vendas@unitrafo.com.br</span> <span id="vendedorTelefone">+55 11 96930-7781</span></p>
+            <p>Representante: <span id="representanteNome">Felipe Weissmann</span> - <span id="representanteEmail">felipe.vendas@unitrafo.com.br</span> <span id="representanteTelefone">+55 11 96930-7781</span></p>
+        </div>
+
+        <!-- Dados do Cliente -->
+        <div class="dados-cliente">
+            <h3>Dados do cliente</h3>
+            <table class="cliente-tabela" id="clienteTabela">
+                <tr>
+                    <td id="clienteDados">
+                        <!-- Preenchido dinamicamente -->
+                    </td>
+                    <td class="text-right" id="clienteContato">
+                        <!-- Preenchido dinamicamente -->
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Totais e Impostos -->
+        <div class="totais-section">
+            <div class="totais-coluna">
+                <h3>Total das mercadorias e serviços</h3>
+                <div class="total-linha">
+                    <span>Produto:</span>
+                    <span class="valor-monetario" id="totalProduto">R$ 0,00</span>
+                </div>
+                <div class="total-linha">
+                    <span>Desconto:</span>
+                    <span class="valor-monetario" id="totalDesconto">R$ 0,00</span>
+                </div>
+                <div class="total-linha">
+                    <span>Frete:</span>
+                    <span class="valor-monetario" id="totalFrete">R$ 0,00</span>
+                </div>
+                <div class="total-linha">
+                    <span>Seguro:</span>
+                    <span class="valor-monetario" id="totalSeguro">R$ 0,00</span>
+                </div>
+                <div class="total-linha">
+                    <span>Outros:</span>
+                    <span class="valor-monetario" id="totalOutros">R$ 0,00</span>
+                </div>
+                <div class="total-linha valor-total">
+                    <span><strong>Total:</strong></span>
+                    <span class="valor-monetario" id="totalGeral">R$ 0,00</span>
+                </div>
+            </div>
+            <div class="totais-coluna">
+                <h3>Total dos tributos</h3>
+                <div class="impostos-lista" id="impostosLista">
+                    <p>ICMS: <span id="icmsPercentual">12,00%</span></p>
+                    <p>ICMS ST: <span id="icmsStPercentual">0,00%</span></p>
+                    <p>PIS: <span id="pisPercentual">0,65%</span></p>
+                    <p>IPI: <span id="ipiPercentual">0,00%</span></p>
+                    <p>COFINS: <span id="cofinsPercentual">3,00%</span></p>
+                    <p>IBPT: <span id="ibptPercentual">0,00%</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Condições Comerciais -->
+        <div class="condicoes-comerciais">
+            <h3>Condições comerciais</h3>
+            <ul class="condicoes-lista" id="condicoesComerciais">
+                <li>Pagamento: <span id="condicaoPagamento">2 Parcelas (30/60 Dias)</span></li>
+                <li>Frete: <span id="condicaoFrete">Por conta do emitente CIF (Sem Descarga)</span></li>
+            </ul>
+        </div>
+
+        <div class="separador"></div>
+
+        <!-- Itens da Proposta -->
+        <div class="itens-proposta">
+            <h3>Itens da proposta</h3>
+            <div id="itensContainer">
+                <!-- Itens serão inseridos dinamicamente aqui -->
+            </div>
+        </div>
+
+        <!-- Condições Gerais (será adicionada em nova página) -->
+        <div class="condicoes-gerais" id="condicoesGerais">
+            <h2>CONDIÇÕES GERAIS DE FORNECIMENTO</h2>
+            <!-- Conteúdo será preenchido dinamicamente -->
+        </div>
+
+        <!-- Rodapé -->
+        <div class="orcamento-footer">
+            <div class="footer-vendedor" id="footerVendedor">Felipe - felipe.vendas@unitrafo.com.br</div>
+            <div class="footer-pagina" id="footerPagina">Página 1 de 1</div>
+            <div class="footer-data" id="footerData">17/12/2025</div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // CONFIGURAÇÕES E DADOS FIXOS
+        // ============================================
+        const CONFIG = {
+            empresa: {
+                nome: 'UNITRAFO',
+                endereco: 'RUA DORIVAL SPONCHIADO - LOTEAMENTO OLARIA PARQUE EMPRESARIAL',
+                cidade: 'Várzea Paulista - SP',
+                cep: 'CEP: 13225-340',
+                telefone: 'Telefone(s): (11) 4038-4800',
+                email: 'E-mail: unitrafo@unitrafo.com.br'
+            },
+            vendedor: {
+                nome: 'Felipe Weissmann',
+                email: 'felipe.vendas@unitrafo.com.br',
+                telefone: '+55 11 96930-7781'
+            },
+            impostos: {
+                icms: 12.00,
+                icmsSt: 0.00,
+                pis: 0.65,
+                ipi: 0.00,
+                cofins: 3.00,
+                ibpt: 0.00
+            },
+            condicoesGerais: [
+                {
+                    titulo: '1. Pagamento:',
+                    itens: [
+                        '1.1 - O pedido estará condicionado à aprovação do cadastro financeiro do cliente por parte de nosso departamento de cadastro. Caso julgue necessário, a UNITRAFO poderá solicitar garantias de pagamento.',
+                        '1.1 BNDES:',
+                        '1.1.1 - O cliente pode optar como forma de pagamento o BNDES, desde que informado no ato da compra.',
+                        '1.2 Pagamento Após o Vencimento:',
+                        '1.2.1 - No caso de pagamentos após o vencimento original pactuado, o valor devido será acrescido do custo financeiro vigente na ocasião, bem como todas as taxas e despesas inerentes a esta situação. Além dos encargos apontados, o valor em atraso será acrescido de uma multa de 5% e incidirão ainda juros de 0,33% ao dia.'
+                    ]
+                },
+                {
+                    titulo: '2. Faturamento direto ao cliente final:',
+                    itens: [
+                        '2.1 - O faturamento para uma terceira empresa poderá ser efetuado apenas mediante autorização por escrito da mesma e aprovação de seu cadastro financeiro.'
+                    ]
+                },
+                {
+                    titulo: '3. Reajuste de Preços:',
+                    itens: [
+                        '3.1 - Sempre que ocorrer diferenças financeiras em virtude de aumento de custos em relação à proposta original, as partes comprometem-se a buscar de comum acordo, uma solução que restabeleça a equação financeira inicial do pedido.'
+                    ]
+                },
+                {
+                    titulo: '4. Cancelamento do pedido:',
+                    itens: [
+                        '4.1 - No caso de Cancelamentos, será cobrada multa contratual sobre o valor total do item cancelado conforme condições abaixo:',
+                        '4.1.1 - 15% - fase de confecções dos projetos;',
+                        '4.1.2 - 50% - fase de fabricação dos equipamentos (válido para período inferior a 75% do prazo total)',
+                        '4.1.3 - 85% - fase de fabricação dos equipamentos (válido para período entre 75% e 90% do prazo total).',
+                        '4.1.4 - 95% - fase final de fabricação/testes.',
+                        '4.2 - Quando o objeto do pedido for equipamento com exigências específicas do contratante, no caso de cancelamento unilateral pelo contratante, o valor a ser pago será de 100% do pedido, independentemente do tempo em que foi feito, tendo em vista as especificações técnicas, o caráter personalíssimo do pedido e a impossibilidade de se comercializar o equipamento para outrem que não o contratante.'
+                    ]
+                },
+                {
+                    titulo: '5. Garantia:',
+                    itens: [
+                        '5.1 - A garantia cobre somente contra qualquer defeito de fabricação a contar da data da emissão da nota fiscal.',
+                        '5.2 - Extinção da garantia: Pelo término do prazo de sua validade; Por assistência prestada no aparelho por terceiros, sem prévia autorização escrita do fabricante; Por acidentes de transporte por terceiros sem responsabilidade do fabricante; Por instalação em desacordo com as Normas Técnicas da A.B.N.T.',
+                        '5.3 - Generalidades: A garantia pode ser na forma de reparo ou substituição do transformador, a critério do fabricante. A assistência do transformador será prestada nesta indústria, ou por terceiros autorizados. As despesas de transporte do transformador, à fábrica ou a terceiros autorizados correm por conta do comprador. A garantia somente se dará com apresentação deste certificado.'
+                    ]
+                },
+                {
+                    titulo: '6. Assistência Técnica:',
+                    itens: [
+                        '6.1 - O reparo ou assistência técnica a produtos UNITRAFO deve ser solicitado através do vendedor responsável pela venda.'
+                    ]
+                },
+                {
+                    titulo: '7. Ensaios:',
+                    itens: [
+                        '7.1 - Caso seja necessário envio de relatório de ensaios, deverá vir descrito com o pedido. Ensaios especiais poderão ser realizados, mediante acordo prévio e especificação no pedido.'
+                    ]
+                },
+                {
+                    titulo: '8. Inspeção:',
+                    itens: [
+                        '8.1 - O cliente deverá inspecionar o material no ato do recebimento em suas instalações, devendo comunicar qualquer divergência a UNITRAFO no mesmo momento. Mediante prévio acordo, o cliente poderá acompanhar os ensaios dos equipamentos na UNITRAFO, com todas as despesas pagas pelo contratante. Quando prevista a inspeção, a data será confirmada com 5 dias de antecedência.'
+                    ]
+                },
+                {
+                    titulo: '9. Devoluções de mercadorias:',
+                    itens: [
+                        '9.1 - A devolução sem prévia comunicação ensejará no NÃO ACEITE, incorrendo todas as despesas e ônus por conta do remetente; o reembolso, caso enseje o fato, ocorrerá após o recebimento e averiguação do produto, que deverá ser remetido em embalagem apropriada. O produto adquirido não poderá apresentar danos ou marcas que evidenciem o mau uso por parte do comprador ou remetente sob o risco de invalidar o termo de garantia e por consequência, a responsabilidade da UNITRAFO, inclusive sobre o reembolso e despesas de envio.'
+                    ]
+                },
+                {
+                    titulo: '10. Transporte:',
+                    itens: [
+                        '10.1 - O transporte quando por responsabilidade da UNITRAFO está livre de descarga. Quando houver a necessidade de equipamento para descarga, será necessário informar anteriormente para a contratação do equipamento necessário, sendo previamente pago pelo cliente.'
+                    ]
+                }
+            ]
+        };
+
+        // ============================================
+        // FUNÇÕES DE FORMATAÇÃO
+        // ============================================
+        function formatarMoeda(valor) {
+            return 'R$ ' + valor.toFixed(2).replace('.', ',');
+        }
+
+        function formatarData(data) {
+            if (!data) {
+                const hoje = new Date();
+                const dia = String(hoje.getDate()).padStart(2, '0');
+                const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+                const ano = hoje.getFullYear();
+                return `${dia}/${mes}/${ano}`;
+            }
+            return data;
+        }
+
+        function formatarPercentual(valor) {
+            return valor.toFixed(2).replace('.', ',') + '%';
+        }
+
+        // ============================================
+        // FUNÇÕES DE PREENCHIMENTO
+        // ============================================
+        function preencherDadosCliente(dados) {
+            const clienteDados = document.getElementById('clienteDados');
+            const clienteContato = document.getElementById('clienteContato');
+            
+            let htmlDados = `
+                <p><strong>${dados.razaoSocial || ''}</strong></p>
+                <p>CNPJ: ${dados.cnpj || ''} - I.E.: ${dados.ie || 'N/A'}</p>
+                <p>Endereço: ${dados.endereco || ''}${dados.numero ? ', ' + dados.numero : ''}</p>
+                <p>Município: ${dados.cidade || ''} - UF: ${dados.uf || ''} - CEP: ${dados.cep || ''}</p>
+                ${dados.bairro ? `<p>Bairro: ${dados.bairro}</p>` : ''}
+                <p>Telefone: ${dados.telefone || ''}</p>
+            `;
+            
+            let htmlContato = '';
+            if (dados.contato || dados.email) {
+                htmlContato = `<p>${dados.contato || ''} ${dados.email || ''}</p>`;
+            }
+            
+            clienteDados.innerHTML = htmlDados;
+            clienteContato.innerHTML = htmlContato;
+        }
+
+        function preencherItens(itens) {
+            const container = document.getElementById('itensContainer');
+            container.innerHTML = '';
+            
+            itens.forEach((item, index) => {
+                const itemNumero = String(index + 1).padStart(5, '0');
+                const precoUnit = item.price || 0;
+                const quantidade = item.quantity || 1;
+                const precoTotal = precoUnit * quantidade;
+                
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'item-proposta';
+                itemDiv.innerHTML = `
+                    <div class="item-header">
+                        <div>Item: ${itemNumero}</div>
+                        <div>Código do Produto: ${item.product || 'N/A'}</div>
+                    </div>
+                    <div class="item-detalhes">
+                        <p><strong>Descrição</strong></p>
+                        <p>${item.name || 'Produto'}</p>
+                        ${item.ncm ? `<p><strong>N.C.M.</strong> ${item.ncm}</p>` : ''}
+                        ${item.potencia ? `<p><strong>Potência</strong> ${item.potencia}</p>` : ''}
+                        ${item.classeIsolamento ? `<p><strong>Classe de Isolamento</strong> ${item.classeIsolamento}</p>` : ''}
+                        ${item.classeTermica ? `<p><strong>Classe Térmica</strong> ${item.classeTermica}</p>` : ''}
+                        ${item.frequencia ? `<p><strong>Frequência</strong> ${item.frequencia}</p>` : ''}
+                        ${item.grauProtecao ? `<p><strong>Grau de proteção</strong> ${item.grauProtecao}</p>` : ''}
+                        ${item.tensaoEntrada ? `<p><strong>Tensão de entrada</strong> ${item.tensaoEntrada}</p>` : ''}
+                        ${item.tensaoSaida ? `<p><strong>Tensão de saída</strong> ${item.tensaoSaida}</p>` : ''}
+                        ${item.tipoPintura ? `<p><strong>Tipo de Pintura</strong> ${item.tipoPintura}</p>` : ''}
+                        ${item.tipoMaterial ? `<p><strong>Tipo Material PA</strong> ${item.tipoMaterial}</p>` : ''}
+                        ${item.dijuntores !== undefined ? `<p><strong>Dijuntores</strong> ${item.dijuntores ? 'SIM' : 'NÃO'}</p>` : ''}
+                        ${item.garantia ? `<p><strong>Garantia</strong> ${item.garantia}</p>` : ''}
+                        <p><strong>Unidade</strong> UNID</p>
+                        <p><strong>Qtde</strong> ${quantidade.toFixed(3)}</p>
+                        <p><strong>Preço un. (R$)</strong> ${formatarMoeda(precoUnit)}</p>
+                        <p><strong>Preço Total (R$)</strong> ${formatarMoeda(precoTotal)}</p>
+                        ${item.prazoFabricacao ? `<p><strong>Prazo de Fabricação</strong> ${item.prazoFabricacao} - Dias úteis, contados a partir da Data da Confirmação da Compra.</p>` : ''}
+                        ${item.validade ? `<p><strong>Validade da Proposta</strong> ${item.validade}</p>` : ''}
+                    </div>
+                `;
+                container.appendChild(itemDiv);
+            });
+        }
+
+        function calcularTotais(itens, desconto = 0, frete = 0, seguro = 0, outros = 0) {
+            let subtotal = 0;
+            
+            itens.forEach(item => {
+                const precoUnit = item.price || 0;
+                const quantidade = item.quantity || 1;
+                subtotal += precoUnit * quantidade;
+            });
+            
+            const total = subtotal - desconto + frete + seguro + outros;
+            
+            return {
+                produto: subtotal,
+                desconto: desconto,
+                frete: frete,
+                seguro: seguro,
+                outros: outros,
+                total: total
+            };
+        }
+
+        function atualizarTotais(totais) {
+            document.getElementById('totalProduto').textContent = formatarMoeda(totais.produto);
+            document.getElementById('totalDesconto').textContent = formatarMoeda(totais.desconto);
+            document.getElementById('totalFrete').textContent = formatarMoeda(totais.frete);
+            document.getElementById('totalSeguro').textContent = formatarMoeda(totais.seguro);
+            document.getElementById('totalOutros').textContent = formatarMoeda(totais.outros);
+            document.getElementById('totalGeral').textContent = formatarMoeda(totais.total);
+        }
+
+        function preencherCondicoesGerais() {
+            const container = document.getElementById('condicoesGerais');
+            let html = '<h2>CONDIÇÕES GERAIS DE FORNECIMENTO</h2>';
+            
+            CONFIG.condicoesGerais.forEach(secao => {
+                html += `<h3>${secao.titulo}</h3>`;
+                secao.itens.forEach(item => {
+                    html += `<p>${item}</p>`;
+                });
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // ============================================
+        // FUNÇÃO PRINCIPAL DE INICIALIZAÇÃO
+        // ============================================
+        function inicializarOrcamento(dados) {
+            // Dados padrão se não fornecidos
+            const dadosCliente = dados.cliente || {};
+            const itens = dados.itens || [];
+            const condicoes = dados.condicoes || {};
+            const proposta = dados.proposta || {};
+            
+            // Preencher cabeçalho
+            document.getElementById('propostaNumero').textContent = `PROPOSTA: ${proposta.numero || 'CP 02011'}`;
+            document.getElementById('propostaData').textContent = formatarData(proposta.data);
+            document.getElementById('footerData').textContent = formatarData(proposta.data);
+            
+            // Preencher vendedor
+            const vendedor = dados.vendedor || CONFIG.vendedor;
+            document.getElementById('vendedorNome').textContent = vendedor.nome;
+            document.getElementById('vendedorEmail').textContent = vendedor.email;
+            document.getElementById('vendedorTelefone').textContent = vendedor.telefone;
+            document.getElementById('representanteNome').textContent = vendedor.nome;
+            document.getElementById('representanteEmail').textContent = vendedor.email;
+            document.getElementById('representanteTelefone').textContent = vendedor.telefone;
+            
+            // Preencher cliente
+            preencherDadosCliente(dadosCliente);
+            
+            // Calcular e atualizar totais
+            const totais = calcularTotais(
+                itens,
+                condicoes.desconto || 0,
+                condicoes.frete || 0,
+                condicoes.seguro || 0,
+                condicoes.outros || 0
+            );
+            atualizarTotais(totais);
+            
+            // Preencher condições comerciais
+            if (condicoes.pagamento) {
+                document.getElementById('condicaoPagamento').textContent = condicoes.pagamento;
+            }
+            if (condicoes.frete) {
+                document.getElementById('condicaoFrete').textContent = condicoes.frete;
+            }
+            
+            // Preencher itens
+            preencherItens(itens);
+            
+            // Preencher condições gerais
+            preencherCondicoesGerais();
+            
+            // Atualizar rodapé
+            document.getElementById('footerVendedor').textContent = `${vendedor.nome} - ${vendedor.email}`;
+        }
+
+        // ============================================
+        // EXPORTAR FUNÇÕES PARA USO EXTERNO
+        // ============================================
+        window.OrcamentoTemplate = {
+            inicializar: inicializarOrcamento,
+            calcularTotais: calcularTotais,
+            formatarMoeda: formatarMoeda,
+            formatarData: formatarData,
+            CONFIG: CONFIG
+        };
+    </script>
+</body>
+</html>
+

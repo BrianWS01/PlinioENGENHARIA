@@ -49,6 +49,9 @@
     <!-- jsPDF para geração de PDFs -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     
+    <!-- Gerador de Orçamento -->
+    <script src="gerador-orcamento.js"></script>
+    
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
     
@@ -145,6 +148,21 @@
             border-bottom: none;
         }
         
+        #btnCarrinho {
+            padding: 0.5rem 0.75rem !important;
+            min-width: 45px;
+            min-height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: visible !important;
+        }
+        
+        #btnCarrinho i {
+            font-size: 1.1rem;
+            display: block;
+        }
+        
         .carrinho-badge {
             position: absolute;
             top: -8px;
@@ -159,6 +177,7 @@
             justify-content: center;
             font-size: 0.75rem;
             font-weight: bold;
+            z-index: 10;
         }
         
         @media (max-width: 768px) {
@@ -397,9 +416,9 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="index.html">
-                        <img src="src/imgs/WhatsApp Image 2026-01-07 at 07.40.38 1.svg" alt="USETRAFO - Logo" class="img-fluid" loading="eager">
+                <img src="src/imgs/WhatsApp Image 2026-01-07 at 07.40.38 1.svg" alt="USETRAFO - Transformadores Elétricos" class="img-fluid" loading="eager">
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation menu">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
@@ -409,9 +428,6 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="index.html#produtos">Produtos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html#usetrafo-solar">USETRAFO Solar</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="index.html#personalizados">Transformadores Personalizados</a>
@@ -426,13 +442,7 @@
                         <a class="nav-link" href="index.html#contato">Contato</a>
                     </li>
                     <li class="nav-item">
-                        <button class="btn btn-primary position-relative ms-2" id="btnCarrinho" type="button">
-                            <i class="fas fa-shopping-cart"></i>
-                            <span class="carrinho-badge" id="carrinhoBadge">0</span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <div class="dropdown ms-2">
+                        <div class="dropdown me-2">
                             <button class="btn btn-outline-primary dropdown-toggle" type="button" id="userMenuDropdown" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Menu do usuário">
                                 <i class="fas fa-user" aria-hidden="true"></i>
                                 <span class="d-none d-md-inline ms-2" id="userNameDisplay">Conta</span>
@@ -461,6 +471,12 @@
                                 </li>
                             </ul>
                         </div>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-primary position-relative" id="btnCarrinho" type="button" aria-label="Abrir carrinho de compras" aria-describedby="carrinhoBadge">
+                            <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                            <span class="carrinho-badge" id="carrinhoBadge" role="status" aria-live="polite">0</span>
+                        </button>
                     </li>
                 </ul>
             </div>
@@ -1369,16 +1385,20 @@
             const notification = document.createElement('div');
             notification.className = `notification ${type} progress`;
             notification.innerHTML = `
-                <div class="notification-icon">
-                    <i class="fas ${icon}"></i>
+                <div class="notification-header">
+                    <div class="notification-icon">
+                        <i class="fas ${icon}"></i>
+                    </div>
+                    <div class="notification-content">
+                        <div class="notification-title">${title}</div>
+                    </div>
+                    <button class="notification-close" aria-label="Fechar">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
-                <div class="notification-content">
-                    <div class="notification-title">${title}</div>
+                <div class="notification-body">
                     <p class="notification-message">${message}</p>
                 </div>
-                <button class="notification-close" aria-label="Fechar">
-                    <i class="fas fa-times"></i>
-                </button>
                 <div class="notification-progress-bar" style="animation-duration: ${duration}ms;"></div>
             `;
             
@@ -2398,349 +2418,60 @@ DADOS DA CALCULADORA:
             });
         }
 
-        // Função para gerar PDF
+        // Função para gerar PDF usando o novo gerador
         async function gerarPDFOrcamento() {
             try {
-                // Verificar se jsPDF está disponível
-                if (!window.jspdf) {
-                    alert('Erro: Biblioteca jsPDF não carregada. Recarregue a página.');
-                    console.error('jsPDF não está disponível');
+                // Verificar se GeradorOrcamento está disponível
+                if (!window.GeradorOrcamento) {
+                    alert('Erro: Gerador de Orçamento não carregado. Recarregue a página.');
+                    console.error('GeradorOrcamento não está disponível');
                     return;
                 }
                 
-                const { jsPDF } = window.jspdf;
-                const doc = new jsPDF();
+                const gerador = new window.GeradorOrcamento();
             
-            // Dados da empresa
-            const empresaNome = 'UNITRAFO';
-            const empresaEndereco = 'RUA DORIVAL SPONCHIADO - LOTEAMENTO OLARIA PARQUE EMPRESARIAL';
-            const empresaCidade = 'Várzea Paulista - SP';
-            const empresaCEP = 'CEP: 13225-340';
-            const empresaTelefone = 'Telefone(s): (11) 4038-4800';
-            const empresaEmail = 'E-mail: unitrafo@unitrafo.com.br';
-            
-            // Gerar número da proposta (CP + data + sequencial)
-            const dataAtual = new Date();
-            const dia = String(dataAtual.getDate()).padStart(2, '0');
-            const mes = String(dataAtual.getMonth() + 1).padStart(2, '0');
-            const ano = dataAtual.getFullYear();
-            const dataFormatada = `${dia}/${mes}/${ano}`;
-            const numeroProposta = `CP ${String(Math.floor(Math.random() * 100000)).padStart(5, '0')}`;
-            
-            // Dados do formulário
-            const dadosCliente = {
-                razaoSocial: document.getElementById('orcamentoRazaoSocial').value,
-                cnpj: document.getElementById('orcamentoCNPJ').value,
-                ie: document.getElementById('orcamentoIE').value || 'N/A',
-                endereco: document.getElementById('orcamentoEndereco').value,
-                numero: document.getElementById('orcamentoNumero').value || '',
-                bairro: document.getElementById('orcamentoBairro').value || '',
-                cidade: document.getElementById('orcamentoCidade').value,
-                uf: document.getElementById('orcamentoUF').value,
-                cep: document.getElementById('orcamentoCEP').value,
-                telefone: document.getElementById('orcamentoTelefone').value,
-                email: document.getElementById('orcamentoEmail').value,
-                contato: document.getElementById('orcamentoContato').value || ''
-            };
-            
-            const condicoes = {
-                pagamento: document.getElementById('orcamentoPagamento').value,
-                frete: document.getElementById('orcamentoFrete').value,
-                validade: document.getElementById('orcamentoValidade').value,
-                prazoFabricacao: document.getElementById('orcamentoPrazoFabricacao').value
-            };
-            
+                // Coletar dados do formulário
+                const dadosCliente = {
+                    razaoSocial: document.getElementById('orcamentoRazaoSocial').value,
+                    cnpj: document.getElementById('orcamentoCNPJ').value,
+                    ie: document.getElementById('orcamentoIE').value || 'N/A',
+                    endereco: document.getElementById('orcamentoEndereco').value,
+                    numero: document.getElementById('orcamentoNumero').value || '',
+                    bairro: document.getElementById('orcamentoBairro').value || '',
+                    cidade: document.getElementById('orcamentoCidade').value,
+                    uf: document.getElementById('orcamentoUF').value,
+                    cep: document.getElementById('orcamentoCEP').value,
+                    telefone: document.getElementById('orcamentoTelefone').value,
+                    email: document.getElementById('orcamentoEmail').value,
+                    contato: document.getElementById('orcamentoContato').value || ''
+                };
+                
+                const condicoes = {
+                    pagamento: document.getElementById('orcamentoPagamento').value,
+                    frete: document.getElementById('orcamentoFrete').value,
+                    validade: document.getElementById('orcamentoValidade').value,
+                    prazoFabricacao: document.getElementById('orcamentoPrazoFabricacao').value,
+                    desconto: parseFloat(document.getElementById('orcamentoDesconto')?.value || 0),
+                    seguro: parseFloat(document.getElementById('orcamentoSeguro')?.value || 0),
+                    outros: parseFloat(document.getElementById('orcamentoOutros')?.value || 0)
+                };
+                
                 const carrinhoAtual = JSON.parse(localStorage.getItem('carrinho')) || [];
-                let totalGeral = 0;
                 
-                // Carregar e adicionar logo (opcional - não bloqueia se falhar)
-                let logoCarregada = false;
-                try {
-                    const logoImg = new Image();
-                    logoImg.crossOrigin = 'anonymous';
-                    logoImg.src = 'src/imgs/WhatsApp Image 2026-01-07 at 07.40.38 1.svg';
-                    
-                    await new Promise((resolve) => {
-                        const timeout = setTimeout(() => {
-                            console.log('Timeout ao carregar logo, continuando sem ela');
-                            resolve();
-                        }, 1000); // Timeout de 1 segundo
-                        
-                        logoImg.onload = () => {
-                            clearTimeout(timeout);
-                            try {
-                                // Converter SVG para base64 ou usar canvas
-                                const canvas = document.createElement('canvas');
-                                const ctx = canvas.getContext('2d');
-                                canvas.width = 40;
-                                canvas.height = 40;
-                                ctx.drawImage(logoImg, 0, 0, 40, 40);
-                                const logoData = canvas.toDataURL('image/png');
-                                doc.addImage(logoData, 'PNG', 10, 10, 25, 25);
-                                logoCarregada = true;
-                                resolve();
-                            } catch (e) {
-                                console.log('Erro ao processar logo, continuando sem ela:', e);
-                                resolve();
-                            }
-                        };
-                        logoImg.onerror = () => {
-                            clearTimeout(timeout);
-                            console.log('Logo não encontrada, continuando sem ela');
-                            resolve();
-                        };
-                    });
-                } catch (e) {
-                    console.log('Erro ao carregar logo, continuando sem ela:', e);
-                }
+                // Preparar dados para o gerador
+                const dadosOrcamento = {
+                    cliente: dadosCliente,
+                    itens: carrinhoAtual,
+                    condicoes: condicoes,
+                    proposta: {
+                        numero: gerador.gerarNumeroProposta(),
+                        data: new Date()
+                    },
+                    vendedor: gerador.config.vendedor
+                };
                 
-                // Cabeçalho com logo e nome
-                let xNome = 10;
-                let yNome = 15;
-                
-                // Se logo foi carregada, ajustar posição do nome
-                if (logoCarregada) {
-                    xNome = 40;
-                }
-            
-            doc.setFontSize(18);
-            doc.setFont(undefined, 'bold');
-            doc.text(empresaNome, xNome, yNome);
-            
-            // Informações da empresa (centralizadas)
-            doc.setFontSize(9);
-            doc.setFont(undefined, 'normal');
-            doc.text(empresaEndereco, 105, 25, { align: 'center' });
-            doc.text(empresaCidade + ' - ' + empresaCEP, 105, 30, { align: 'center' });
-            doc.text(empresaTelefone, 105, 35, { align: 'center' });
-            doc.text(empresaEmail, 105, 40, { align: 'center' });
-            
-            // Linha separadora horizontal
-            doc.setLineWidth(0.5);
-            doc.line(10, 45, 200, 45);
-            
-            // Proposta e Data
-            doc.setFontSize(12);
-            doc.setFont(undefined, 'bold');
-            doc.text('PROPOSTA: ' + numeroProposta, 10, 58);
-            doc.text(dataFormatada, 180, 58, { align: 'right' });
-            
-            // Vendedor (dados padrão - pode ser ajustado)
-            doc.setFontSize(10);
-            doc.setFont(undefined, 'normal');
-            doc.text('Vendedor: Felipe Weissmann - felipe.vendas@unitrafo.com.br +55 11 96930-7781', 10, 65);
-            doc.text('Representante: Felipe Weissmann - felipe.vendas@unitrafo.com.br +55 11 96930-7781', 10, 70);
-            
-            let yPos = 80;
-            
-            // Dados do Cliente - Título
-            doc.setFontSize(11);
-            doc.setFont(undefined, 'bold');
-            doc.text('Dados do cliente', 10, yPos);
-            yPos += 7;
-            
-            // Dados do Cliente - Conteúdo em formato de tabela
-            doc.setFontSize(9);
-            doc.setFont(undefined, 'normal');
-            const enderecoCompleto = `${dadosCliente.endereco}${dadosCliente.numero ? ', ' + dadosCliente.numero : ''}`;
-            const complemento = dadosCliente.bairro ? `, ${dadosCliente.bairro}` : '';
-            
-            // Primeira linha: Razão Social
-            doc.text(`${dadosCliente.razaoSocial}`, 10, yPos);
-            yPos += 5;
-            
-            // Segunda linha: CNPJ e IE
-            doc.text(`CNPJ: ${dadosCliente.cnpj} - I.E.: ${dadosCliente.ie}`, 10, yPos);
-            yPos += 5;
-            
-            // Terceira linha: Endereço completo
-            doc.text(`Endereço: ${enderecoCompleto}${complemento}`, 10, yPos);
-            yPos += 5;
-            
-            // Quarta linha: Município, UF e CEP
-            doc.text(`Município: ${dadosCliente.cidade} - UF: ${dadosCliente.uf} - CEP: ${dadosCliente.cep}`, 10, yPos);
-            if (dadosCliente.bairro) {
-                yPos += 5;
-                doc.text(`Bairro: ${dadosCliente.bairro}`, 10, yPos);
-            }
-            yPos += 5;
-            
-            // Quinta linha: Telefone
-            doc.text(`Telefone: ${dadosCliente.telefone}`, 10, yPos);
-            yPos += 5;
-            
-            // Sexta linha: Contato e Email
-            if (dadosCliente.contato) {
-                doc.text(`${dadosCliente.contato} ${dadosCliente.email}`, 10, yPos);
-            } else {
-                doc.text(dadosCliente.email, 10, yPos);
-            }
-            
-            yPos += 8;
-            
-            // Linha separadora após dados do cliente
-            doc.setLineWidth(0.3);
-            doc.line(10, yPos, 200, yPos);
-            yPos += 5;
-            
-            // Totais - Layout em duas colunas
-            carrinhoAtual.forEach(item => {
-                totalGeral += (item.price || 0) * (item.quantity || 1);
-            });
-            
-            const yTotais = yPos;
-            
-            // Coluna esquerda: Total das mercadorias
-            doc.setFontSize(9);
-            doc.setFont(undefined, 'bold');
-            doc.text('Total das mercadorias e serviços', 10, yTotais);
-            doc.setFont(undefined, 'normal');
-            doc.text('Produto:', 10, yTotais + 5);
-            doc.text('R$ ' + totalGeral.toFixed(2).replace('.', ','), 50, yTotais + 5);
-            doc.text('Desconto:', 10, yTotais + 10);
-            doc.text('R$ 0,00', 50, yTotais + 10);
-            doc.text('Frete:', 10, yTotais + 15);
-            doc.text('R$ 0,00', 50, yTotais + 15);
-            doc.text('Seguro:', 10, yTotais + 20);
-            doc.text('R$ 0,00', 50, yTotais + 20);
-            doc.text('Outros:', 10, yTotais + 25);
-            doc.text('R$ 0,00', 50, yTotais + 25);
-            doc.setFont(undefined, 'bold');
-            doc.text('Total:', 10, yTotais + 30);
-            doc.text('R$ ' + totalGeral.toFixed(2).replace('.', ','), 50, yTotais + 30);
-            
-            // Coluna direita: Total dos tributos
-            doc.setFont(undefined, 'bold');
-            doc.text('Total dos tributos', 120, yTotais);
-            doc.setFont(undefined, 'normal');
-            doc.text('ICMS: 12,00%', 120, yTotais + 5);
-            doc.text('ICMS ST: 0,00%', 120, yTotais + 10);
-            doc.text('PIS: 0,65%', 120, yTotais + 15);
-            doc.text('IPI: 0,00%', 120, yTotais + 20);
-            doc.text('COFINS: 3,00%', 120, yTotais + 25);
-            doc.text('IBPT: 0,00%', 120, yTotais + 30);
-            
-            yPos = yTotais + 35;
-            
-            // Linha separadora após totais
-            doc.setLineWidth(0.3);
-            doc.line(10, yPos, 200, yPos);
-            yPos += 5;
-            
-            // Condições Comerciais
-            doc.setFontSize(11);
-            doc.setFont(undefined, 'bold');
-            doc.text('Condições comerciais', 10, yPos);
-            yPos += 7;
-            
-            doc.setFontSize(9);
-            doc.setFont(undefined, 'normal');
-            doc.text(`- Pagamento: ${condicoes.pagamento}`, 10, yPos);
-            doc.text(`- Frete: ${condicoes.frete}`, 10, yPos + 5);
-            
-            yPos += 12;
-            
-            // Linha separadora antes dos itens
-            doc.setLineWidth(0.3);
-            doc.line(10, yPos, 200, yPos);
-            yPos += 5;
-            
-            // Itens da Proposta
-            doc.setFontSize(11);
-            doc.setFont(undefined, 'bold');
-            doc.text('Itens da proposta', 10, yPos);
-            yPos += 8;
-            
-            carrinhoAtual.forEach((item, index) => {
-                // Verificar se precisa de nova página
-                if (yPos > 250) {
-                    doc.addPage();
-                    yPos = 20;
-                }
-                
-                const itemNumero = String(index + 1).padStart(5, '0');
-                const precoUnit = item.price || 0;
-                const quantidade = item.quantity || 1;
-                const precoTotal = precoUnit * quantidade;
-                
-                doc.setFontSize(9);
-                doc.setFont(undefined, 'normal');
-                doc.text(`Item: ${itemNumero}`, 10, yPos);
-                doc.text(`Código do Produto: ${item.product || 'N/A'}`, 100, yPos);
-                
-                yPos += 6;
-                doc.text(`Descrição: ${item.name || 'Produto'}`, 10, yPos);
-                yPos += 5;
-                doc.text(`Potência: ${item.potencia || 'N/A'}`, 10, yPos);
-                yPos += 5;
-                doc.text(`Tensões: ${item.tensao || 'N/A'}`, 10, yPos);
-                yPos += 5;
-                doc.text(`Unidade: UNID`, 10, yPos);
-                doc.text(`Qtde: ${quantidade.toFixed(3)}`, 100, yPos);
-                yPos += 5;
-                doc.text(`Preço un. (R$): R$ ${precoUnit.toFixed(2).replace('.', ',')}`, 10, yPos);
-                doc.text(`Preço Total (R$): R$ ${precoTotal.toFixed(2).replace('.', ',')}`, 100, yPos);
-                yPos += 5;
-                doc.text(`Prazo de Fabricação: ${condicoes.prazoFabricacao} - Dias úteis, contados a partir da Data da Confirmação da Compra.`, 10, yPos);
-                yPos += 5;
-                
-                const dataValidade = new Date();
-                dataValidade.setDate(dataValidade.getDate() + parseInt(condicoes.validade));
-                const diaVal = String(dataValidade.getDate()).padStart(2, '0');
-                const mesVal = String(dataValidade.getMonth() + 1).padStart(2, '0');
-                const anoVal = dataValidade.getFullYear();
-                doc.text(`Validade da Proposta: ${diaVal}/${mesVal}/${anoVal}`, 10, yPos);
-                
-                yPos += 10;
-            });
-            
-            // Condições Gerais (em nova página se necessário)
-            if (yPos > 200) {
-                doc.addPage();
-                yPos = 20;
-            }
-            
-            doc.setFontSize(12);
-            doc.setFont(undefined, 'bold');
-            doc.text('CONDIÇÕES GERAIS DE FORNECIMENTO', 105, yPos, { align: 'center' });
-            yPos += 10;
-            
-            const condicoesGerais = [
-                '1. Pagamento:',
-                '1.1 - O pedido estará condicionado à aprovação do cadastro financeiro do cliente por parte de nosso departamento de cadastro.',
-                '1.2 - No caso de pagamentos após o vencimento, será acrescido multa de 5% e juros de 0,33% ao dia.',
-                '2. Garantia:',
-                '2.1 - A garantia cobre somente contra qualquer defeito de fabricação a contar da data da emissão da nota fiscal.',
-                '2.2 - Garantia de 36 meses.',
-                '3. Transporte:',
-                '3.1 - O transporte quando por responsabilidade da UNITRAFO está livre de descarga.',
-                '4. Cancelamento:',
-                '4.1 - Cancelamentos serão cobrados conforme fase do pedido (15% a 100% do valor).'
-            ];
-            
-            doc.setFontSize(9);
-            doc.setFont(undefined, 'normal');
-            condicoesGerais.forEach(condicao => {
-                if (yPos > 270) {
-                    doc.addPage();
-                    yPos = 20;
-                }
-                doc.text(condicao, 10, yPos);
-                yPos += 6;
-            });
-            
-            // Rodapé
-            const pageCount = doc.internal.getNumberOfPages();
-            for (let i = 1; i <= pageCount; i++) {
-                doc.setPage(i);
-                doc.setFontSize(8);
-                doc.text(`Felipe - felipe.vendas@unitrafo.com.br`, 10, 285);
-                doc.text(dataFormatada, 190, 285, { align: 'right' });
-                doc.text(`Página ${i} de ${pageCount}`, 105, 285, { align: 'center' });
-            }
-            
-                // Salvar PDF
-                doc.save(`Orcamento_${numeroProposta}_${dataFormatada.replace(/\//g, '-')}.pdf`);
+                // Gerar PDF
+                const resultado = await gerador.gerarPDF(dadosOrcamento);
                 
                 // Fechar modal e mostrar mensagem
                 const modal = bootstrap.Modal.getInstance(orcamentoModal);

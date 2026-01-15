@@ -215,37 +215,20 @@ class GeradorOrcamento {
         doc.setFontSize(9);
         doc.setFont(undefined, 'normal');
         
-        const enderecoCompleto = `${dadosCliente.endereco || ''}${dadosCliente.numero ? ', ' + dadosCliente.numero : ''}`;
-        const complemento = dadosCliente.bairro ? `, ${dadosCliente.bairro}` : '';
-        
-        // Linha 1: Razão Social
-        doc.text(dadosCliente.razaoSocial || '', 10, yPos);
-        if (dadosCliente.contato || dadosCliente.email) {
-            const contatoTexto = `${dadosCliente.contato || ''} ${dadosCliente.email || ''}`.trim();
-            doc.text(contatoTexto, 150, yPos, { align: 'right' });
-        }
+        // Linha 1: Nome
+        doc.text(`Nome: ${dadosCliente.nome || ''}`, 10, yPos);
         yPos += 5;
 
-        // Linha 2: CNPJ e IE
-        doc.text(`CNPJ: ${dadosCliente.cnpj || ''} - I.E.: ${dadosCliente.ie || 'N/A'}`, 10, yPos);
+        // Linha 2: CNPJ
+        doc.text(`CNPJ: ${dadosCliente.cnpj || ''}`, 10, yPos);
         yPos += 5;
 
-        // Linha 3: Endereço
-        doc.text(`Endereço: ${enderecoCompleto}${complemento}`, 10, yPos);
-        yPos += 5;
-
-        // Linha 4: Município, UF, CEP
-        doc.text(`Município: ${dadosCliente.cidade || ''} - UF: ${dadosCliente.uf || ''} - CEP: ${dadosCliente.cep || ''}`, 10, yPos);
-        yPos += 5;
-
-        // Linha 5: Bairro (se houver)
-        if (dadosCliente.bairro) {
-            doc.text(`Bairro: ${dadosCliente.bairro}`, 10, yPos);
-            yPos += 5;
-        }
-
-        // Linha 6: Telefone
+        // Linha 3: Telefone
         doc.text(`Telefone: ${dadosCliente.telefone || ''}`, 10, yPos);
+        yPos += 5;
+
+        // Linha 4: Email
+        doc.text(`E-mail: ${dadosCliente.email || ''}`, 10, yPos);
         yPos += 8;
 
         // Linha separadora

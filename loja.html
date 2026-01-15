@@ -424,13 +424,10 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html#sobre">Sobre</a>
+                        <a class="nav-link" href="index.html#sobre">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html#produtos">Produtos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html#personalizados">Transformadores Personalizados</a>
+                        <a class="nav-link" href="orcamento-personalizado.html">Orçamento Personalizado</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="loja.html">Loja</a>
@@ -590,16 +587,16 @@
                 <p class="lead text-muted">Compre nossos produtos diretamente pela nossa loja online</p>
             </div>
 
-            <!-- Link para Calculadora -->
+            <!-- Card Orçamento Personalizado -->
             <div class="row mb-4">
                 <div class="col-12 text-center">
                     <div class="card shadow-sm border-0" style="background: linear-gradient(135deg, var(--primary-color) 0%, #030d5a 100%);">
                         <div class="card-body p-4">
-                            <i class="fas fa-calculator fa-3x text-white mb-3"></i>
-                            <h3 class="text-white mb-2">Calculadora de Transformadores</h3>
-                            <p class="text-white-50 mb-3">Calcule a potência e especificações ideais para seu projeto</p>
-                            <a href="calculadora.html" class="btn btn-light btn-lg">
-                                <i class="fas fa-calculator me-2"></i>Acessar Calculadora
+                            <i class="fas fa-tools fa-3x text-white mb-3"></i>
+                            <h3 class="text-white mb-2">Não achou o que precisa?</h3>
+                            <p class="text-white-50 mb-3">Faça seu próprio transformador personalizado sob medida para suas necessidades</p>
+                            <a href="orcamento-personalizado.html" class="btn btn-light btn-lg">
+                                <i class="fas fa-wrench me-2"></i>Solicitar Orçamento Personalizado
                             </a>
                         </div>
                     </div>
@@ -2042,16 +2039,12 @@
                             <div class="card-body">
                                 <div class="row g-3">
                                     <div class="col-md-6">
-                                        <label for="orcamentoRazaoSocial" class="form-label">Razão Social <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="orcamentoRazaoSocial" required>
+                                        <label for="orcamentoNome" class="form-label">Nome <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="orcamentoNome" required>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="orcamentoCNPJ" class="form-label">CNPJ <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="orcamentoCNPJ" placeholder="00.000.000/0000-00" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="orcamentoIE" class="form-label">Inscrição Estadual (IE)</label>
-                                        <input type="text" class="form-control" id="orcamentoIE">
                                     </div>
                                     <div class="col-md-6">
                                         <label for="orcamentoTelefone" class="form-label">Telefone <span class="text-danger">*</span></label>
@@ -2060,63 +2053,6 @@
                                     <div class="col-md-6">
                                         <label for="orcamentoEmail" class="form-label">E-mail <span class="text-danger">*</span></label>
                                         <input type="email" class="form-control" id="orcamentoEmail" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="orcamentoContato" class="form-label">Nome do Contato</label>
-                                        <input type="text" class="form-control" id="orcamentoContato">
-                                    </div>
-                                    <div class="col-md-8">
-                                        <label for="orcamentoEndereco" class="form-label">Endereço <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="orcamentoEndereco" required>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="orcamentoNumero" class="form-label">Número</label>
-                                        <input type="text" class="form-control" id="orcamentoNumero">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="orcamentoBairro" class="form-label">Bairro</label>
-                                        <input type="text" class="form-control" id="orcamentoBairro">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="orcamentoCidade" class="form-label">Cidade <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="orcamentoCidade" required>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label for="orcamentoUF" class="form-label">UF <span class="text-danger">*</span></label>
-                                        <select class="form-select" id="orcamentoUF" required>
-                                            <option value="">UF</option>
-                                            <option value="AC">AC</option>
-                                            <option value="AL">AL</option>
-                                            <option value="AP">AP</option>
-                                            <option value="AM">AM</option>
-                                            <option value="BA">BA</option>
-                                            <option value="CE">CE</option>
-                                            <option value="DF">DF</option>
-                                            <option value="ES">ES</option>
-                                            <option value="GO">GO</option>
-                                            <option value="MA">MA</option>
-                                            <option value="MT">MT</option>
-                                            <option value="MS">MS</option>
-                                            <option value="MG">MG</option>
-                                            <option value="PA">PA</option>
-                                            <option value="PB">PB</option>
-                                            <option value="PR">PR</option>
-                                            <option value="PE">PE</option>
-                                            <option value="PI">PI</option>
-                                            <option value="RJ">RJ</option>
-                                            <option value="RN">RN</option>
-                                            <option value="RS">RS</option>
-                                            <option value="RO">RO</option>
-                                            <option value="RR">RR</option>
-                                            <option value="SC">SC</option>
-                                            <option value="SP" selected>SP</option>
-                                            <option value="SE">SE</option>
-                                            <option value="TO">TO</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label for="orcamentoCEP" class="form-label">CEP <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="orcamentoCEP" placeholder="00000-000" required>
                                     </div>
                                 </div>
                             </div>
@@ -2291,6 +2227,25 @@
             const frequencia = urlParams.get('frequencia') || '60';
             const fase = urlParams.get('fase') || 'trifasico';
             
+            // Preencher dados do cliente se vierem da calculadora
+            const nome = urlParams.get('nome');
+            const cnpj = urlParams.get('cnpj');
+            const telefone = urlParams.get('telefone');
+            const email = urlParams.get('email');
+            
+            if (nome && document.getElementById('orcamentoNome')) {
+                document.getElementById('orcamentoNome').value = nome;
+            }
+            if (cnpj && document.getElementById('orcamentoCNPJ')) {
+                document.getElementById('orcamentoCNPJ').value = cnpj;
+            }
+            if (telefone && document.getElementById('orcamentoTelefone')) {
+                document.getElementById('orcamentoTelefone').value = telefone;
+            }
+            if (email && document.getElementById('orcamentoEmail')) {
+                document.getElementById('orcamentoEmail').value = email;
+            }
+            
             // Preencher campos se existirem
             if (potencia && document.getElementById('orcamentoObservacoes')) {
                 const observacoes = document.getElementById('orcamentoObservacoes');
@@ -2383,16 +2338,6 @@ DADOS DA CALCULADORA:
             });
         }
 
-        if (document.getElementById('orcamentoCEP')) {
-            document.getElementById('orcamentoCEP').addEventListener('input', function(e) {
-                let value = e.target.value.replace(/\D/g, '');
-                if (value.length <= 8) {
-                    value = value.replace(/^(\d{5})(\d{3}).*/, '$1-$2');
-                    e.target.value = value;
-                }
-            });
-        }
-
         if (document.getElementById('orcamentoTelefone')) {
             document.getElementById('orcamentoTelefone').addEventListener('input', function(e) {
                 let value = e.target.value.replace(/\D/g, '');
@@ -2432,18 +2377,10 @@ DADOS DA CALCULADORA:
             
                 // Coletar dados do formulário
                 const dadosCliente = {
-                    razaoSocial: document.getElementById('orcamentoRazaoSocial').value,
+                    nome: document.getElementById('orcamentoNome').value,
                     cnpj: document.getElementById('orcamentoCNPJ').value,
-                    ie: document.getElementById('orcamentoIE').value || 'N/A',
-                    endereco: document.getElementById('orcamentoEndereco').value,
-                    numero: document.getElementById('orcamentoNumero').value || '',
-                    bairro: document.getElementById('orcamentoBairro').value || '',
-                    cidade: document.getElementById('orcamentoCidade').value,
-                    uf: document.getElementById('orcamentoUF').value,
-                    cep: document.getElementById('orcamentoCEP').value,
                     telefone: document.getElementById('orcamentoTelefone').value,
-                    email: document.getElementById('orcamentoEmail').value,
-                    contato: document.getElementById('orcamentoContato').value || ''
+                    email: document.getElementById('orcamentoEmail').value
                 };
                 
                 const condicoes = {
@@ -2512,6 +2449,15 @@ DADOS DA CALCULADORA:
             }
         })();
     </script>
+
+    <!-- Botão Flutuante WhatsApp -->
+    <a href="https://wa.me/551140384800?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento" 
+       class="whatsapp-float" 
+       target="_blank" 
+       rel="noopener noreferrer"
+       aria-label="Fale conosco no WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 </body>
 </html>
 

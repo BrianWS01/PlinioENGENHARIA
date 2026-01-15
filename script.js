@@ -372,6 +372,45 @@ if (contatoForm) {
         // Animação de loading
         btn.style.position = 'relative';
         
+        // Salvar contato no localStorage para o admin
+        const formData = {
+            nome: document.getElementById('nome').value,
+            email: document.getElementById('email').value,
+            telefone: document.getElementById('telefone').value,
+            cnpj: document.getElementById('cnpj') ? document.getElementById('cnpj').value || '' : '',
+            mensagem: document.getElementById('mensagem').value,
+            data: new Date().toISOString(),
+            assunto: 'Contato'
+        };
+        
+        // Verificar se veio de orçamento personalizado
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('assunto')) {
+            formData.assunto = urlParams.get('assunto');
+            formData.mensagem = urlParams.get('mensagem') || formData.mensagem;
+        }
+        
+        // Salvar contatos
+        const contatos = JSON.parse(localStorage.getItem('contatos') || '[]');
+        contatos.push(formData);
+        localStorage.setItem('contatos', JSON.stringify(contatos));
+        
+        // Salvar como orçamento se for orçamento
+        if (formData.assunto && formData.assunto.includes('Orçamento')) {
+            const orcamentos = JSON.parse(localStorage.getItem('orcamentos') || '[]');
+            orcamentos.push({
+                id: 'ORC-' + Date.now(),
+                cliente: formData.nome,
+                email: formData.email,
+                telefone: formData.telefone,
+                cnpj: formData.cnpj || '',
+                mensagem: formData.mensagem,
+                data: formData.data,
+                status: 'pendente'
+            });
+            localStorage.setItem('orcamentos', JSON.stringify(orcamentos));
+        }
+        
         // Simula delay de envio
         setTimeout(() => {
             btn.disabled = false;
@@ -634,6 +673,18 @@ telInputs.forEach(input => {
         }
         
         e.target.value = value;
+    });
+});
+
+// Máscara para CNPJ
+const cnpjInputs = document.querySelectorAll('input[name="cnpj"], input[id="cnpj"]');
+cnpjInputs.forEach(input => {
+    input.addEventListener('input', (e) => {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length <= 14) {
+            value = value.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2}).*/, '$1.$2.$3/$4-$5');
+            e.target.value = value;
+        }
     });
 });
 

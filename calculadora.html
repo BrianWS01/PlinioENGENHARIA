@@ -195,13 +195,10 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html#sobre">Sobre</a>
+                        <a class="nav-link" href="index.html#sobre">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html#produtos">Produtos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html#personalizados">Transformadores Personalizados</a>
+                        <a class="nav-link" href="orcamento-personalizado.html">Orçamento Personalizado</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="loja.html">Loja</a>
@@ -841,6 +838,26 @@
                                     <input type="text" class="form-control" value="${formatarNumero(correnteMotor)} A" readonly>
                                 </div>
                             </div>
+                            <hr class="my-4">
+                            <h6 class="mb-3"><i class="fas fa-user me-2"></i>Dados do Cliente</h6>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Nome <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="orcNomeHP" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">CNPJ <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="orcCNPJHP" placeholder="00.000.000/0000-00" maxlength="18" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Telefone <span class="text-danger">*</span></label>
+                                    <input type="tel" class="form-control" id="orcTelefoneHP" placeholder="(00) 00000-0000" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Email <span class="text-danger">*</span></label>
+                                    <input type="email" class="form-control" id="orcEmailHP" required>
+                                </div>
+                            </div>
                             <div class="mt-3">
                                 <button type="submit" class="btn btn-primary w-100">
                                     <i class="fas fa-file-pdf me-2"></i>Solicitar Orçamento com Estes Dados
@@ -859,6 +876,10 @@
             const tensaoSecundaria = document.getElementById('orcTensaoSecundariaHP').value;
             const frequencia = document.getElementById('orcFrequenciaHP').value;
             const fase = document.getElementById('orcFaseHP').value;
+            const nome = document.getElementById('orcNomeHP').value;
+            const cnpj = document.getElementById('orcCNPJHP').value;
+            const telefone = document.getElementById('orcTelefoneHP').value;
+            const email = document.getElementById('orcEmailHP').value;
             
             const params = new URLSearchParams({
                 origem: 'calculadora-hp-kva',
@@ -866,7 +887,11 @@
                 tensao_primaria: tensaoPrimaria,
                 tensao_secundaria: tensaoSecundaria,
                 frequencia: frequencia,
-                fase: fase
+                fase: fase,
+                nome: nome,
+                cnpj: cnpj,
+                telefone: telefone,
+                email: email
             });
             
             window.location.href = `loja.html?${params.toString()}#orcamento`;
@@ -966,6 +991,26 @@
                                     <input type="text" class="form-control" value="${formatarNumero(corrente)} A" readonly>
                                 </div>
                             </div>
+                            <hr class="my-4">
+                            <h6 class="mb-3"><i class="fas fa-user me-2"></i>Dados do Cliente</h6>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Nome <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="orcNomeKVA" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">CNPJ <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="orcCNPJKVA" placeholder="00.000.000/0000-00" maxlength="18" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Telefone <span class="text-danger">*</span></label>
+                                    <input type="tel" class="form-control" id="orcTelefoneKVA" placeholder="(00) 00000-0000" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Email <span class="text-danger">*</span></label>
+                                    <input type="email" class="form-control" id="orcEmailKVA" required>
+                                </div>
+                            </div>
                             <div class="mt-3">
                                 <button type="submit" class="btn btn-primary w-100">
                                     <i class="fas fa-file-pdf me-2"></i>Solicitar Orçamento com Estes Dados
@@ -984,6 +1029,10 @@
             const tensaoSecundaria = document.getElementById('orcTensaoSecundariaKVA').value;
             const frequencia = document.getElementById('orcFrequenciaKVA').value;
             const fase = document.getElementById('orcFaseKVA').value;
+            const nome = document.getElementById('orcNomeKVA').value;
+            const cnpj = document.getElementById('orcCNPJKVA').value;
+            const telefone = document.getElementById('orcTelefoneKVA').value;
+            const email = document.getElementById('orcEmailKVA').value;
             
             const params = new URLSearchParams({
                 origem: 'calculadora-kva-corrente',
@@ -991,7 +1040,11 @@
                 tensao_primaria: tensaoPrimaria,
                 tensao_secundaria: tensaoSecundaria,
                 frequencia: frequencia,
-                fase: fase
+                fase: fase,
+                nome: nome,
+                cnpj: cnpj,
+                telefone: telefone,
+                email: email
             });
             
             window.location.href = `loja.html?${params.toString()}#orcamento`;
@@ -1091,6 +1144,26 @@
                                     <input type="text" class="form-control" value="${formatarNumero(corrente)} A" readonly>
                                 </div>
                             </div>
+                            <hr class="my-4">
+                            <h6 class="mb-3"><i class="fas fa-user me-2"></i>Dados do Cliente</h6>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Nome <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="orcNomeCorrente" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">CNPJ <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="orcCNPJCorrente" placeholder="00.000.000/0000-00" maxlength="18" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Telefone <span class="text-danger">*</span></label>
+                                    <input type="tel" class="form-control" id="orcTelefoneCorrente" placeholder="(00) 00000-0000" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Email <span class="text-danger">*</span></label>
+                                    <input type="email" class="form-control" id="orcEmailCorrente" required>
+                                </div>
+                            </div>
                             <div class="mt-3">
                                 <button type="submit" class="btn btn-primary w-100">
                                     <i class="fas fa-file-pdf me-2"></i>Solicitar Orçamento com Estes Dados
@@ -1109,6 +1182,10 @@
             const tensaoSecundaria = document.getElementById('orcTensaoSecundariaCorrente').value;
             const frequencia = document.getElementById('orcFrequenciaCorrente').value;
             const fase = document.getElementById('orcFaseCorrente').value;
+            const nome = document.getElementById('orcNomeCorrente').value;
+            const cnpj = document.getElementById('orcCNPJCorrente').value;
+            const telefone = document.getElementById('orcTelefoneCorrente').value;
+            const email = document.getElementById('orcEmailCorrente').value;
             
             const params = new URLSearchParams({
                 origem: 'calculadora-corrente-kva',
@@ -1116,7 +1193,11 @@
                 tensao_primaria: tensaoPrimaria,
                 tensao_secundaria: tensaoSecundaria,
                 frequencia: frequencia,
-                fase: fase
+                fase: fase,
+                nome: nome,
+                cnpj: cnpj,
+                telefone: telefone,
+                email: email
             });
             
             window.location.href = `loja.html?${params.toString()}#orcamento`;
@@ -1206,6 +1287,26 @@
                                     <input type="text" class="form-control" value="${formatarNumero(kw)} kW" readonly>
                                 </div>
                             </div>
+                            <hr class="my-4">
+                            <h6 class="mb-3"><i class="fas fa-user me-2"></i>Dados do Cliente</h6>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Nome <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="orcNomeKW" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">CNPJ <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="orcCNPJKW" placeholder="00.000.000/0000-00" maxlength="18" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Telefone <span class="text-danger">*</span></label>
+                                    <input type="tel" class="form-control" id="orcTelefoneKW" placeholder="(00) 00000-0000" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Email <span class="text-danger">*</span></label>
+                                    <input type="email" class="form-control" id="orcEmailKW" required>
+                                </div>
+                            </div>
                             <div class="mt-3">
                                 <button type="submit" class="btn btn-primary w-100">
                                     <i class="fas fa-file-pdf me-2"></i>Solicitar Orçamento com Estes Dados
@@ -1224,6 +1325,10 @@
             const tensaoSecundaria = document.getElementById('orcTensaoSecundariaKW').value;
             const frequencia = document.getElementById('orcFrequenciaKW').value;
             const fase = document.getElementById('orcFaseKW').value;
+            const nome = document.getElementById('orcNomeKW').value;
+            const cnpj = document.getElementById('orcCNPJKW').value;
+            const telefone = document.getElementById('orcTelefoneKW').value;
+            const email = document.getElementById('orcEmailKW').value;
             
             const params = new URLSearchParams({
                 origem: 'calculadora-kw-kva',
@@ -1231,7 +1336,11 @@
                 tensao_primaria: tensaoPrimaria,
                 tensao_secundaria: tensaoSecundaria,
                 frequencia: frequencia,
-                fase: fase
+                fase: fase,
+                nome: nome,
+                cnpj: cnpj,
+                telefone: telefone,
+                email: email
             });
             
             window.location.href = `loja.html?${params.toString()}#orcamento`;
@@ -1331,6 +1440,26 @@
                                     <input type="text" class="form-control" value="${formatarNumero(watts)} W" readonly>
                                 </div>
                             </div>
+                            <hr class="my-4">
+                            <h6 class="mb-3"><i class="fas fa-user me-2"></i>Dados do Cliente</h6>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Nome <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="orcNomeWatts" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">CNPJ <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="orcCNPJWatts" placeholder="00.000.000/0000-00" maxlength="18" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Telefone <span class="text-danger">*</span></label>
+                                    <input type="tel" class="form-control" id="orcTelefoneWatts" placeholder="(00) 00000-0000" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Email <span class="text-danger">*</span></label>
+                                    <input type="email" class="form-control" id="orcEmailWatts" required>
+                                </div>
+                            </div>
                             <div class="mt-3">
                                 <button type="submit" class="btn btn-primary w-100">
                                     <i class="fas fa-file-pdf me-2"></i>Solicitar Orçamento com Estes Dados
@@ -1349,6 +1478,10 @@
             const tensaoSecundaria = document.getElementById('orcTensaoSecundariaWatts').value;
             const frequencia = document.getElementById('orcFrequenciaWatts').value;
             const fase = document.getElementById('orcFaseWatts').value;
+            const nome = document.getElementById('orcNomeWatts').value;
+            const cnpj = document.getElementById('orcCNPJWatts').value;
+            const telefone = document.getElementById('orcTelefoneWatts').value;
+            const email = document.getElementById('orcEmailWatts').value;
             
             const params = new URLSearchParams({
                 origem: 'calculadora-watts-kva',
@@ -1356,7 +1489,11 @@
                 tensao_primaria: tensaoPrimaria,
                 tensao_secundaria: tensaoSecundaria,
                 frequencia: frequencia,
-                fase: fase
+                fase: fase,
+                nome: nome,
+                cnpj: cnpj,
+                telefone: telefone,
+                email: email
             });
             
             window.location.href = `loja.html?${params.toString()}#orcamento`;
@@ -1411,8 +1548,43 @@
                     });
                 }
             });
+
+            // Máscaras para CNPJ (delegação de eventos para campos dinâmicos)
+            document.addEventListener('input', function(e) {
+                if (e.target.id && e.target.id.startsWith('orcCNPJ')) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length <= 14) {
+                        value = value.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2}).*/, '$1.$2.$3/$4-$5');
+                        e.target.value = value;
+                    }
+                }
+            });
+
+            // Máscaras para Telefone (delegação de eventos para campos dinâmicos)
+            document.addEventListener('input', function(e) {
+                if (e.target.id && e.target.id.startsWith('orcTelefone')) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length <= 11) {
+                        if (value.length <= 10) {
+                            value = value.replace(/^(\d{2})(\d{4})(\d{4}).*/, '($1) $2-$3');
+                        } else {
+                            value = value.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1) $2-$3');
+                        }
+                        e.target.value = value;
+                    }
+                }
+            });
             
     </script>
+
+    <!-- Botão Flutuante WhatsApp -->
+    <a href="https://wa.me/551140384800?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento" 
+       class="whatsapp-float" 
+       target="_blank" 
+       rel="noopener noreferrer"
+       aria-label="Fale conosco no WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 </body>
 </html>
 

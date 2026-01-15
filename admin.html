@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Admin - USETRAFO</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            background: #f5f5f5;
+            font-size: 14px;
+        }
+        
+        .admin-header {
+            background: #02093f;
+            color: white;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        .admin-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .admin-card h5 {
+            color: #02093f;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            border-bottom: 2px solid #02093f;
+            padding-bottom: 0.5rem;
+        }
+        
+        .table-responsive {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        .table {
+            font-size: 13px;
+        }
+        
+        .table thead {
+            position: sticky;
+            top: 0;
+            background: #f8f9fa;
+            z-index: 10;
+        }
+        
+        .badge-status {
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        .status-pendente { background: #fff3cd; color: #856404; }
+        .status-enviado { background: #d1ecf1; color: #0c5460; }
+        .status-aceito { background: #d4edda; color: #155724; }
+        .status-recusado { background: #f8d7da; color: #721c24; }
+        
+        .btn-sm {
+            padding: 0.2rem 0.5rem;
+            font-size: 12px;
+        }
+        
+        .cnpj-result {
+            background: #f8f9fa;
+            border-left: 4px solid #02093f;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 3px;
+        }
+        
+        .search-box {
+            margin-bottom: 1rem;
+        }
+        
+        .stats-box {
+            text-align: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+        
+        .stats-box .number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #02093f;
+        }
+        
+        .stats-box .label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Admin -->
+    <div class="admin-header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h4 class="mb-0">
+                        <i class="fas fa-shield-alt me-2"></i>
+                        Painel Administrativo - USETRAFO
+                    </h4>
+                </div>
+                <div class="col-md-6 text-end">
+                    <span id="adminName" class="me-3">Admin</span>
+                    <button class="btn btn-light btn-sm" onclick="logoutAdmin()">
+                        <i class="fas fa-sign-out-alt me-1"></i>Sair
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Form (inicialmente) -->
+    <div id="loginSection" class="container" style="max-width: 400px; margin-top: 100px;">
+        <div class="admin-card">
+            <h5 class="text-center mb-4">Acesso Administrativo</h5>
+            <form id="adminLoginForm">
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" id="adminEmail" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Senha</label>
+                    <input type="password" class="form-control" id="adminPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="fas fa-lock me-2"></i>Entrar
+                </button>
+            </form>
+            <div id="loginError" class="alert alert-danger mt-3 d-none" role="alert"></div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard (após login) -->
+    <div id="adminDashboard" class="container-fluid d-none">
+        <!-- Estatísticas -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="stats-box">
+                    <div class="number" id="statsOrcamentos">0</div>
+                    <div class="label">Orçamentos</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-box">
+                    <div class="number" id="statsClientes">0</div>
+                    <div class="label">Clientes</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-box">
+                    <div class="number" id="statsPendentes">0</div>
+                    <div class="label">Pendentes</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-box">
+                    <div class="number" id="statsEnviados">0</div>
+                    <div class="label">Enviados</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Abas -->
+        <ul class="nav nav-tabs mb-3" id="adminTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="orcamentos-tab" data-bs-toggle="tab" data-bs-target="#orcamentos" type="button" role="tab">
+                    <i class="fas fa-file-invoice me-2"></i>Orçamentos
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="clientes-tab" data-bs-toggle="tab" data-bs-target="#clientes" type="button" role="tab">
+                    <i class="fas fa-users me-2"></i>Clientes
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="cnpj-tab" data-bs-toggle="tab" data-bs-target="#cnpj" type="button" role="tab">
+                    <i class="fas fa-building me-2"></i>Consulta CNPJ
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="adminTabContent">
+            <!-- Tab Orçamentos -->
+            <div class="tab-pane fade show active" id="orcamentos" role="tabpanel">
+                <div class="admin-card">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0">Orçamentos Solicitados</h5>
+                        <div class="search-box">
+                            <input type="text" class="form-control form-control-sm" id="searchOrcamentos" placeholder="Buscar orçamentos..." style="width: 300px;">
+                        </div>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-sm table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Data</th>
+                                    <th>Cliente</th>
+                                    <th>Email</th>
+                                    <th>Telefone</th>
+                                    <th>Produto/Descrição</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orcamentosTable">
+                                <tr>
+                                    <td colspan="8" class="text-center text-muted">
+                                        <i class="fas fa-spinner fa-spin me-2"></i>Carregando...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Clientes -->
+            <div class="tab-pane fade" id="clientes" role="tabpanel">
+                <div class="admin-card">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0">Base de Clientes</h5>
+                        <div class="search-box">
+                            <input type="text" class="form-control form-control-sm" id="searchClientes" placeholder="Buscar clientes..." style="width: 300px;">
+                        </div>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-sm table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Email</th>
+                                    <th>Telefone</th>
+                                    <th>CNPJ</th>
+                                    <th>CPF/CNPJ</th>
+                                    <th>Cadastro</th>
+                                    <th>Orçamentos</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="clientesTable">
+                                <tr>
+                                    <td colspan="8" class="text-center text-muted">
+                                        <i class="fas fa-spinner fa-spin me-2"></i>Carregando...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab CNPJ -->
+            <div class="tab-pane fade" id="cnpj" role="tabpanel">
+                <div class="admin-card">
+                    <h5>Consulta de CNPJ</h5>
+                    <p class="text-muted mb-3">Busque informações detalhadas de empresas através do CNPJ</p>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="cnpjInput" placeholder="Digite o CNPJ (00.000.000/0000-00)" maxlength="18">
+                            <small class="text-muted">Exemplo: 12.345.678/0001-90 ou 12345678000190</small>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-primary w-100" onclick="consultarCNPJ()">
+                                <i class="fas fa-search me-2"></i>Consultar
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="cnpjResult" class="d-none">
+                        <div class="cnpj-result">
+                            <h6 class="mb-3">Informações da Empresa</h6>
+                            <div id="cnpjData"></div>
+                        </div>
+                    </div>
+                    
+                    <div id="cnpjLoading" class="text-center d-none">
+                        <i class="fas fa-spinner fa-spin fa-2x text-primary"></i>
+                        <p class="mt-2">Consultando CNPJ...</p>
+                    </div>
+                    
+                    <div id="cnpjError" class="alert alert-danger d-none mt-3" role="alert"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Detalhes Orçamento -->
+    <div class="modal fade" id="orcamentoModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Detalhes do Orçamento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="orcamentoModalBody">
+                    <p class="text-muted">Carregando...</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary" onclick="atualizarStatus()">Atualizar Status</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+    
+    <!-- Admin JS -->
+    <script>
+        // Lista de emails admin (em produção, deve vir do backend)
+        const ADMIN_EMAILS = ['admin@usetrafo.com.br', 'felipe.vendas@unitrafo.com.br'];
+        
+        // Credenciais admin padrão (em produção, usar backend seguro)
+        const ADMIN_CREDENTIALS = {
+            'admin@usetrafo.com.br': 'admin123',
+            'felipe.vendas@unitrafo.com.br': 'admin123'
+        };
+        
+        let adminData = null;
+        let orcamentosData = [];
+        let clientesData = [];
+        
+        // Verificar se já está logado
+        document.addEventListener('DOMContentLoaded', function() {
+            // Criar usuário admin padrão se não existir
+            criarAdminPadrao();
+            
+            const adminLogado = localStorage.getItem('adminLogado');
+            if (adminLogado) {
+                try {
+                    adminData = JSON.parse(adminLogado);
+                    // Verificar se ainda é válido (tempo de sessão)
+                    const sessionTime = localStorage.getItem('adminSessionTime');
+                    if (sessionTime && (Date.now() - parseInt(sessionTime)) < 24 * 60 * 60 * 1000) {
+                        initDashboard();
+                    } else {
+                        // Sessão expirada
+                        localStorage.removeItem('adminLogado');
+                        localStorage.removeItem('adminSessionTime');
+                    }
+                } catch (e) {
+                    console.error('Erro ao carregar sessão admin:', e);
+                }
+            }
+            
+            // Event listeners
+            document.getElementById('adminLoginForm').addEventListener('submit', handleAdminLogin);
+            document.getElementById('searchOrcamentos').addEventListener('input', filtrarOrcamentos);
+            document.getElementById('searchClientes').addEventListener('input', filtrarClientes);
+        });
+        
+        // Criar usuário admin padrão
+        function criarAdminPadrao() {
+            const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+            
+            // Verificar se admin já existe
+            const adminExists = usuarios.find(u => ADMIN_EMAILS.includes(u.email.toLowerCase()));
+            
+            if (!adminExists) {
+                // Criar admin padrão
+                const adminUsuario = {
+                    nome: 'Administrador',
+                    email: 'admin@usetrafo.com.br',
+                    senha: 'admin123',
+                    telefone: '(11) 4038-4800',
+                    dataCadastro: new Date().toISOString(),
+                    isAdmin: true
+                };
+                
+                usuarios.push(adminUsuario);
+                localStorage.setItem('usuarios', JSON.stringify(usuarios));
+                console.log('✅ Usuário admin padrão criado!');
+                console.log('📋 Email: admin@usetrafo.com.br | Senha: admin123');
+            }
+        }
+        
+        // Login Admin
+        async function handleAdminLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('adminEmail').value.trim().toLowerCase();
+            const senha = document.getElementById('adminPassword').value;
+            const errorDiv = document.getElementById('loginError');
+            const loginForm = document.getElementById('adminLoginForm');
+            const btnSubmit = loginForm.querySelector('button[type="submit"]');
+            
+            errorDiv.classList.add('d-none');
+            
+            // Disable button durante validação
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Verificando...';
+            
+            // Verificar se é admin
+            if (!ADMIN_EMAILS.includes(email)) {
+                errorDiv.textContent = 'Acesso negado. Email não autorizado.';
+                errorDiv.classList.remove('d-none');
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = '<i class="fas fa-lock me-2"></i>Entrar';
+                return;
+            }
+            
+            // Verificar credenciais
+            let senhaValida = false;
+            let nomeAdmin = '';
+            
+            // Verificar credenciais padrão primeiro
+            if (ADMIN_CREDENTIALS[email] && ADMIN_CREDENTIALS[email] === senha) {
+                senhaValida = true;
+                nomeAdmin = email === 'admin@usetrafo.com.br' ? 'Administrador' : 'Felipe Weissmann';
+            } else {
+                // Verificar no localStorage (usuários cadastrados)
+                const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+                const usuario = usuarios.find(u => u.email.toLowerCase() === email && u.senha === senha);
+                
+                if (usuario) {
+                    senhaValida = true;
+                    nomeAdmin = usuario.nome || email.split('@')[0];
+                }
+            }
+            
+            if (senhaValida) {
+                // Login bem-sucedido
+                adminData = {
+                    email: email,
+                    nome: nomeAdmin,
+                    isAdmin: true
+                };
+                
+                localStorage.setItem('adminLogado', JSON.stringify(adminData));
+                localStorage.setItem('adminSessionTime', Date.now().toString());
+                
+                btnSubmit.innerHTML = '<i class="fas fa-check me-2"></i>Sucesso!';
+                btnSubmit.classList.add('btn-success');
+                
+                setTimeout(() => {
+                    initDashboard();
+                }, 500);
+            } else {
+                // Senha incorreta
+                errorDiv.textContent = 'Senha incorreta. Tente novamente.';
+                errorDiv.classList.remove('d-none');
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = '<i class="fas fa-lock me-2"></i>Entrar';
+                document.getElementById('adminPassword').value = '';
+            }
+        }
+        
+        // Inicializar Dashboard
+        function initDashboard() {
+            document.getElementById('loginSection').classList.add('d-none');
+            document.getElementById('adminDashboard').classList.remove('d-none');
+            document.getElementById('adminName').textContent = adminData.nome;
+            
+            carregarOrcamentos();
+            carregarClientes();
+        }
+        
+        // Logout
+        function logoutAdmin() {
+            localStorage.removeItem('adminLogado');
+            localStorage.removeItem('adminSessionTime');
+            location.reload();
+        }
+        
+        // Carregar Orçamentos
+        function carregarOrcamentos() {
+            // Buscar orçamentos do localStorage e de formulários enviados
+            orcamentosData = JSON.parse(localStorage.getItem('orcamentos') || '[]');
+            
+            // Buscar também dos formulários de contato
+            const contatos = JSON.parse(localStorage.getItem('contatos') || '[]');
+            contatos.forEach((contato, index) => {
+                if (contato.assunto && contato.assunto.includes('Orçamento')) {
+                    orcamentosData.push({
+                        id: `CONT-${index}`,
+                        data: contato.data || new Date().toISOString(),
+                        cliente: contato.nome,
+                        email: contato.email,
+                        telefone: contato.telefone,
+                        empresa: contato.cnpj || contato.empresa || '',
+                        mensagem: contato.mensagem,
+                        status: 'pendente'
+                    });
+                }
+            });
+            
+            atualizarTabelaOrcamentos();
+            atualizarEstatisticas();
+        }
+        
+        // Carregar Clientes
+        function carregarClientes() {
+            // Buscar usuários cadastrados
+            const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+            const contatos = JSON.parse(localStorage.getItem('contatos') || '[]');
+            
+            clientesData = [];
+            
+            // Adicionar usuários cadastrados
+            usuarios.forEach((user, index) => {
+                if (user.email) {
+                    clientesData.push({
+                        id: `USER-${index}`,
+                        nome: user.nome || user.email.split('@')[0],
+                        email: user.email,
+                        telefone: user.telefone || '',
+                        empresa: user.empresa || '',
+                        cpfCnpj: user.cpf_cnpj || user.cpfCnpj || '',
+                        cadastro: user.dataCadastro || new Date().toISOString(),
+                        tipo: 'cadastrado'
+                    });
+                }
+            });
+            
+            // Adicionar clientes de contatos
+            const emailsClientes = new Set();
+            contatos.forEach((contato, index) => {
+                if (contato.email && !emailsClientes.has(contato.email)) {
+                    emailsClientes.add(contato.email);
+                    clientesData.push({
+                        id: `CONT-${index}`,
+                        nome: contato.nome,
+                        email: contato.email,
+                        telefone: contato.telefone || '',
+                        empresa: contato.cnpj || contato.empresa || '',
+                        cpfCnpj: '',
+                        cadastro: contato.data || new Date().toISOString(),
+                        tipo: 'contato'
+                    });
+                }
+            });
+            
+            atualizarTabelaClientes();
+        }
+        
+        // Atualizar Tabela de Orçamentos
+        function atualizarTabelaOrcamentos() {
+            const tbody = document.getElementById('orcamentosTable');
+            const searchTerm = document.getElementById('searchOrcamentos').value.toLowerCase();
+            
+            let orcamentosFiltrados = orcamentosData;
+            if (searchTerm) {
+                orcamentosFiltrados = orcamentosData.filter(o => 
+                    o.cliente.toLowerCase().includes(searchTerm) ||
+                    o.email.toLowerCase().includes(searchTerm) ||
+                    (o.mensagem || '').toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            if (orcamentosFiltrados.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted">Nenhum orçamento encontrado</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = orcamentosFiltrados.map(orc => {
+                const data = new Date(orc.data);
+                const dataFormatada = data.toLocaleDateString('pt-BR') + ' ' + data.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'});
+                const statusClass = `status-${orc.status || 'pendente'}`;
+                const statusText = (orc.status || 'pendente').charAt(0).toUpperCase() + (orc.status || 'pendente').slice(1);
+                const descricaoResumida = (orc.mensagem || '').substring(0, 50) + ((orc.mensagem || '').length > 50 ? '...' : '');
+                
+                return `
+                    <tr>
+                        <td>${orc.id}</td>
+                        <td>${dataFormatada}</td>
+                        <td>${orc.cliente}</td>
+                        <td>${orc.email}</td>
+                        <td>${orc.telefone || '-'}</td>
+                        <td>${descricaoResumida}</td>
+                        <td><span class="badge-status ${statusClass}">${statusText}</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-primary" onclick="verOrcamento('${orc.id}')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn btn-sm btn-success" onclick="atualizarStatusOrcamento('${orc.id}', 'enviado')">
+                                <i class="fas fa-check"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+        
+        // Atualizar Tabela de Clientes
+        function atualizarTabelaClientes() {
+            const tbody = document.getElementById('clientesTable');
+            const searchTerm = document.getElementById('searchClientes').value.toLowerCase();
+            
+            let clientesFiltrados = clientesData;
+            if (searchTerm) {
+                clientesFiltrados = clientesData.filter(c => 
+                    c.nome.toLowerCase().includes(searchTerm) ||
+                    c.email.toLowerCase().includes(searchTerm) ||
+                    (c.empresa || c.cnpj || '').toLowerCase().includes(searchTerm) ||
+                    (c.cpfCnpj || '').includes(searchTerm)
+                );
+            }
+            
+            if (clientesFiltrados.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted">Nenhum cliente encontrado</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = clientesFiltrados.map(cliente => {
+                const data = new Date(cliente.cadastro);
+                const dataFormatada = data.toLocaleDateString('pt-BR');
+                const orcamentosCount = orcamentosData.filter(o => o.email === cliente.email).length;
+                
+                return `
+                    <tr>
+                        <td>${cliente.nome}</td>
+                        <td>${cliente.email}</td>
+                        <td>${cliente.telefone || '-'}</td>
+                        <td>${cliente.empresa || '-'}</td>
+                        <td>${cliente.cpfCnpj || '-'}</td>
+                        <td>${dataFormatada}</td>
+                        <td>${orcamentosCount}</td>
+                        <td>
+                            ${cliente.cpfCnpj ? `
+                                <button class="btn btn-sm btn-info" onclick="consultarCNPJPorCliente('${cliente.cpfCnpj}')">
+                                    <i class="fas fa-building"></i> CNPJ
+                                </button>
+                            ` : ''}
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+        
+        // Filtrar Orçamentos
+        function filtrarOrcamentos() {
+            atualizarTabelaOrcamentos();
+        }
+        
+        // Filtrar Clientes
+        function filtrarClientes() {
+            atualizarTabelaClientes();
+        }
+        
+        // Ver Orçamento
+        function verOrcamento(id) {
+            const orcamento = orcamentosData.find(o => o.id === id);
+            if (!orcamento) return;
+            
+            const modalBody = document.getElementById('orcamentoModalBody');
+            const data = new Date(orcamento.data);
+            
+            modalBody.innerHTML = `
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>ID:</strong> ${orcamento.id}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Data:</strong> ${data.toLocaleString('pt-BR')}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Cliente:</strong> ${orcamento.cliente}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Email:</strong> ${orcamento.email}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Telefone:</strong> ${orcamento.telefone || '-'}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>CNPJ:</strong> ${orcamento.cnpj || orcamento.empresa || '-'}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <strong>Status:</strong> 
+                        <span class="badge-status status-${orcamento.status || 'pendente'}">
+                            ${(orcamento.status || 'pendente').charAt(0).toUpperCase() + (orcamento.status || 'pendente').slice(1)}
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <strong>Mensagem/Solicitação:</strong>
+                        <div class="mt-2 p-3 bg-light rounded" style="white-space: pre-wrap; max-height: 400px; overflow-y: auto;">
+                            ${orcamento.mensagem || 'Nenhuma mensagem'}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            const modal = new bootstrap.Modal(document.getElementById('orcamentoModal'));
+            modal.show();
+        }
+        
+        // Atualizar Status do Orçamento
+        function atualizarStatusOrcamento(id, novoStatus) {
+            const orcamento = orcamentosData.find(o => o.id === id);
+            if (orcamento) {
+                orcamento.status = novoStatus;
+                localStorage.setItem('orcamentos', JSON.stringify(orcamentosData));
+                atualizarTabelaOrcamentos();
+                atualizarEstatisticas();
+                alert('Status atualizado com sucesso!');
+            }
+        }
+        
+        // Atualizar Estatísticas
+        function atualizarEstatisticas() {
+            document.getElementById('statsOrcamentos').textContent = orcamentosData.length;
+            document.getElementById('statsClientes').textContent = clientesData.length;
+            document.getElementById('statsPendentes').textContent = orcamentosData.filter(o => !o.status || o.status === 'pendente').length;
+            document.getElementById('statsEnviados').textContent = orcamentosData.filter(o => o.status === 'enviado' || o.status === 'aceito').length;
+        }
+        
+        // Formatação automática de CNPJ no input
+        document.addEventListener('DOMContentLoaded', function() {
+            const cnpjInput = document.getElementById('cnpjInput');
+            if (cnpjInput) {
+                cnpjInput.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    
+                    // Limitar a 14 dígitos
+                    if (value.length > 14) {
+                        value = value.substring(0, 14);
+                    }
+                    
+                    // Formatar: XX.XXX.XXX/XXXX-XX
+                    if (value.length > 12) {
+                        value = value.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5');
+                    } else if (value.length > 8) {
+                        value = value.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})$/, '$1.$2.$3/$4');
+                    } else if (value.length > 5) {
+                        value = value.replace(/^(\d{2})(\d{3})(\d{3})$/, '$1.$2.$3');
+                    } else if (value.length > 2) {
+                        value = value.replace(/^(\d{2})(\d{3})$/, '$1.$2');
+                    }
+                    
+                    e.target.value = value;
+                });
+            }
+        });
+        
+        // Consultar CNPJ
+        async function consultarCNPJ() {
+            // Remover toda formatação e pegar apenas números
+            let cnpj = document.getElementById('cnpjInput').value.replace(/\D/g, '');
+            
+            // Validar se tem exatamente 14 dígitos
+            if (!cnpj || cnpj.length !== 14) {
+                alert('CNPJ deve ter exatamente 14 dígitos. Digite: 00.000.000/0000-00');
+                document.getElementById('cnpjInput').focus();
+                return;
+            }
+            
+            // Validar CNPJ básico (verificar se não é todos os dígitos iguais)
+            if (/^(\d)\1{13}$/.test(cnpj)) {
+                alert('CNPJ inválido. Não pode ter todos os dígitos iguais.');
+                return;
+            }
+            
+            document.getElementById('cnpjResult').classList.add('d-none');
+            document.getElementById('cnpjError').classList.add('d-none');
+            document.getElementById('cnpjLoading').classList.remove('d-none');
+            
+            try {
+                // Tentar API ReceitaWS primeiro
+                let data = null;
+                let errorMsg = null;
+                
+                try {
+                    // API ReceitaWS com timeout de 10 segundos
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 10000);
+                    
+                    const response = await fetch(`https://www.receitaws.com.br/v1/${cnpj}`, {
+                        signal: controller.signal,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+                    
+                    clearTimeout(timeoutId);
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+                    
+                    data = await response.json();
+                    
+                    // Verificar se a resposta é um erro
+                    if (data.status === 'ERROR' || data.error) {
+                        errorMsg = data.message || data.error || 'CNPJ não encontrado ou inválido';
+                        throw new Error(errorMsg);
+                    }
+                    
+                    // Verificar se tem dados válidos
+                    if (!data.nome && !data.razao_social) {
+                        errorMsg = 'CNPJ não encontrado ou dados indisponíveis';
+                        throw new Error(errorMsg);
+                    }
+                } catch (apiError) {
+                    console.error('Erro na API ReceitaWS:', apiError);
+                    
+                    // Tentar API alternativa (BrasilAPI)
+                    try {
+                        const brasilApiResponse = await fetch(`https://brasilapi.com.br/api/cnpj/v1/${cnpj}`, {
+                            headers: {
+                                'Accept': 'application/json'
+                            }
+                        });
+                        
+                        if (brasilApiResponse.ok) {
+                            const brasilData = await brasilApiResponse.json();
+                            
+                            // Converter formato BrasilAPI para formato ReceitaWS
+                            data = {
+                                nome: brasilData.razao_social || brasilData.nome || '-',
+                                fantasia: brasilData.nome_fantasia || brasilData.fantasia || '-',
+                                cnpj: brasilData.cnpj || cnpj,
+                                situacao: brasilData.descricao_situacao_cadastral || brasilData.situacao || '-',
+                                abertura: brasilData.data_inicio_atividade || brasilData.abertura || '-',
+                                natureza_juridica: brasilData.natureza_juridica || '-',
+                                logradouro: brasilData.logradouro || '-',
+                                numero: brasilData.numero || '-',
+                                complemento: brasilData.complemento || '-',
+                                bairro: brasilData.bairro || '-',
+                                cep: brasilData.cep ? brasilData.cep.replace(/^(\d{5})(\d{3})$/, '$1-$2') : '-',
+                                municipio: brasilData.municipio || '-',
+                                uf: brasilData.uf || '-',
+                                telefone: brasilData.ddd_telefone_1 || brasilData.telefone || '-',
+                                email: brasilData.email || '-',
+                                capital_social: brasilData.capital_social ? `R$ ${parseFloat(brasilData.capital_social).toLocaleString('pt-BR', {minimumFractionDigits: 2})}` : '-',
+                                atividades_secundarias: brasilData.qsa || []
+                            };
+                        } else {
+                            throw new Error('BrasilAPI também falhou');
+                        }
+                    } catch (brasilApiError) {
+                        console.error('Erro na API BrasilAPI:', brasilApiError);
+                        errorMsg = errorMsg || 'Erro ao consultar CNPJ. A API pode estar temporariamente indisponível ou o CNPJ pode estar incorreto.';
+                        throw new Error(errorMsg);
+                    }
+                }
+                
+                document.getElementById('cnpjLoading').classList.add('d-none');
+                
+                // Exibir dados
+                const cnpjDataDiv = document.getElementById('cnpjData');
+                cnpjDataDiv.innerHTML = `
+                    <div class="row mb-2">
+                        <div class="col-md-6"><strong>Razão Social:</strong></div>
+                        <div class="col-md-6">${data.nome || '-'}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-6"><strong>Nome Fantasia:</strong></div>
+                        <div class="col-md-6">${data.fantasia || '-'}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-6"><strong>CNPJ:</strong></div>
+                        <div class="col-md-6">${data.cnpj || '-'}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-6"><strong>Situação:</strong></div>
+                        <div class="col-md-6">${data.situacao || '-'}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-6"><strong>Data de Abertura:</strong></div>
+                        <div class="col-md-6">${data.abertura || '-'}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-6"><strong>Natureza Jurídica:</strong></div>
+                        <div class="col-md-6">${data.natureza_juridica || '-'}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-6"><strong>Logradouro:</strong></div>
+                        <div class="col-md-6">${data.logradouro || '-'}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-6"><strong>Número:</strong></div>
+                        <div class="col-md-6">${data.numero || '-'}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-6"><strong>Complemento:</strong></div>
+                        <div class="col-md-6">${data.complemento || '-'}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-6"><strong>Bairro:</strong></div>
+                        <div class="col-md-6">${data.bairro || '-'}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-6"><strong>CEP:</strong></div>
+                        <div class="col-md-6">${data.cep || '-'}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-6"><strong>Cidade/UF:</strong></div>
+                        <div class="col-md-6">${data.municipio || '-'} / ${data.uf || '-'}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-6"><strong>Telefone:</strong></div>
+                        <div class="col-md-6">${data.telefone || '-'}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-6"><strong>Email:</strong></div>
+                        <div class="col-md-6">${data.email || '-'}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-6"><strong>Capital Social:</strong></div>
+                        <div class="col-md-6">${data.capital_social || '-'}</div>
+                    </div>
+                    ${data.atividades_secundarias && data.atividades_secundarias.length > 0 ? `
+                        <div class="row mb-2">
+                            <div class="col-12">
+                                <strong>Atividades Secundárias:</strong>
+                                <ul class="mt-2">
+                                    ${data.atividades_secundarias.map(ativ => `<li>${ativ.text}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    ` : ''}
+                `;
+                
+                document.getElementById('cnpjResult').classList.remove('d-none');
+            } catch (error) {
+                document.getElementById('cnpjLoading').classList.add('d-none');
+                
+                let errorMessage = 'Erro ao consultar CNPJ. ';
+                
+                if (error.name === 'AbortError') {
+                    errorMessage += 'Tempo limite excedido. Tente novamente.';
+                } else if (error.message) {
+                    errorMessage += error.message;
+                } else {
+                    errorMessage += 'Verifique se o CNPJ está correto e tente novamente.';
+                }
+                
+                document.getElementById('cnpjError').textContent = errorMessage;
+                document.getElementById('cnpjError').classList.remove('d-none');
+                console.error('Erro na consulta CNPJ:', error);
+                console.log('CNPJ consultado:', cnpj);
+            }
+        }
+        
+        // Consultar CNPJ por Cliente
+        function consultarCNPJPorCliente(cnpj) {
+            // Remover formatação e formatar novamente
+            const cnpjLimpo = cnpj.replace(/\D/g, '');
+            let cnpjFormatado = '';
+            
+            if (cnpjLimpo.length === 14) {
+                cnpjFormatado = cnpjLimpo.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5');
+            } else {
+                cnpjFormatado = cnpjLimpo;
+            }
+            
+            document.getElementById('cnpjInput').value = cnpjFormatado;
+            document.getElementById('cnpj-tab').click();
+            setTimeout(() => consultarCNPJ(), 300);
+        }
+    </script>
+</body>
+</html>

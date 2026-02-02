@@ -7,7 +7,7 @@
     <meta name="msapplication-TileColor" content="#02093f">
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Loja USETRAFO - Compre transformadores elétricos de alta qualidade. Transformadores isoladores, autotransformadores e caixas com garantia de 36 meses.">
+    <meta name="description" content="Loja USETRAFO - Compre transformadores elétricos de alta qualidade. Transformadores isoladores e autotransformadores com garantia de 36 meses.">
     <meta name="keywords" content="loja transformadores, comprar transformadores, transformadores elétricos, USETRAFO loja">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://usetrafo.com.br/loja.html">
@@ -78,10 +78,23 @@
             justify-content: center;
             opacity: 0;
             transition: opacity 0.3s ease;
+            pointer-events: none; /* Não bloquear cliques */
+            z-index: 1;
         }
         
         .position-relative:hover .product-overlay {
             opacity: 1;
+        }
+        
+        .product-card a {
+            position: relative;
+            z-index: 2;
+            display: block;
+        }
+        
+        .product-card .card-body a {
+            position: relative;
+            z-index: 2;
         }
         
         .position-relative:hover .product-image-hover {
@@ -635,10 +648,6 @@
                                 <i class="fas fa-th me-2"></i> Todos
                                 <span class="badge bg-primary ms-2 filter-count" data-filter-type="category" data-filter="all">-</span>
                             </button>
-                            <button class="btn btn-outline-primary filter-btn" data-filter-type="category" data-filter="caixas">
-                                <i class="fas fa-box me-2"></i> Caixas
-                                <span class="badge bg-secondary ms-2 filter-count" data-filter-type="category" data-filter="caixas">-</span>
-                            </button>
                             <button class="btn btn-outline-primary filter-btn" data-filter-type="category" data-filter="autotransformadores">
                                 <i class="fas fa-exchange-alt me-2"></i> <span class="d-none d-lg-inline">Autotransformadores</span><span class="d-lg-none">Auto</span>
                                 <span class="badge bg-secondary ms-2 filter-count" data-filter-type="category" data-filter="autotransformadores">-</span>
@@ -646,6 +655,10 @@
                             <button class="btn btn-outline-primary filter-btn" data-filter-type="category" data-filter="transformadores-isoladores">
                                 <i class="fas fa-shield-alt me-2"></i> <span class="d-none d-lg-inline">Transformadores Isoladores</span><span class="d-lg-none">Isoladores</span>
                                 <span class="badge bg-secondary ms-2 filter-count" data-filter-type="category" data-filter="transformadores-isoladores">-</span>
+                            </button>
+                            <button class="btn btn-outline-primary filter-btn" data-filter-type="category" data-filter="transformadores-oleo">
+                                <i class="fas fa-oil-can me-2"></i> <span class="d-none d-lg-inline">Transformadores a Óleo</span><span class="d-lg-none">Óleo</span>
+                                <span class="badge bg-secondary ms-2 filter-count" data-filter-type="category" data-filter="transformadores-oleo">-</span>
                             </button>
                         </div>
                     </div>
@@ -743,356 +756,7 @@
 
             <!-- Grid de Produtos -->
             <div class="row g-4" id="loja-produtos">
-                <!-- Caixa B -->
-                <div class="col-md-6 col-lg-4 loja-item" 
-                     data-category="caixas"
-                     data-refrigeracao="ar-natural"
-                     data-construcao="trifasico"
-                     data-potencia="ate-50"
-                     data-uso="interno">
-                    <div class="card product-card h-100">
-                        <a href="produto-detalhes.html?produto=caixa-b" class="text-decoration-none">
-                            <div class="position-relative overflow-hidden">
-                                <img src="src/imgs/B (3) 1.png" alt="Caixa B - Transformador elétrico linha B" class="card-img-top product-image-hover" loading="lazy">
-                                <div class="product-overlay">
-                                    <i class="fas fa-search-plus fa-2x text-white"></i>
-                                </div>
-                            </div>
-                        </a>
-                        <div class="card-body d-flex flex-column">
-                            <a href="produto-detalhes.html?produto=caixa-b" class="text-decoration-none text-dark">
-                                <h5 class="card-title">Caixa B</h5>
-                            </a>
-                            <p class="card-text text-muted">Equipamento desenvolvido para aplicações específicas com alta qualidade e confiabilidade.</p>
-                            <div class="mt-auto">
-                                <div class="mb-3">
-                                    <span class="h5 text-primary fw-bold">Consulte o preço</span>
-                                </div>
-                                <a href="produto-detalhes.html?produto=caixa-b" class="btn btn-outline-primary w-100 mb-2">
-                                    <i class="fas fa-eye me-2"></i> Ver Detalhes
-                                </a>
-                                <button class="btn btn-primary w-100 mb-2 btn-adicionar-carrinho" data-product="caixa-b" data-name="Caixa B" data-price="0">
-                                    <i class="fas fa-shopping-cart me-2"></i> Adicionar ao Carrinho
-                                </button>
-                                <a href="#" class="btn btn-warning w-100" data-mercado-livre="caixa-b" target="_blank">
-                                    <i class="fab fa-mercadolivre me-2"></i> Comprar no Mercado Livre
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Caixa C -->
-                <div class="col-md-6 col-lg-4 loja-item" 
-                     data-category="caixas"
-                     data-refrigeracao="ar-natural"
-                     data-construcao="trifasico"
-                     data-potencia="50-150"
-                     data-uso="interno">
-                    <div class="card product-card h-100">
-                        <a href="produto-detalhes.html?produto=caixa-c" class="text-decoration-none">
-                            <div class="position-relative overflow-hidden">
-                                <img src="src/imgs/C (1) 1.png" alt="Caixa C - Transformador elétrico linha C" class="card-img-top product-image-hover" loading="lazy">
-                                <div class="product-overlay">
-                                    <i class="fas fa-search-plus fa-2x text-white"></i>
-                                </div>
-                            </div>
-                        </a>
-                        <div class="card-body d-flex flex-column">
-                            <a href="produto-detalhes.html?produto=caixa-c" class="text-decoration-none text-dark">
-                                <h5 class="card-title">Caixa C</h5>
-                            </a>
-                            <p class="card-text text-muted">Equipamento desenvolvido para aplicações específicas com alta qualidade e confiabilidade.</p>
-                            <div class="mt-auto">
-                                <div class="mb-3">
-                                    <span class="h5 text-primary fw-bold">Consulte o preço</span>
-                                </div>
-                                <a href="produto-detalhes.html?produto=caixa-c" class="btn btn-outline-primary w-100 mb-2">
-                                    <i class="fas fa-eye me-2"></i> Ver Detalhes
-                                </a>
-                                <button class="btn btn-primary w-100 mb-2 btn-adicionar-carrinho" data-product="caixa-c" data-name="Caixa C" data-price="0">
-                                    <i class="fas fa-shopping-cart me-2"></i> Adicionar ao Carrinho
-                                </button>
-                                <a href="#" class="btn btn-warning w-100" data-mercado-livre="caixa-c" target="_blank">
-                                    <i class="fab fa-mercadolivre me-2"></i> Comprar no Mercado Livre
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Caixa D -->
-                <div class="col-md-6 col-lg-4 loja-item" 
-                     data-category="caixas"
-                     data-refrigeracao="ar-natural"
-                     data-construcao="trifasico"
-                     data-potencia="50-150"
-                     data-uso="interno">
-                    <div class="card product-card h-100">
-                        <a href="produto-detalhes.html?produto=caixa-d" class="text-decoration-none">
-                            <div class="position-relative overflow-hidden">
-                                <img src="src/imgs/D (2) 1.png" alt="Caixa D - Transformador elétrico linha D" class="card-img-top product-image-hover" loading="lazy">
-                                <div class="product-overlay">
-                                    <i class="fas fa-search-plus fa-2x text-white"></i>
-                                </div>
-                            </div>
-                        </a>
-                        <div class="card-body d-flex flex-column">
-                            <a href="produto-detalhes.html?produto=caixa-d" class="text-decoration-none text-dark">
-                                <h5 class="card-title">Caixa D</h5>
-                            </a>
-                            <p class="card-text">Equipamento desenvolvido para aplicações específicas com alta qualidade e confiabilidade.</p>
-                            <div class="mt-auto">
-                                <div class="mb-3">
-                                    <span class="h5 text-primary fw-bold">Consulte o preço</span>
-                                </div>
-                                <a href="produto-detalhes.html?produto=caixa-d" class="btn btn-outline-primary w-100 mb-2">
-                                    <i class="fas fa-eye me-2"></i> Ver Detalhes
-                                </a>
-                                <button class="btn btn-primary w-100 mb-2 btn-adicionar-carrinho" data-product="caixa-d" data-name="Caixa D" data-price="0">
-                                    <i class="fas fa-shopping-cart me-2"></i> Adicionar ao Carrinho
-                                </button>
-                                <a href="#" class="btn btn-warning w-100" data-mercado-livre="caixa-d" target="_blank">
-                                    <i class="fab fa-mercadolivre me-2"></i> Comprar no Mercado Livre
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Caixa E -->
-                <div class="col-md-6 col-lg-4 loja-item" 
-                     data-category="caixas"
-                     data-refrigeracao="ar-natural"
-                     data-construcao="trifasico"
-                     data-potencia="acima-150"
-                     data-uso="interno">
-                    <div class="card product-card h-100">
-                        <a href="produto-detalhes.html?produto=caixa-e" class="text-decoration-none">
-                            <div class="position-relative overflow-hidden">
-                                <img src="src/imgs/E (1) 1.png" alt="Caixa E - Transformador elétrico linha E" class="card-img-top product-image-hover" loading="lazy">
-                                <div class="product-overlay">
-                                    <i class="fas fa-search-plus fa-2x text-white"></i>
-                                </div>
-                            </div>
-                        </a>
-                        <div class="card-body d-flex flex-column">
-                            <a href="produto-detalhes.html?produto=caixa-e" class="text-decoration-none text-dark">
-                                <h5 class="card-title">Caixa E</h5>
-                            </a>
-                            <p class="card-text text-muted">Equipamento desenvolvido para aplicações específicas com alta qualidade e confiabilidade.</p>
-                            <div class="mt-auto">
-                                <div class="mb-3">
-                                    <span class="h5 text-primary fw-bold">Consulte o preço</span>
-                                </div>
-                                <a href="produto-detalhes.html?produto=caixa-e" class="btn btn-outline-primary w-100 mb-2">
-                                    <i class="fas fa-eye me-2"></i> Ver Detalhes
-                                </a>
-                                <button class="btn btn-primary w-100 mb-2 btn-adicionar-carrinho" data-product="caixa-e" data-name="Caixa E" data-price="0">
-                                    <i class="fas fa-shopping-cart me-2"></i> Adicionar ao Carrinho
-                                </button>
-                                <a href="#" class="btn btn-warning w-100" data-mercado-livre="caixa-e" target="_blank">
-                                    <i class="fab fa-mercadolivre me-2"></i> Comprar no Mercado Livre
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Caixa F -->
-                <div class="col-md-6 col-lg-4 loja-item" 
-                     data-category="caixas"
-                     data-refrigeracao="ar-natural"
-                     data-construcao="trifasico"
-                     data-potencia="acima-150"
-                     data-uso="interno">
-                    <div class="card product-card h-100">
-                        <a href="produto-detalhes.html?produto=caixa-f" class="text-decoration-none">
-                            <div class="position-relative overflow-hidden">
-                                <img src="src/imgs/F (1) 1.png" alt="Caixa F - Transformador elétrico linha F" class="card-img-top product-image-hover" loading="lazy">
-                                <div class="product-overlay">
-                                    <i class="fas fa-search-plus fa-2x text-white"></i>
-                                </div>
-                            </div>
-                        </a>
-                        <div class="card-body d-flex flex-column">
-                            <a href="produto-detalhes.html?produto=caixa-f" class="text-decoration-none text-dark">
-                                <h5 class="card-title">Caixa F</h5>
-                            </a>
-                            <p class="card-text">Equipamento desenvolvido para aplicações específicas com alta qualidade e confiabilidade.</p>
-                            <div class="mt-auto">
-                                <div class="mb-3">
-                                    <span class="h5 text-primary fw-bold">Consulte o preço</span>
-                                </div>
-                                <a href="produto-detalhes.html?produto=caixa-f" class="btn btn-outline-primary w-100 mb-2">
-                                    <i class="fas fa-eye me-2"></i> Ver Detalhes
-                                </a>
-                                <button class="btn btn-primary w-100 mb-2 btn-adicionar-carrinho" data-product="caixa-f" data-name="Caixa F" data-price="0">
-                                    <i class="fas fa-shopping-cart me-2"></i> Adicionar ao Carrinho
-                                </button>
-                                <a href="#" class="btn btn-warning w-100" data-mercado-livre="caixa-f" target="_blank">
-                                    <i class="fab fa-mercadolivre me-2"></i> Comprar no Mercado Livre
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Autotransformador Linha C -->
-                <div class="col-md-6 col-lg-4 loja-item" 
-                     data-category="autotransformadores"
-                     data-refrigeracao="ar-natural"
-                     data-construcao="trifasico"
-                     data-potencia="ate-50"
-                     data-uso="interno">
-                    <div class="card product-card h-100">
-                        <a href="produto-detalhes.html?produto=autotransformador-c" class="text-decoration-none">
-                            <div class="position-relative overflow-hidden">
-                                <img src="src/imgs/C (3) 1.png" alt="Autotransformador Linha C - Solução econômica para conversão de tensão" class="card-img-top product-image-hover" loading="lazy">
-                                <div class="product-overlay">
-                                    <i class="fas fa-search-plus fa-2x text-white"></i>
-                                </div>
-                            </div>
-                        </a>
-                        <div class="card-body d-flex flex-column">
-                            <a href="produto-detalhes.html?produto=autotransformador-c" class="text-decoration-none text-dark">
-                                <h5 class="card-title">Autotransformador Linha C</h5>
-                            </a>
-                            <p class="card-text text-muted">Nossos autotransformadores são desenvolvidos com engenharia precisa e matéria-prima de alto padrão.</p>
-                            <div class="mt-auto">
-                                <div class="mb-3">
-                                    <span class="h5 text-primary fw-bold">Consulte o preço</span>
-                                </div>
-                                <a href="produto-detalhes.html?produto=autotransformador-c" class="btn btn-outline-primary w-100 mb-2">
-                                    <i class="fas fa-eye me-2"></i> Ver Detalhes
-                                </a>
-                                <button class="btn btn-primary w-100 mb-2 btn-adicionar-carrinho" data-product="autotransformador-c" data-name="Autotransformador Linha C" data-price="0">
-                                    <i class="fas fa-shopping-cart me-2"></i> Adicionar ao Carrinho
-                                </button>
-                                <a href="#" class="btn btn-warning w-100" data-mercado-livre="autotransformador-c" target="_blank">
-                                    <i class="fab fa-mercadolivre me-2"></i> Comprar no Mercado Livre
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Autotransformador Linha D -->
-                <div class="col-md-6 col-lg-4 loja-item" 
-                     data-category="autotransformadores"
-                     data-refrigeracao="ar-natural"
-                     data-construcao="trifasico"
-                     data-potencia="50-150"
-                     data-uso="interno">
-                    <div class="card product-card h-100">
-                        <a href="produto-detalhes.html?produto=autotransformador-d" class="text-decoration-none">
-                            <div class="position-relative overflow-hidden">
-                                <img src="src/imgs/D (2) 1.png" alt="Autotransformador Linha D - Eficiência energética e economia" class="card-img-top product-image-hover" loading="lazy">
-                                <div class="product-overlay">
-                                    <i class="fas fa-search-plus fa-2x text-white"></i>
-                                </div>
-                            </div>
-                        </a>
-                        <div class="card-body d-flex flex-column">
-                            <a href="produto-detalhes.html?produto=autotransformador-d" class="text-decoration-none text-dark">
-                                <h5 class="card-title">Autotransformador Linha D</h5>
-                            </a>
-                            <p class="card-text text-muted">Produzidos na classe térmica F, oferecem excelente estabilidade térmica e alta eficiência.</p>
-                            <div class="mt-auto">
-                                <div class="mb-3">
-                                    <span class="h5 text-primary fw-bold">Consulte o preço</span>
-                                </div>
-                                <a href="produto-detalhes.html?produto=autotransformador-d" class="btn btn-outline-primary w-100 mb-2">
-                                    <i class="fas fa-eye me-2"></i> Ver Detalhes
-                                </a>
-                                <button class="btn btn-primary w-100 mb-2 btn-adicionar-carrinho" data-product="autotransformador-d" data-name="Autotransformador Linha D" data-price="0">
-                                    <i class="fas fa-shopping-cart me-2"></i> Adicionar ao Carrinho
-                                </button>
-                                <a href="#" class="btn btn-warning w-100" data-mercado-livre="autotransformador-d" target="_blank">
-                                    <i class="fab fa-mercadolivre me-2"></i> Comprar no Mercado Livre
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Transformador Isolador Linha D -->
-                <div class="col-md-6 col-lg-4 loja-item" 
-                     data-category="transformadores-isoladores"
-                     data-refrigeracao="ar-natural"
-                     data-construcao="trifasico"
-                     data-potencia="ate-50"
-                     data-uso="externo">
-                    <div class="card product-card h-100">
-                        <a href="produto-detalhes.html?produto=transformador-isolador-d" class="text-decoration-none">
-                            <div class="position-relative overflow-hidden">
-                                <img src="src/imgs/D (3) 1.png" alt="Transformador Isolador Linha D - Isolamento galvânico completo" class="card-img-top product-image-hover" loading="lazy">
-                                <div class="product-overlay">
-                                    <i class="fas fa-search-plus fa-2x text-white"></i>
-                                </div>
-                            </div>
-                        </a>
-                        <div class="card-body d-flex flex-column">
-                            <a href="produto-detalhes.html?produto=transformador-isolador-d" class="text-decoration-none text-dark">
-                                <h5 class="card-title">Transformador Isolador Linha D</h5>
-                            </a>
-                            <p class="card-text text-muted">Nossos transformadores isoladores oferecem isolamento galvânico completo para máxima segurança.</p>
-                            <div class="mt-auto">
-                                <div class="mb-3">
-                                    <span class="h5 text-primary fw-bold">Consulte o preço</span>
-                                </div>
-                                <a href="produto-detalhes.html?produto=transformador-isolador-d" class="btn btn-outline-primary w-100 mb-2">
-                                    <i class="fas fa-eye me-2"></i> Ver Detalhes
-                                </a>
-                                <button class="btn btn-primary w-100 mb-2 btn-adicionar-carrinho" data-product="transformador-isolador-d" data-name="Transformador Isolador Linha D" data-price="0">
-                                    <i class="fas fa-shopping-cart me-2"></i> Adicionar ao Carrinho
-                                </button>
-                                <a href="#" class="btn btn-warning w-100" data-mercado-livre="transformador-isolador-d" target="_blank">
-                                    <i class="fab fa-mercadolivre me-2"></i> Comprar no Mercado Livre
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Transformador Isolador Linha F -->
-                <div class="col-md-6 col-lg-4 loja-item" 
-                     data-category="transformadores-isoladores"
-                     data-refrigeracao="ar-natural"
-                     data-construcao="trifasico"
-                     data-potencia="50-150"
-                     data-uso="interno">
-                    <div class="card product-card h-100">
-                        <a href="produto-detalhes.html?produto=transformador-isolador-f" class="text-decoration-none">
-                            <div class="position-relative overflow-hidden">
-                                <img src="src/imgs/F (3) 1.png" alt="Transformador Isolador Linha F - Proteção para equipamentos sensíveis" class="card-img-top product-image-hover" loading="lazy">
-                                <div class="product-overlay">
-                                    <i class="fas fa-search-plus fa-2x text-white"></i>
-                                </div>
-                            </div>
-                        </a>
-                        <div class="card-body d-flex flex-column">
-                            <a href="produto-detalhes.html?produto=transformador-isolador-f" class="text-decoration-none text-dark">
-                                <h5 class="card-title">Transformador Isolador Linha F</h5>
-                            </a>
-                            <p class="card-text text-muted">Projetados com engenharia de alta precisão para proteger equipamentos sensíveis e reduzir ruídos.</p>
-                            <div class="mt-auto">
-                                <div class="mb-3">
-                                    <span class="h5 text-primary fw-bold">Consulte o preço</span>
-                                </div>
-                                <a href="produto-detalhes.html?produto=transformador-isolador-f" class="btn btn-outline-primary w-100 mb-2">
-                                    <i class="fas fa-eye me-2"></i> Ver Detalhes
-                                </a>
-                                <button class="btn btn-primary w-100 mb-2 btn-adicionar-carrinho" data-product="transformador-isolador-f" data-name="Transformador Isolador Linha F" data-price="0">
-                                    <i class="fas fa-shopping-cart me-2"></i> Adicionar ao Carrinho
-                                </button>
-                                <a href="#" class="btn btn-warning w-100" data-mercado-livre="transformador-isolador-f" target="_blank">
-                                    <i class="fab fa-mercadolivre me-2"></i> Comprar no Mercado Livre
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- Produtos removidos - container vazio -->
             </div>
         </div>
     </section>

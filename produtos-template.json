@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "description": "Template de estrutura de produtos para USETRAFO",
+  "produtos": [
+    {
+      "id": "exemplo-uuid-aqui",
+      "nome": "Transformador a Óleo 45 kVA – Classe 15 kV",
+      "descricao": "Transformador a óleo de média tensão para aplicações industriais",
+      "descricao_completa": "Transformador a óleo de 45 kVA classe 15 kV, desenvolvido para aplicações de média tensão com alta confiabilidade e durabilidade. Todos os equipamentos produzidos pela USETRAFO são testados em nosso laboratório individualmente, e emitido certificado de garantia com 36 meses contra defeitos de fabricação.",
+      "subtitulo": "Transformador a óleo de média tensão 45 kVA classe 15 kV",
+      "preco": 10700.00,
+      "preco_antigo": null,
+      "imagem_principal": "src/imgs/C (3) 1.png",
+      "imagens": [
+        "src/imgs/C (3) 1.png",
+        "src/imgs/trafos a seco1 .jpeg"
+      ],
+      "categoria": "transformadores-oleo",
+      "subcategoria": "media-tensao",
+      "slug": "transformador-oleo-45kva-15kv",
+      "especificacoes": {
+        "potencia": "45 kVA",
+        "classe": "15 kV",
+        "tensao_entrada": null,
+        "tensao_saida": null,
+        "frequencia": "50Hz ou 60Hz",
+        "refrigeracao": "oleo",
+        "construcao": "trifasico",
+        "grau_protecao": "IP00",
+        "classe_termica": "F",
+        "garantia": "36 meses"
+      },
+      "estoque": 0,
+      "estoque_minimo": 0,
+      "disponivel": true,
+      "ativo": true,
+      "destaque": false,
+      "novo": true,
+      "mercado_livre_url": "#",
+      "visualizacoes": 0,
+      "vendas": 0
+    }
+  ]
+}

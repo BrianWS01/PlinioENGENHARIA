@@ -1,0 +1,31 @@
+# =====================================================
+# CONFIGURAÇÕES DO BACKEND USETRAFO
+# =====================================================
+# Copie este arquivo para .env e configure suas credenciais
+# =====================================================
+
+# Porta do servidor
+PORT=3000
+
+# Banco de Dados MariaDB
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=usetrafo_user
+DB_PASSWORD=sua_senha_aqui
+DB_NAME=usetrafo_db
+DB_CHARSET=utf8mb4
+
+# JWT Secret (GERE UMA STRING ALEATÓRIA FORTE!)
+# Use: node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+JWT_SECRET=sua_chave_secreta_jwt_muito_forte_aqui_altere_isto
+JWT_EXPIRES_IN=24h
+JWT_REFRESH_EXPIRES_IN=7d
+
+# CORS - URLs permitidas (separe por vírgula)
+CORS_ORIGIN=http://localhost:8000,http://127.0.0.1:8000
+
+# Ambiente
+NODE_ENV=development
+
+# Logs
+LOG_LEVEL=info

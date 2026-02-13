@@ -211,6 +211,28 @@ function renderProductDetails(produto) {
         });
     }
 
+    // Botão Comprar Agora
+    const btnBuyNow = document.getElementById('btnBuyNow');
+    if (btnBuyNow) {
+        // Clone to remove old listeners
+        const newBtnBuyNow = btnBuyNow.cloneNode(true);
+        btnBuyNow.parentNode.replaceChild(newBtnBuyNow, btnBuyNow);
+
+        newBtnBuyNow.addEventListener('click', function (e) {
+            e.preventDefault();
+            if (window.carrinhoManager) {
+                // Add to cart
+                window.carrinhoManager.adicionarItem(produto.id, produto.nome, parseFloat(produto.preco), images[0]);
+
+                // Open cart modal immediately
+                const btnCarrinho = document.getElementById('btnCarrinho');
+                if (btnCarrinho) btnCarrinho.click();
+            } else {
+                alert('Erro ao processar compra. Tente novamente.');
+            }
+        });
+    }
+
     // Mercado Livre
     const btnMercadoLivre = document.getElementById('btnMercadoLivre');
     if (btnMercadoLivre) {

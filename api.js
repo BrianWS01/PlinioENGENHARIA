@@ -1,3 +1,4 @@
+console.log('Carregando api.js...');
 /**
  * API Integration Layer
  * Centralizes all communication with the backend
@@ -119,8 +120,62 @@ const api = {
             console.error('Erro ao criar orçamento:', error);
             throw error;
         }
+    },
+
+    /**
+     * Calculate shipping options
+     * @param {string} cep - Zip code
+     * @param {Array} itens - Cart items
+     * @returns {Promise<Array>} Shipping options
+     */
+    calcularFrete: async (cep, itens) => {
+        try {
+            const response = await fetch(`${API_URL}/frete/calcular`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ cep, itens })
+            });
+
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.message || 'Erro ao calcular frete');
+            }
+            return data.success ? data.data : [];
+        } catch (error) {
+            console.error('Erro ao calcular frete:', error);
+            throw error;
+        }
+    },
+
+    /**
+     * Get order details by ID
+     * @param {string|number} id - Order ID
+     * @returns {Promise<Object>} Order details
+     */
+    getOrcamento: async (id) => {
+        try {
+            const token = localStorage.getItem('token');
+            const headers = { 'Content-Type': 'application/json' };
+            if (token) headers['Authorization'] = `Bearer ${token}`;
+
+            const response = await fetch(`${API_URL}/orcamentos/${id}`, { headers });
+
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.message || 'Erro ao buscar orçamento');
+            }
+            return data.success ? data.data : null;
+        } catch (error) {
+            console.error('Erro ao buscar orçamento:', error);
+            throw error;
+        }
     }
 };
 
 // Expose to window for global access
+window.api = api;
+
+// AuthManager code removed - moved to auth-manager.js
+
+console.log('API script loaded');
 window.api = api;

@@ -64,23 +64,27 @@ router.post('/register', async (req, res) => {
             [email, senhaHash, nome, telefone || null, cpf_cnpj || null, empresa || null]
         );
 
-        const userId = result.insertId || result[0]?.id;
+        // Buscar usuário recém-criado pelo email (mais confiável para UUIDs)
+        const [usuarios] = await query(
+            'SELECT id, email, nome, telefone, empresa, cpf_cnpj, is_admin, is_ativo, created_at FROM usuarios WHERE email = ?',
+            [email]
+        );
+
+        if (!usuarios || usuarios.length === 0) {
+            throw new Error('Falha ao recuperar usuário recém-criado');
+        }
+
+        const user = usuarios[0];
 
         // Gerar tokens
-        const token = generateToken(userId);
-        const refreshToken = generateRefreshToken(userId);
-
-        // Buscar dados do usuário criado
-        const [usuarios] = await query(
-            'SELECT id, email, nome, telefone, empresa, cpf_cnpj, is_admin, is_ativo, created_at FROM usuarios WHERE id = ?',
-            [userId]
-        );
+        const token = generateToken(user.id);
+        const refreshToken = generateRefreshToken(user.id);
 
         res.status(201).json({
             success: true,
             message: 'Usuário criado com sucesso',
             data: {
-                user: usuarios[0],
+                user,
                 token,
                 refreshToken
             }

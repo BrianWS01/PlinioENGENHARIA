@@ -17,6 +17,7 @@ const authRoutes = require('./routes/auth');
 const produtosRoutes = require('./routes/produtos');
 const carrinhoRoutes = require('./routes/carrinho');
 const orcamentosRoutes = require('./routes/orcamentos');
+const freteRoutes = require('./routes/frete');
 
 // Criar aplicação Express
 const app = express();
@@ -31,29 +32,11 @@ app.use(helmet());
 
 // CORS
 // CORS
-const corsOptions = {
-    origin: function (origin, callback) {
-        // Allow requests with no origin (like mobile apps or curl requests)
-        if (!origin) return callback(null, true);
-
-        const allowedOrigins = [
-            'http://localhost:8000', 'http://127.0.0.1:8000',
-            'http://localhost:8080', 'http://127.0.0.1:8080',
-            'http://localhost:3000', 'http://127.0.0.1:3000',
-            ...(process.env.CORS_ORIGIN?.split(',') || [])
-        ];
-
-        if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV === 'development') {
-            callback(null, true);
-        } else {
-            console.log('Origin blocked by CORS:', origin);
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    credentials: true,
-    optionsSuccessStatus: 200
-};
-app.use(cors(corsOptions));
+// CORS
+app.use(cors({
+    origin: true,
+    credentials: true
+}));
 
 // Body Parser
 app.use(express.json());
@@ -93,6 +76,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/produtos', produtosRoutes);
 app.use('/api/carrinho', carrinhoRoutes);
 app.use('/api/orcamentos', orcamentosRoutes);
+app.use('/api/frete', freteRoutes);
 
 // Rota padrão
 app.get('/', (req, res) => {

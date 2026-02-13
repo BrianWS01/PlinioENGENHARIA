@@ -36,11 +36,11 @@ router.get('/', authenticateToken, async (req, res) => {
         sql += ' LIMIT ? OFFSET ?';
         params.push(por_pagina, offset);
 
-        const orcamentos = await query(sql, params);
+        const [orcamentos] = await query(sql, params);
 
         // Buscar itens de cada orçamento
         for (let orcamento of orcamentos) {
-            const itens = await query(
+            const [itens] = await query(
                 'SELECT * FROM orcamento_itens WHERE orcamento_id = ? ORDER BY ordem',
                 [orcamento.id]
             );
@@ -95,7 +95,7 @@ router.get('/:id', authenticateToken, async (req, res) => {
         const orcamento = orcamentos[0];
 
         // Buscar itens
-        const itens = await query(
+        const [itens] = await query(
             'SELECT * FROM orcamento_itens WHERE orcamento_id = ? ORDER BY ordem',
             [id]
         );
@@ -152,9 +152,9 @@ router.post('/', async (req, res) => {
         }
 
         // Calcular total
-        const total = (subtotal || 0) - (desconto || 0) + (frete || 0) + 
-                     (icms || 0) + (icms_st || 0) + (pis || 0) + 
-                     (ipi || 0) + (cofins || 0) + (ibpt || 0);
+        const total = (subtotal || 0) - (desconto || 0) + (frete || 0) +
+            (icms || 0) + (icms_st || 0) + (pis || 0) +
+            (ipi || 0) + (cofins || 0) + (ibpt || 0);
 
         // Gerar número de orçamento
         const [ultimoNumero] = await query(
@@ -171,7 +171,7 @@ router.post('/', async (req, res) => {
         const usuarioId = req.user ? req.user.id : null;
 
         // Criar orçamento
-        const orcamentoResult = await query(
+        const [orcamentoResult] = await query(
             `INSERT INTO orcamentos (
                 numero_orcamento, usuario_id, cliente_nome, cliente_email,
                 cliente_telefone, cliente_cnpj, cliente_endereco,
@@ -195,14 +195,14 @@ router.post('/', async (req, res) => {
         // Obter ID do orçamento criado
         // A função query retorna objeto com insertId
         let orcamentoId = orcamentoResult?.insertId || null;
-        
+
         // Fallback: buscar pelo número do orçamento se insertId não estiver disponível
-        if (!orcamentoId) {
-            const orcamentos = await query('SELECT id FROM orcamentos WHERE numero_orcamento = ? LIMIT 1', [novoNumero]);
+        if (!orcamentoId || orcamentoId === 0) {
+            const [orcamentos] = await query('SELECT id FROM orcamentos WHERE numero_orcamento = ? LIMIT 1', [novoNumero]);
             const orc = Array.isArray(orcamentos) ? orcamentos[0] : orcamentos;
             orcamentoId = orc?.id || null;
         }
-        
+
         if (!orcamentoId) {
             throw new Error('Não foi possível obter o ID do orçamento criado');
         }
@@ -236,9 +236,9 @@ router.post('/', async (req, res) => {
         );
 
         const orcamento = orcamentos[0];
-        
+
         // Buscar itens
-        const itensOrcamento = await query(
+        const [itensOrcamento] = await query(
             'SELECT * FROM orcamento_itens WHERE orcamento_id = ? ORDER BY ordem',
             [orcamentoId]
         );
@@ -271,7 +271,7 @@ router.put('/:id/status', authenticateToken, requireAdmin, async (req, res) => {
         const { status } = req.body;
 
         const statusValidos = ['pendente', 'enviado', 'aceito', 'recusado', 'expirado'];
-        
+
         if (!status || !statusValidos.includes(status)) {
             return res.status(400).json({
                 success: false,

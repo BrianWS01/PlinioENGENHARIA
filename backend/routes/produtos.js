@@ -13,11 +13,11 @@ const { authenticateToken, requireAdmin } = require('../middleware/auth');
  */
 router.get('/', async (req, res) => {
     try {
-        const { 
-            categoria, 
-            subcategoria, 
-            busca, 
-            min_preco, 
+        const {
+            categoria,
+            subcategoria,
+            busca,
+            min_preco,
             max_preco,
             pagina = 1,
             por_pagina = 12,
@@ -28,6 +28,16 @@ router.get('/', async (req, res) => {
         const params = [];
 
         // Filtros
+        if (req.query.id) {
+            sql += ' AND id = ?';
+            params.push(req.query.id);
+        }
+
+        if (req.query.slug) {
+            sql += ' AND slug = ?';
+            params.push(req.query.slug);
+        }
+
         if (categoria) {
             sql += ' AND categoria = ?';
             params.push(categoria);
@@ -39,9 +49,9 @@ router.get('/', async (req, res) => {
         }
 
         if (busca) {
-            sql += ' AND (nome LIKE ? OR descricao LIKE ? OR MATCH(nome, descricao) AGAINST(? IN BOOLEAN MODE))';
+            sql += ' AND (nome LIKE ? OR descricao LIKE ?)'; // Removed MATCH AGAINST for compatibility/simplicity unless configured
             const buscaTerm = `%${busca}%`;
-            params.push(buscaTerm, buscaTerm, busca);
+            params.push(buscaTerm, buscaTerm);
         }
 
         if (min_preco) {
@@ -70,12 +80,20 @@ router.get('/', async (req, res) => {
         sql += ' LIMIT ? OFFSET ?';
         params.push(parseInt(por_pagina), offset);
 
-        const produtos = await query(sql, params);
+        const [produtos] = await query(sql, params);
 
         // Contar total
         let countSql = 'SELECT COUNT(*) as total FROM produtos WHERE ativo = TRUE';
         const countParams = [];
-        
+
+        if (req.query.id) {
+            countSql += ' AND id = ?';
+            countParams.push(req.query.id);
+        }
+        if (req.query.slug) {
+            countSql += ' AND slug = ?';
+            countParams.push(req.query.slug);
+        }
         if (categoria) {
             countSql += ' AND categoria = ?';
             countParams.push(categoria);
@@ -365,9 +383,9 @@ router.put('/:id', authenticateToken, requireAdmin, async (req, res) => {
         camposPermitidos.forEach(campo => {
             if (campos[campo] !== undefined) {
                 atualizacoes.push(`${campo} = ?`);
-                
+
                 // Se for JSON, stringify
-                if ((campo === 'imagens' || campo === 'especificacoes' || campo === 'tags') && 
+                if ((campo === 'imagens' || campo === 'especificacoes' || campo === 'tags') &&
                     typeof campos[campo] === 'object') {
                     valores.push(JSON.stringify(campos[campo]));
                 } else {

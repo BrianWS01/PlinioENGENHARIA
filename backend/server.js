@@ -30,8 +30,26 @@ const PORT = process.env.PORT || 3000;
 app.use(helmet());
 
 // CORS
+// CORS
 const corsOptions = {
-    origin: process.env.CORS_ORIGIN?.split(',') || ['http://localhost:8000', 'http://127.0.0.1:8000'],
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+
+        const allowedOrigins = [
+            'http://localhost:8000', 'http://127.0.0.1:8000',
+            'http://localhost:8080', 'http://127.0.0.1:8080',
+            'http://localhost:3000', 'http://127.0.0.1:3000',
+            ...(process.env.CORS_ORIGIN?.split(',') || [])
+        ];
+
+        if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV === 'development') {
+            callback(null, true);
+        } else {
+            console.log('Origin blocked by CORS:', origin);
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     credentials: true,
     optionsSuccessStatus: 200
 };
@@ -97,7 +115,7 @@ app.get('/', (req, res) => {
 
 app.use((err, req, res, next) => {
     console.error('Erro não tratado:', err);
-    
+
     res.status(err.status || 500).json({
         success: false,
         message: err.message || 'Erro interno do servidor',
@@ -122,7 +140,7 @@ async function startServer() {
         // Testar conexão com banco
         console.log('🔌 Testando conexão com MariaDB...');
         const dbConnected = await testConnection();
-        
+
         if (!dbConnected) {
             console.error('❌ Não foi possível conectar ao banco de dados!');
             console.error('⚠️  Verifique as configurações em .env');

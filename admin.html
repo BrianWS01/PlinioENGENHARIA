@@ -414,6 +414,34 @@
             btnSubmit.disabled = true;
             btnSubmit.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Entrando...';
 
+            // MODO DEMO / GITHUB PAGES - Login Hardcoded
+            if (email === 'diretoria@usetrafo.com.br' && senha === 'usetrafo2026') {
+                setTimeout(() => {
+                    const mockUser = {
+                        id: 999,
+                        nome: 'Diretoria USETRAFO (Demo)',
+                        email: 'diretoria@usetrafo.com.br',
+                        is_admin: 1
+                    };
+
+                    localStorage.setItem('adminToken', 'demo-token-github-pages');
+                    localStorage.setItem('adminUser', JSON.stringify(mockUser));
+                    adminData = mockUser;
+
+                    btnSubmit.innerHTML = '<i class="fas fa-check me-2"></i>Sucesso!';
+
+                    // Injetar dados mockados se não houver API
+                    orcamentosData = [
+                        { id: 1, cliente_nome: 'Cliente Exemplo 1', cliente_email: 'cliente1@teste.com', numero_orcamento: 'ORC-001', total: 15000.00, status: 'pendente', created_at: new Date().toISOString() },
+                        { id: 2, cliente_nome: 'Cliente Exemplo 2', cliente_email: 'cliente2@teste.com', numero_orcamento: 'ORC-002', total: 25500.50, status: 'aprovado', created_at: new Date(Date.now() - 86400000).toISOString() },
+                        { id: 3, cliente_nome: 'Cliente Exemplo 1', cliente_email: 'cliente1@teste.com', numero_orcamento: 'ORC-003', total: 5000.00, status: 'enviado', created_at: new Date(Date.now() - 172800000).toISOString() }
+                    ];
+
+                    setTimeout(() => initDashboard(), 500);
+                }, 1000);
+                return;
+            }
+
             try {
                 const response = await fetch(`${API_URL}/auth/login`, {
                     method: 'POST',

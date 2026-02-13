@@ -113,6 +113,60 @@ document.addEventListener('DOMContentLoaded', async function () {
                     preco: 4500.00,
                     categoria: 'reguladores',
                     imagem_principal: 'src/imgs/transformadores a oleo5.jpeg'
+                },
+                {
+                    id: 7,
+                    nome: 'Transformador a Óleo 30kVA',
+                    slug: 'transformador-oleo-30kva',
+                    descricao: 'Maior capacidade para redes de distribuição urbana robustas.',
+                    preco: 5500.00,
+                    categoria: 'transformadores-oleo',
+                    imagem_principal: 'src/imgs/transformadores a oleo6.jpeg'
+                },
+                {
+                    id: 8,
+                    nome: 'Transformador a Seco 112.5kVA',
+                    slug: 'transformador-seco-112-5kva',
+                    descricao: 'Alta eficiência energética e baixo nível de ruído para ambientes internos.',
+                    preco: 18500.00,
+                    categoria: 'transformadores-seco',
+                    imagem_principal: 'src/imgs/trafos a seco2.jpeg'
+                },
+                {
+                    id: 9,
+                    nome: 'Autotransformador 10kVA 220V/380V',
+                    slug: 'autotransformador-10kva',
+                    descricao: 'Versatilidade para indústrias com maquinário pesado.',
+                    preco: 2200.00,
+                    categoria: 'autotransformadores',
+                    imagem_principal: 'src/imgs/transformadores a oleo1.jpeg'
+                },
+                {
+                    id: 10,
+                    nome: 'Transformador Isolador 5kVA',
+                    slug: 'transformador-isolador-5kva',
+                    descricao: 'Proteção elétrica superior para equipamentos médicos e de ti.',
+                    preco: 1500.00,
+                    categoria: 'transformadores-isoladores',
+                    imagem_principal: 'src/imgs/transformadores a oleo2.jpeg'
+                },
+                {
+                    id: 11,
+                    nome: 'Subestação Compacta 500kVA',
+                    slug: 'subestacao-compacta-500kva',
+                    descricao: 'Solução completa para grandes consumidores de energia.',
+                    preco: 65000.00,
+                    categoria: 'transformadores-pedestal',
+                    imagem_principal: 'src/imgs/transformadores a oleo3.jpeg'
+                },
+                {
+                    id: 12,
+                    nome: 'Estabilizador Industrial 20kVA',
+                    slug: 'estabilizador-industrial-20kva',
+                    descricao: 'Correção rápida de tensão para linhas de produção sensíveis.',
+                    preco: 8500.00,
+                    categoria: 'reguladores',
+                    imagem_principal: 'src/imgs/transformadores a oleo4.jpeg'
                 }
             ];
             console.log('Produtos carregados do Fallback:', allProducts.length);

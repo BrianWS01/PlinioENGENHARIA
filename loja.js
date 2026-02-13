@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 descricao: 'Transformador de distribuição imerso em óleo isolante, ideal para redes de distribuição urbana e rural.',
                 preco: 3500.00,
                 categoria: 'transformadores-oleo',
-                imagem: 'src/imgs/transformador-oleo-15kva.jpg'
+                imagem: 'src/imgs/transformadores a oleo1.jpeg'
             },
             {
                 id: 2,
@@ -78,23 +78,23 @@ document.addEventListener('DOMContentLoaded', async function () {
                 descricao: 'Transformador de potência a seco encapsulado em resina epóxi, alta segurança contra incêndios.',
                 preco: 12500.00,
                 categoria: 'transformadores-seco',
-                imagem: 'src/imgs/transformador-seco-75kva.jpg'
+                imagem: 'src/imgs/trafos a seco1 .jpeg'
             },
             {
                 id: 3,
-                nome: 'Autotransformador Trifásico 5kVA 220V/380V',
+                nome: 'Autotransformador Trifásico 5kVA',
                 descricao: 'Equipamento compacto para ajuste de tensão em máquinas e equipamentos industriais.',
                 preco: 1800.00,
                 categoria: 'autotransformadores',
-                imagem: 'src/imgs/autotransformador-5kva.jpg'
+                imagem: 'src/imgs/transformadores a oleo2.jpeg'
             },
             {
                 id: 4,
-                nome: 'Transformador Isolador Monofásico 3kVA',
+                nome: 'Transformador Isolador 3kVA',
                 descricao: 'Garante isolação galvânica entre rede e carga, protegendo equipamentos sensíveis.',
                 preco: 1200.00,
                 categoria: 'transformadores-isoladores',
-                imagem: 'src/imgs/isolador-mono-3kva.jpg'
+                imagem: 'src/imgs/transformadores a oleo3.jpeg'
             },
             {
                 id: 5,
@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 descricao: 'Transformador pad-mounted para instalação ao tempo em redes subterrâneas.',
                 preco: 45000.00,
                 categoria: 'transformadores-pedestal',
-                imagem: 'src/imgs/pedestal-300kva.jpg'
+                imagem: 'src/imgs/transformadores a oleo4.jpeg'
             },
             {
                 id: 6,
@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 descricao: 'Estabiliza a tensão de saída para proteger equipamentos contra oscilações da rede.',
                 preco: 4500.00,
                 categoria: 'reguladores',
-                imagem: 'src/imgs/regulador-10kva.jpg'
+                imagem: 'src/imgs/transformadores a oleo5.jpeg'
             }
         ];
 

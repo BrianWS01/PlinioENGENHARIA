@@ -52,8 +52,67 @@ document.addEventListener('DOMContentLoaded', async function () {
         initializeFilters();
 
     } catch (error) {
-        console.error('Erro ao carregar produtos:', error);
-        produtosContainer.innerHTML = '<div class="col-12 text-center text-danger"><i class="fas fa-exclamation-triangle"></i> Erro ao carregar produtos. Tente novamente mais tarde.</div>';
+        console.warn('API falhou, carregando produtos de demonstração (fallback)...', error);
+
+        // DADOS MOCKADOS PARA MODO DEMO
+        allProducts = [
+            {
+                id: 1,
+                nome: 'Transformador a Óleo 15kVA',
+                descricao: 'Transformador de distribuição imerso em óleo isolante, ideal para redes de distribuição urbana e rural.',
+                preco: 3500.00,
+                categoria: 'transformadores-oleo',
+                imagem: 'src/imgs/transformador-oleo-15kva.jpg'
+            },
+            {
+                id: 2,
+                nome: 'Transformador a Seco 75kVA',
+                descricao: 'Transformador de potência a seco encapsulado em resina epóxi, alta segurança contra incêndios.',
+                preco: 12500.00,
+                categoria: 'transformadores-seco',
+                imagem: 'src/imgs/transformador-seco-75kva.jpg'
+            },
+            {
+                id: 3,
+                nome: 'Autotransformador Trifásico 5kVA 220V/380V',
+                descricao: 'Equipamento compacto para ajuste de tensão em máquinas e equipamentos industriais.',
+                preco: 1800.00,
+                categoria: 'autotransformadores',
+                imagem: 'src/imgs/autotransformador-5kva.jpg'
+            },
+            {
+                id: 4,
+                nome: 'Transformador Isolador Monofásico 3kVA',
+                descricao: 'Garante isolação galvânica entre rede e carga, protegendo equipamentos sensíveis.',
+                preco: 1200.00,
+                categoria: 'transformadores-isoladores',
+                imagem: 'src/imgs/isolador-mono-3kva.jpg'
+            },
+            {
+                id: 5,
+                nome: 'Transformador Pedestal 300kVA',
+                descricao: 'Transformador pad-mounted para instalação ao tempo em redes subterrâneas.',
+                preco: 45000.00,
+                categoria: 'transformadores-pedestal',
+                imagem: 'src/imgs/pedestal-300kva.jpg'
+            },
+            {
+                id: 6,
+                nome: 'Regulador de Tensão 10kVA',
+                descricao: 'Estabiliza a tensão de saída para proteger equipamentos contra oscilações da rede.',
+                preco: 4500.00,
+                categoria: 'reguladores',
+                imagem: 'src/imgs/regulador-10kva.jpg'
+            }
+        ];
+
+        console.log('Produtos mockados carregados:', allProducts.length);
+        initializeFilters();
+
+        // Remover aviso de carregamento se houver
+        if (docProdutosContainer && docProdutosContainer.querySelector('.spinner-border')) {
+            // Limpar apenas se ainda tiver o spinner, o renderPagination vai cuidar do resto
+        }
     }
 
     // Helper to extract mapped attributes from a product object

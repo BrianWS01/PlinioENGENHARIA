@@ -46,6 +46,14 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         // Carregar todos os produtos para filtragem no frontend
         allProducts = await window.api.getProdutos({ por_pagina: 1000 });
+
+        // CORREÇÃO PARA MODO DEMO:
+        // Se a API retornar vazio (seja por falha tratada no api.js ou banco vazio), 
+        // lançamos erro para forçar o uso dos dados mockados no catch abaixo.
+        if (!allProducts || allProducts.length === 0) {
+            throw new Error('Nenhum produto retornado pela API. Ativando modo fallback.');
+        }
+
         console.log('Produtos carregados:', allProducts.length);
 
         // Initialize filters and render initial state

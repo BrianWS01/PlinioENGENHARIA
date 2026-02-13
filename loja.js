@@ -45,82 +45,87 @@ document.addEventListener('DOMContentLoaded', async function () {
         produtosContainer.innerHTML = '<div class="col-12 text-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Carregando...</span></div></div>';
 
         // Carregar todos os produtos para filtragem no frontend
-        allProducts = await window.api.getProdutos({ por_pagina: 1000 });
-
-        // CORREÇÃO PARA MODO DEMO:
-        // Se a API retornar vazio (seja por falha tratada no api.js ou banco vazio), 
-        // lançamos erro para forçar o uso dos dados mockados no catch abaixo.
-        if (!allProducts || allProducts.length === 0) {
-            throw new Error('Nenhum produto retornado pela API. Ativando modo fallback.');
+        let produtosApi = [];
+        try {
+            produtosApi = await window.api.getProdutos({ por_pagina: 1000 });
+        } catch (apiErr) {
+            console.warn('Erro na chamada da API:', apiErr);
         }
 
-        console.log('Produtos carregados:', allProducts.length);
+        // Se a API retornar dados, usamos. Se não, usamos mock.
+        if (produtosApi && produtosApi.length > 0) {
+            allProducts = produtosApi;
+            console.log('Produtos carregados da API:', allProducts.length);
+        } else {
+            console.warn('API vazia ou inacessível. Usando fallback de demonstração.');
+            // DADOS MOCKADOS PARA MODO DEMO
+            allProducts = [
+                {
+                    id: 1,
+                    nome: 'Transformador a Óleo 15kVA',
+                    slug: 'transformador-oleo-15kva',
+                    descricao: 'Transformador de distribuição imerso em óleo isolante, ideal para redes de distribuição urbana e rural.',
+                    preco: 3500.00,
+                    categoria: 'transformadores-oleo',
+                    imagem_principal: 'src/imgs/transformadores a oleo1.jpeg'
+                },
+                {
+                    id: 2,
+                    nome: 'Transformador a Seco 75kVA',
+                    slug: 'transformador-seco-75kva',
+                    descricao: 'Transformador de potência a seco encapsulado em resina epóxi, alta segurança contra incêndios.',
+                    preco: 12500.00,
+                    categoria: 'transformadores-seco',
+                    imagem_principal: 'src/imgs/trafos a seco1 .jpeg'
+                },
+                {
+                    id: 3,
+                    nome: 'Autotransformador Trifásico 5kVA',
+                    slug: 'autotransformador-trifasico-5kva',
+                    descricao: 'Equipamento compacto para ajuste de tensão em máquinas e equipamentos industriais.',
+                    preco: 1800.00,
+                    categoria: 'autotransformadores',
+                    imagem_principal: 'src/imgs/transformadores a oleo2.jpeg'
+                },
+                {
+                    id: 4,
+                    nome: 'Transformador Isolador 3kVA',
+                    slug: 'transformador-isolador-3kva',
+                    descricao: 'Garante isolação galvânica entre rede e carga, protegendo equipamentos sensíveis.',
+                    preco: 1200.00,
+                    categoria: 'transformadores-isoladores',
+                    imagem_principal: 'src/imgs/transformadores a oleo3.jpeg'
+                },
+                {
+                    id: 5,
+                    nome: 'Transformador Pedestal 300kVA',
+                    slug: 'transformador-pedestal-300kva',
+                    descricao: 'Transformador pad-mounted para instalação ao tempo em redes subterrâneas.',
+                    preco: 45000.00,
+                    categoria: 'transformadores-pedestal',
+                    imagem_principal: 'src/imgs/transformadores a oleo4.jpeg'
+                },
+                {
+                    id: 6,
+                    nome: 'Regulador de Tensão 10kVA',
+                    slug: 'regulador-tensao-10kva',
+                    descricao: 'Estabiliza a tensão de saída para proteger equipamentos contra oscilações da rede.',
+                    preco: 4500.00,
+                    categoria: 'reguladores',
+                    imagem_principal: 'src/imgs/transformadores a oleo5.jpeg'
+                }
+            ];
+            console.log('Produtos carregados do Fallback:', allProducts.length);
+        }
 
         // Initialize filters and render initial state
         initializeFilters();
 
     } catch (error) {
-        console.warn('API falhou, carregando produtos de demonstração (fallback)...', error);
-
-        // DADOS MOCKADOS PARA MODO DEMO
-        allProducts = [
-            {
-                id: 1,
-                nome: 'Transformador a Óleo 15kVA',
-                descricao: 'Transformador de distribuição imerso em óleo isolante, ideal para redes de distribuição urbana e rural.',
-                preco: 3500.00,
-                categoria: 'transformadores-oleo',
-                imagem: 'src/imgs/transformadores a oleo1.jpeg'
-            },
-            {
-                id: 2,
-                nome: 'Transformador a Seco 75kVA',
-                descricao: 'Transformador de potência a seco encapsulado em resina epóxi, alta segurança contra incêndios.',
-                preco: 12500.00,
-                categoria: 'transformadores-seco',
-                imagem: 'src/imgs/trafos a seco1 .jpeg'
-            },
-            {
-                id: 3,
-                nome: 'Autotransformador Trifásico 5kVA',
-                descricao: 'Equipamento compacto para ajuste de tensão em máquinas e equipamentos industriais.',
-                preco: 1800.00,
-                categoria: 'autotransformadores',
-                imagem: 'src/imgs/transformadores a oleo2.jpeg'
-            },
-            {
-                id: 4,
-                nome: 'Transformador Isolador 3kVA',
-                descricao: 'Garante isolação galvânica entre rede e carga, protegendo equipamentos sensíveis.',
-                preco: 1200.00,
-                categoria: 'transformadores-isoladores',
-                imagem: 'src/imgs/transformadores a oleo3.jpeg'
-            },
-            {
-                id: 5,
-                nome: 'Transformador Pedestal 300kVA',
-                descricao: 'Transformador pad-mounted para instalação ao tempo em redes subterrâneas.',
-                preco: 45000.00,
-                categoria: 'transformadores-pedestal',
-                imagem: 'src/imgs/transformadores a oleo4.jpeg'
-            },
-            {
-                id: 6,
-                nome: 'Regulador de Tensão 10kVA',
-                descricao: 'Estabiliza a tensão de saída para proteger equipamentos contra oscilações da rede.',
-                preco: 4500.00,
-                categoria: 'reguladores',
-                imagem: 'src/imgs/transformadores a oleo5.jpeg'
-            }
-        ];
-
-        console.log('Produtos mockados carregados:', allProducts.length);
-        initializeFilters();
-
-        // Remover aviso de carregamento se houver
-        if (docProdutosContainer && docProdutosContainer.querySelector('.spinner-border')) {
-            // Limpar apenas se ainda tiver o spinner, o renderPagination vai cuidar do resto
-        }
+        console.error('Erro crítico ao carregar produtos:', error);
+        // Fallback de emergência visual
+        produtosContainer.innerHTML = '<div class="col-12 text-center text-muted"><p>Carregando catálogo de demonstração...</p></div>';
+        // Tentar recarregar página em caso de erro crítico muito persistente, ou apenas deixar a mensagem
     }
 
     // Helper to extract mapped attributes from a product object

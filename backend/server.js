@@ -153,7 +153,9 @@ async function startServer() {
     }
 }
 
-// Iniciar
-startServer();
+// Iniciar apenas se for executado diretamente (não importado)
+if (require.main === module) {
+    startServer();
+}
 
 module.exports = app;

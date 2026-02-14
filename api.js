@@ -4,7 +4,9 @@ console.log('Carregando api.js...');
  * Centralizes all communication with the backend
  */
 
-const API_URL = 'http://localhost:3000/api';
+const API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? 'http://localhost:3000/api'
+    : '/api';
 
 const api = {
     /**
@@ -169,11 +171,34 @@ const api = {
             console.error('Erro ao buscar orçamento:', error);
             throw error;
         }
+    },
+    /**
+     * Get all quotes/orders
+     * @returns {Promise<Array>} List of orders
+     */
+    getOrcamentos: async () => {
+        try {
+            const token = localStorage.getItem('adminToken') || localStorage.getItem('token');
+            const headers = { 'Content-Type': 'application/json' };
+            if (token) headers['Authorization'] = `Bearer ${token}`;
+
+            const response = await fetch(`${API_URL}/orcamentos`, { headers });
+
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.message || 'Erro ao buscar orçamentos');
+            }
+            return data.success ? data.data : [];
+        } catch (error) {
+            console.error('Erro ao buscar orçamentos:', error);
+            throw error;
+        }
     }
 };
 
 // Expose to window for global access
 window.api = api;
+window.API_URL = API_URL;
 
 // AuthManager code removed - moved to auth-manager.js
 
